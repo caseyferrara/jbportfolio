@@ -19,8 +19,8 @@ const classes = {
     },
     aboutContainer: {
       backgroundColor: '#E3E3E3',
-      height: '93vh',
-      marginTop: '4em',
+      height: '100vh',
+      // marginTop: '4em',
       fontFamily: 'Kanit'
     },
     tagline: {
@@ -40,22 +40,20 @@ const classes = {
   return (
 
         <div style={classes.aboutContainer}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <h2 style={classes.tagline}>Creating beautiful designs with passion and purpose</h2>
-            </Grid>
-            <Grid item xs={12}>
-              <h1 style={classes.tagline}>Hi! My name is Jillian Brown.</h1>
-            </Grid>
-          </Grid>
-
           <Grid 
           container 
           spacing={2}
           direction="column"
-          alignContent="center"
-          alignItems="center"
+          align="center"
           >
+            <Grid item xs={12}>
+              <h2 style={classes.tagline}>Creating beautiful designs with passion and purpose</h2>
+            </Grid>
+
+            <Grid item xs={12}>
+              <h1 style={classes.tagline}>Hi! My name is Jillian Brown.</h1>
+            </Grid>
+
             <Grid item xs={6} sm={12}>     
                 <Avatar 
                 alt="Jillian Brown" 
@@ -64,16 +62,14 @@ const classes = {
                 sx={{ width: 300, height: 300 }}
                 />
             </Grid>
-          </Grid>  
 
-          <Grid item xs={12} sm={12}>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Quisque eu sollicitudin erat, eu faucibus massa. Maecenas a lobortis magna. 
-                Nunc quis augue a mi eleifend luctus eu eu nisi. Nullam pretium auctor neque, eu posuere dui vehicula ac. 
-                Vivamus quis dui dolor. Quisque at eros ipsum.</p>
-          </Grid>
+            <Grid item xs={12} sm={12}>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                  Quisque eu sollicitudin erat, eu faucibus massa. Maecenas a lobortis magna. 
+                  Nunc quis augue a mi eleifend luctus eu eu nisi. Nullam pretium auctor neque, eu posuere dui vehicula ac. 
+                  Vivamus quis dui dolor. Quisque at eros ipsum.</p>
+            </Grid>
 
-          <Grid contianer spacing={2}>
             <Grid item xs={12}>
                 <div style={classes.social}>
                   <a href="https://twitter.com">
@@ -87,9 +83,8 @@ const classes = {
                   </a>
                 </div>
             </Grid>
-          </Grid>
+          </Grid>  
         </div>
-
   );
 }
 

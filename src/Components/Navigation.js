@@ -22,7 +22,7 @@ function Navigation() {
 
   return (
     <div style={classes.navContainer}>
-      <AppBar position="fixed" style={classes.nav}>
+      <AppBar position="sticky" style={classes.nav}>
         <Toolbar variant='dense'>
           <Typography variant="h6" style={classes.navLinks}>
             <Button style={classes.navLink}>Home</Button>

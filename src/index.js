@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import Portfolio from './Components/Portfolio';
 import Navigation from './Components/Navigation';
 import About from './Components/About';
 import reportWebVitals from './reportWebVitals';
@@ -10,6 +11,7 @@ root.render(
   <React.StrictMode>
     <Navigation />
     <About />
+    <Portfolio />
   </React.StrictMode>
 );
 
