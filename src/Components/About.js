@@ -1,7 +1,7 @@
 import React from 'react';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
+// import FacebookIcon from '@mui/icons-material/Facebook';
+// import TwitterIcon from '@mui/icons-material/Twitter';
+// import InstagramIcon from '@mui/icons-material/Instagram';
 import avatar from '../Images/jb.jpeg'
 import { Avatar } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -20,7 +20,6 @@ const classes = {
     aboutContainer: {
       backgroundColor: '#E3E3E3',
       height: '100vh',
-      // marginTop: '4em',
       fontFamily: 'Kanit'
     },
     tagline: {
@@ -43,6 +42,7 @@ const classes = {
           <Grid 
           container 
           spacing={2}
+          rowGap={3}
           direction="column"
           align="center"
           >
@@ -70,7 +70,8 @@ const classes = {
                   Vivamus quis dui dolor. Quisque at eros ipsum.</p>
             </Grid>
 
-            <Grid item xs={12}>
+            {/* Add to contact? */}
+            {/* <Grid item xs={12}>
                 <div style={classes.social}>
                   <a href="https://twitter.com">
                     <TwitterIcon style={classes.link}/>
@@ -82,7 +83,7 @@ const classes = {
                     <InstagramIcon style={classes.link}/>
                   </a>
                 </div>
-            </Grid>
+            </Grid> */}
           </Grid>  
         </div>
   );
