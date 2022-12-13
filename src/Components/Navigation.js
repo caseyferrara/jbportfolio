@@ -1,24 +1,23 @@
-import React from 'react';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 
-const classes = {
-    navContainer: {
-        flexGrow: 1,
-    },
-    nav: {
-        backgroundColor: '#2E282A',
-    },
-    navLinks: {
-        margin: '0 auto',
-        fontFamily: 'Kanit',
-    },
-      navLink: {
-        color: 'white',
-        margin: 10,
-    }
-};
-
 function Navigation() {
+
+  const classes = {
+      navContainer: {
+          flexGrow: 1,
+      },
+      nav: {
+          backgroundColor: '#2E282A',
+      },
+      navLinks: {
+          margin: '0 auto',
+          fontFamily: 'Kanit',
+      },
+        navLink: {
+          color: 'white',
+          margin: 10,
+      }
+  };
 
   return (
     <div style={classes.navContainer}>

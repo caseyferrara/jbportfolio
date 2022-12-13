@@ -1,4 +1,3 @@
-import React from 'react';
 // import FacebookIcon from '@mui/icons-material/Facebook';
 // import TwitterIcon from '@mui/icons-material/Twitter';
 // import InstagramIcon from '@mui/icons-material/Instagram';
@@ -8,32 +7,32 @@ import Grid from '@mui/material/Grid';
 
 function About() {
 
-const classes = {
-    avatar: {
-      margin: '0 auto',
-    },
-    avatarHover: {
-      '&:hover': {
-        transform: 'scale(1.1)',
-      }
-    },
-    aboutContainer: {
-      backgroundColor: '#E3E3E3',
-      height: '100vh',
-      fontFamily: 'Kanit'
-    },
-    tagline: {
-      fontStyle: 'italic',
-      textAlign: 'center',
-    },
-    social: {
-      display: 'flex',
-      justifyContent: 'center',
-    },
-    link: {
-      margin: 10,
-      color: 'black',
-    },
+  const classes = {
+      avatar: {
+        margin: '0 auto',
+      },
+      avatarHover: {
+        '&:hover': {
+          transform: 'scale(1.1)',
+        }
+      },
+      aboutContainer: {
+        backgroundColor: '#E3E3E3',
+        height: '100vh',
+        fontFamily: 'Kanit'
+      },
+      tagline: {
+        fontStyle: 'italic',
+        textAlign: 'center',
+      },
+      social: {
+        display: 'flex',
+        justifyContent: 'center',
+      },
+      link: {
+        margin: 10,
+        color: 'black',
+      },
   };
 
   return (
