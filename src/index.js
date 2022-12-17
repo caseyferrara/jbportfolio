@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import Portfolio from './Components/Portfolio';
 import Navigation from './Components/Navigation';
 import About from './Components/About';
