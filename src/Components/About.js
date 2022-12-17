@@ -10,9 +10,10 @@ function About() {
 
   const classes = {
       aboutContainer: {
-        backgroundColor: '#E3E3E3',
+        backgroundColor: '#E8EAE5',
         height: '100vh',
-        fontFamily: 'Kanit'
+        fontFamily: 'Kanit',
+        width: '100%',
       },
       svgContainer: {
         position: 'absolute',
@@ -30,7 +31,7 @@ function About() {
         zIndex: 1,
       },
       shapefill: {
-        fill: '#2E282A'
+        fill: '#303030'
       },
       tagline: {
         fontStyle: 'italic',

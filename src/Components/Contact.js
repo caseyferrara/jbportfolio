@@ -4,12 +4,13 @@ function Contact() {
 
     const classes = {
       contactContainer: {
-        backgroundColor: '#E3E3E3',
+        backgroundColor: '#E8EAE5',
         height: '100vh',
+        width:'100%',
         fontFamily: 'Kanit'
       },
       nav: {
-          backgroundColor: '#2E282A',
+          backgroundColor: '#E8EAE5',
       },
       navLinks: {
           margin: '0 auto',

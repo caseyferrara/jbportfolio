@@ -7,7 +7,7 @@ function Navigation() {
           flexGrow: 1,
       },
       nav: {
-          backgroundColor: '#2E282A',
+          backgroundColor: '#303030',
       },
       navLinks: {
           margin: '0 auto',
