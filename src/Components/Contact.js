@@ -1,6 +1,3 @@
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
 import Footer from './Footer';
 import { Grid, Box, TextField, Button } from '@mui/material';
 
@@ -43,10 +40,12 @@ function Contact() {
               noValidate
               autoComplete="off"
               sx={{
-                borderRadius: 5,
                 width: 650,
                 height: 350,
-                backgroundColor: 'white',
+                backgroundColor: '#E8EAE5',
+                border: 6,
+                borderRadius: 5,
+                borderColor: '#303030'
               }}
             >
                 <TextField
@@ -80,21 +79,17 @@ function Contact() {
                     }}
                 />
                 <br></br>
-                <Button>Submit</Button>
-
-                <Grid item xs={12}>
-                <div style={classes.social}>
-                  <a href="https://twitter.com">
-                    <TwitterIcon style={classes.link}/>
-                  </a>
-                  <a href="https://facebook.com">
-                    <FacebookIcon style={classes.link}/>
-                  </a>
-                  <a href="https://instagram.com">
-                    <InstagramIcon style={classes.link}/>
-                  </a>
-                </div>
-                </Grid>
+                <Button
+                  variant='contained'
+                  sx={{
+                    backgroundColor: '#303030',
+                    ':hover': {
+                      backgroundColor: '#404040'
+                    }
+                  }}
+                >
+                Submit
+                </Button>
             </Box>
           </Grid>
         </Grid>
