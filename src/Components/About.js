@@ -71,7 +71,6 @@ function About() {
                   <Avatar 
                   alt="Jillian Brown" 
                   src={avatar}
-                  style={classes.avatarHover}
                   className='swing-in-top-bck'
                   sx={{ width: 300, height: 300 }}
                   />
