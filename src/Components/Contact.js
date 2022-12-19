@@ -1,3 +1,7 @@
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import Footer from './Footer';
 import { Grid, Box, TextField, Button } from '@mui/material';
 
 function Contact() {
@@ -28,7 +32,7 @@ function Contact() {
             container 
             direction="row" 
             align="center"
-            rowGap={15}
+            rowGap={8}
         >
           <Grid item xs={12} sm={12}>
             <h1>Contact Jillian Brown</h1>
@@ -77,9 +81,24 @@ function Contact() {
                 />
                 <br></br>
                 <Button>Submit</Button>
+
+                <Grid item xs={12}>
+                <div style={classes.social}>
+                  <a href="https://twitter.com">
+                    <TwitterIcon style={classes.link}/>
+                  </a>
+                  <a href="https://facebook.com">
+                    <FacebookIcon style={classes.link}/>
+                  </a>
+                  <a href="https://instagram.com">
+                    <InstagramIcon style={classes.link}/>
+                  </a>
+                </div>
+                </Grid>
             </Box>
           </Grid>
         </Grid>
+        <Footer />
       </div>
     );
   }

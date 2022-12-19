@@ -1,10 +1,7 @@
-// import FacebookIcon from '@mui/icons-material/Facebook';
-// import TwitterIcon from '@mui/icons-material/Twitter';
-// import InstagramIcon from '@mui/icons-material/Instagram';
-
 import avatar from '../Images/jb.jpeg'
 import { Avatar } from '@mui/material';
 import Grid from '@mui/material/Grid';
+import '../App.css';
 
 function About() {
 
@@ -27,7 +24,7 @@ function About() {
       svg: {
         display: 'block',
         width: 'calc(174% + 1.3px)',
-        height: '650px',
+        height: '700px',
         zIndex: 1,
       },
       shapefill: {
@@ -51,7 +48,7 @@ function About() {
         <div style={classes.aboutContainer}>
           <Grid 
           container 
-          spacing={2}
+          spacing={4}
           rowGap={3}
           direction="column"
           align="center"
@@ -64,10 +61,10 @@ function About() {
               </div>
 
               <Grid item xs={12}>
-                  <h2 style={classes.tagline}>Creating beautiful designs with passion and purpose</h2>
+                <h1 className='tracking-in-expand' style={classes.tagline}>Hi! My name is Jillian Brown.</h1>
               </Grid>
               <Grid item xs={12}>
-                <h1 style={classes.tagline}>Hi! My name is Jillian Brown.</h1>
+                  <h2 className='tracking-in-expand' style={classes.tagline}>Creating beautiful designs with passion and purpose</h2>
               </Grid>
               
               <Grid item xs={6} sm={12}>     
@@ -75,6 +72,7 @@ function About() {
                   alt="Jillian Brown" 
                   src={avatar}
                   style={classes.avatarHover}
+                  className='swing-in-top-bck'
                   sx={{ width: 300, height: 300 }}
                   />
               </Grid>
@@ -85,21 +83,6 @@ function About() {
                     Nunc quis augue a mi eleifend luctus eu eu nisi. Nullam pretium auctor neque, eu posuere dui vehicula ac. 
                     Vivamus quis dui dolor. Quisque at eros ipsum.</p>
               </Grid>
-
-            {/* Add to contact? */}
-            {/* <Grid item xs={12}>
-                <div style={classes.social}>
-                  <a href="https://twitter.com">
-                    <TwitterIcon style={classes.link}/>
-                  </a>
-                  <a href="https://facebook.com">
-                    <FacebookIcon style={classes.link}/>
-                  </a>
-                  <a href="https://instagram.com">
-                    <InstagramIcon style={classes.link}/>
-                  </a>
-                </div>
-            </Grid> */}
           </Grid>  
         </div>
   );
