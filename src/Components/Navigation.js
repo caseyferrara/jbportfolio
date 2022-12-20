@@ -1,4 +1,5 @@
 import './CSS/Style.css'
+import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 
 function Navigation() {
@@ -16,43 +17,63 @@ function Navigation() {
           <Typography variant="h6" className="navLinks">
             <Button 
               className="navLink"
-              sx={{
+            >
+            <Link 
+              to="/home" 
+              style={{ 
+                textDecoration: 'none',
                 margin: 0,
                 fontFamily: 'Marcellus',
-                color: 'white'
-              }}
+                color: 'white',
+             }}
             >
-            Home
+              Home
+            </Link>
             </Button>
             <Button 
               className="navLink"
-              sx={{
+            >
+            <Link 
+              to="/about" 
+              style={{ 
+                textDecoration: 'none',
                 margin: 0,
                 fontFamily: 'Marcellus',
-                color: 'white'
-              }}
+                color: 'white',
+             }}
             >
-            About
+              About
+            </Link>
             </Button>
             <Button 
               className="navLink"
-              sx={{
+            >
+            <Link 
+              to="/portfolio" 
+              style={{ 
+                textDecoration: 'none',
                 margin: 0,
                 fontFamily: 'Marcellus',
-                color: 'white'
-              }}
+                color: 'white',
+             }}
             >
-            Portfolio
+              Portfolio
+            </Link>
             </Button>
             <Button 
               className="navLink"
-              sx={{
+            >
+            <Link 
+              to="/contact" 
+              style={{ 
+                textDecoration: 'none',
                 margin: 0,
                 fontFamily: 'Marcellus',
-                color: 'white'
-              }}
+                color: 'white',
+             }}
             >
-            Contact
+              Contact
+            </Link>
             </Button>
           </Typography>
         </Toolbar>

@@ -1,5 +1,4 @@
 import './CSS/Style.css'
-import Footer from './Footer';
 import { Grid, Box, TextField, Button } from '@mui/material';
 
 function Contact() {
@@ -83,7 +82,6 @@ function Contact() {
             </Box>
           </Grid>
         </Grid>
-        <Footer />
       </div>
     );
   }

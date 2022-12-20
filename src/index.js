@@ -4,19 +4,18 @@ import Portfolio from './Components/Portfolio';
 import Navigation from './Components/Navigation';
 import About from './Components/About';
 import Contact from './Components/Contact';
-import reportWebVitals from './reportWebVitals';
+import Footer from './Components/Footer';
+import { Route, BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Navigation />
-    <About />
-    <Portfolio />
-    <Contact />
-  </React.StrictMode>
+  <BrowserRouter>
+    <React.Fragment>
+      <Navigation />
+      <Route path="/about" component={About} />
+      <Route path="/portfolio" component={Portfolio} />
+      <Route path="/contact" component={Contact} />
+      <Footer />
+    </React.Fragment>
+  </BrowserRouter>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

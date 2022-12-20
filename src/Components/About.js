@@ -11,8 +11,8 @@ function About() {
         <div className="aboutContainer">
           <Grid 
           container 
-          spacing={4}
-          rowGap={3}
+          spacing={0}
+          rowGap={0}
           direction="column"
           align="center"
           >
