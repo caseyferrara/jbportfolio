@@ -2,6 +2,8 @@ import img1 from '../Images/img1.jpg';
 import img2 from '../Images/img2.jpg';
 import img3 from '../Images/img3.jpeg';
 import img4 from '../Images/img4.jpg';
+import './CSS/Style.css';
+import './CSS/Animation.css';
 import { Grid, Box } from "@mui/material";
 
 function Portfolio() {
@@ -21,6 +23,7 @@ function Portfolio() {
           <Grid item xs={12} sm={6} md={3}>
             <h2>Portfolio Item #1</h2>
             <Box
+              className="slide-in-left"
               component="img"
               src={img3}
               sx={{
@@ -37,6 +40,7 @@ function Portfolio() {
           <Grid item xs={12} sm={6} md={3}>
             <h2>Portfolio Item #1</h2>
             <Box
+              className="slide-in-left"
               component="img"
               src={img1}
               sx={{
@@ -55,6 +59,7 @@ function Portfolio() {
           <Grid item xs={12} sm={6} md={3}>
             <h2>Portfolio Item #1</h2>
             <Box
+              className="slide-in-left"
               component="img"
               src={img2}
               sx={{
@@ -73,6 +78,7 @@ function Portfolio() {
           <Grid item xs={12} sm={6} md={3}>
             <h2>Portfolio Item #1</h2>
             <Box
+              className="slide-in-left"
               component="img"
               src={img4}
               sx={{
