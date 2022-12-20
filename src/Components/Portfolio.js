@@ -1,126 +1,88 @@
+import img1 from '../Images/img1.jpg';
+import img2 from '../Images/img2.jpg';
+import img3 from '../Images/img3.jpeg';
+import img4 from '../Images/img4.jpg';
 import { Grid, Box } from "@mui/material";
 
 function Portfolio() {
-    
-    const classes = {
-      portfolioContainer: {
-        backgroundColor: '#E8EAE5',
-        height: '100vh',
-        fontFamily: 'Kanit',
-      },
-      portfolioHeader: {
-      }
-    };
 
     return (
-      <div style={classes.portfolioContainer}>
+      <div className="portfolioContainer">
         <Grid 
           container 
           direction="row" 
-          spacing={2}
+          spacing={0}
           rowGap={0}
           align="center"
         >
           <Grid item xs={12} sm={12}>
-            <h1 style={classes.portfolioHeader}>Jillian Brown's Portfolio</h1>
+            <h1>Jillian Brown's Portfolio</h1>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6} md={3}>
             <h2>Portfolio Item #1</h2>
             <Box
+              component="img"
+              src={img3}
               sx={{
-                borderRadius: 10,
                 width: 300,
-                height: 233,
-                backgroundColor: '#303030',
+                height: 533,
                 '&:hover': {
-                  backgroundColor: '#2E282A',
                   opacity: [0.9, 0.8, 0.7],
-                  transform: 'Scale(1.1)'
+                  transform: 'Scale(1.05)'
                 },
                 cursor: 'pointer',
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6} md={3}>
             <h2>Portfolio Item #1</h2>
             <Box
+              component="img"
+              src={img1}
               sx={{
-                borderRadius: 10,
                 width: 300,
-                height: 233,
+                height: 533,
                 backgroundColor: '#303030',
                 '&:hover': {
                   backgroundColor: '#2E282A',
                   opacity: [0.9, 0.8, 0.7],
-                  transform: 'Scale(1.1)'
+                  transform: 'Scale(1.05)'
                 },
                 cursor: 'pointer',
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6} md={3}>
             <h2>Portfolio Item #1</h2>
             <Box
+              component="img"
+              src={img2}
               sx={{
-                borderRadius: 10,
                 width: 300,
-                height: 233,
+                height: 533,
                 backgroundColor: '#303030',
                 '&:hover': {
                   backgroundColor: '#2E282A',
                   opacity: [0.9, 0.8, 0.7],
-                  transform: 'Scale(1.1)'
+                  transform: 'Scale(1.05)'
                 },
                 cursor: 'pointer',
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6} md={3}>
             <h2>Portfolio Item #1</h2>
             <Box
+              component="img"
+              src={img4}
               sx={{
-                borderRadius: 10,
                 width: 300,
-                height: 233,
+                height: 533,
                 backgroundColor: '#303030',
                 '&:hover': {
                   backgroundColor: '#2E282A',
                   opacity: [0.9, 0.8, 0.7],
-                  transform: 'Scale(1.1)'
-                },
-                cursor: 'pointer',
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <h2>Portfolio Item #1</h2>
-            <Box
-              sx={{
-                borderRadius: 10,
-                width: 300,
-                height: 233,
-                backgroundColor: '#303030',
-                '&:hover': {
-                  backgroundColor: '#2E282A',
-                  opacity: [0.9, 0.8, 0.7],
-                  transform: 'Scale(1.1)'
-                },
-                cursor: 'pointer',
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <h2>Portfolio Item #1</h2>
-            <Box
-              sx={{
-                borderRadius: 10,
-                width: 300,
-                height: 233,
-                backgroundColor: '#303030',
-                '&:hover': {
-                  backgroundColor: '#2E282A',
-                  opacity: [0.9, 0.8, 0.7],
-                  transform: 'Scale(1.1)'
+                  transform: 'Scale(1.05)'
                 },
                 cursor: 'pointer',
               }}
