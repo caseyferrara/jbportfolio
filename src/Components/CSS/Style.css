@@ -1,0 +1,114 @@
+/* ABOUT COMPONENT */
+
+.aboutContainer {
+    background-color: #E8EAE5;
+    height: 100vh;
+    font-family: Marcellus;
+    width: 100%;
+}
+  
+.svgContainerHeader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+  
+.svgHeader {
+    display: block;
+    width: calc(174% + 1.3px);
+    height: 700px;
+    z-index: 1;
+}
+  
+.shapeFillHeader {
+    fill: #303030;
+}
+  
+.tagline {
+    /* font-style: italic; */
+    color: white;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+  
+.link {
+    margin: 10px;
+    color: black;
+}
+
+/* PORTFOLIO COMPONENT */
+
+.portfolioContainer {
+    background-color: #E8EAE5;
+    height: 100vh;
+    font-family: Marcellus;
+}  
+
+/* PORTFOLIO CAROUSEL */
+
+.carousel-container {
+    width: 1400px;
+}
+
+.img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.imgSize {
+    display: inline-block;
+    height: 533px;
+    width: 350px;
+}
+  
+
+/* CONTACT COMPONENT */
+
+.contactContainer {
+    background-color: #E8EAE5;
+    width: 100%;
+    font-family: Marcellus;
+}
+
+/* FOOTER COMPONENT */
+
+.footerText {
+  color: white;
+}
+
+.svgContainerFooter {
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.svgFooter {
+  display: block;
+  width: calc(174% + 1.3px);
+  height: 300px;
+  z-index: 1;
+}
+
+.shapeFillFooter {
+  fill: #303030;
+}
+
+.footerLink {
+  margin: 5px;
+  color: white;
+}
+
+.social {
+  position: relative;
+  margin-top: 13%;
+  z-index: 3;
+}
+
+  

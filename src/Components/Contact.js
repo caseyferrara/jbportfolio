@@ -1,3 +1,4 @@
+import './CSS/Style.css'
 import Footer from './Footer';
 import { Grid, Box, TextField, Button } from '@mui/material';
 
@@ -9,17 +10,6 @@ function Contact() {
         height: '100vh',
         width:'100%',
         fontFamily: 'Kanit'
-      },
-      nav: {
-          backgroundColor: '#E8EAE5',
-      },
-      navLinks: {
-          margin: '0 auto',
-          fontFamily: 'Kanit',
-      },
-        navLink: {
-          color: 'white',
-          margin: 10,
       }
     };
 
