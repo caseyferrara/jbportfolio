@@ -19,7 +19,7 @@ function About() {
 
               <div className="svgContainerHeader">
                 <svg className="svgHeader" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" className="shapeFillHeader"></path>
+                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" className="shapeFill"></path>
                 </svg>
               </div>
 
@@ -40,7 +40,7 @@ function About() {
               </Grid>
 
               <Grid item xs={12} sm={12}>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                    <p className="tracking-in-expand">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                     Quisque eu sollicitudin erat, eu faucibus massa. Maecenas a lobortis magna. 
                     Nunc quis augue a mi eleifend luctus eu eu nisi. Nullam pretium auctor neque, eu posuere dui vehicula ac. 
                     Vivamus quis dui dolor. Quisque at eros ipsum.</p>

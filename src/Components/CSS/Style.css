@@ -23,13 +23,14 @@
     height: 500px;
     z-index: 1;
 }
-  
-.shapeFillHeader {
-    fill: #303030;
+
+.svgPortfolio {
+  width: calc(125% + 1.3px);
+  display: block;
+  height: 500px;
 }
   
 .tagline {
-    /* font-style: italic; */
     color: white;
     text-align: center;
     position: relative;
@@ -44,29 +45,72 @@
 /* PORTFOLIO COMPONENT */
 
 .portfolioContainer {
-    background-color: #E8EAE5;
-    height: 100vh;
-    font-family: Marcellus;
-}  
-
-/* PORTFOLIO CAROUSEL */
-
-.carousel-container {
-    width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-.img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.imgSize {
-    display: inline-block;
-    height: 533px;
-    width: 350px;
+.portImg {
+  width: 250px;
+  height: 250px;
 }
-  
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Marcellus;
+}
+
+.modal {
+  background-color: #E8EAE5;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  width: 100%;
+  height: 80%;
+  overflow-y: scroll;
+  max-width: 600px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.modal-title {
+  font-size: 24px;
+  margin: 0;
+}
+
+.modal-description {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.modal-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin: 10px;
+  border-radius: 5px;
+}
+
 
 /* CONTACT COMPONENT */
 
@@ -90,13 +134,13 @@
 }
 
 .svgFooter {
-  display: block;
+  display: flex;
   width: calc(174% + 1.3px);
   height: 200px;
   z-index: 1;
 }
 
-.shapeFillFooter {
+.shapeFill {
   fill: #303030;
 }
 
@@ -110,5 +154,6 @@
   margin-top: 7%;
   z-index: 3;
 }
+
 
   
