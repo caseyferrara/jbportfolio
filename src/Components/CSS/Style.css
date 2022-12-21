@@ -14,20 +14,11 @@
     width: 100%;
     overflow: hidden;
     line-height: 0;
-    transform: rotate(180deg);
 }
   
 .svgHeader {
-    display: block;
-    width: calc(174% + 1.3px);
-    height: 500px;
+    height: 750px;
     z-index: 1;
-}
-
-.svgPortfolio {
-    width: calc(125% + 1.3px);
-    display: block;
-    height: 500px;
 }
   
 .tagline {
@@ -141,19 +132,17 @@
 
 .footerText {
   color: white;
+  margin: 0 auto;
 }
 
 .svgContainerFooter {
   position: absolute;
   width: 100%;
   overflow: hidden;
-  line-height: 0;
 }
 
 .svgFooter {
   display: flex;
-  width: calc(174% + 1.3px);
-  height: 200px;
   z-index: 1;
 }
 
@@ -168,7 +157,7 @@
 
 .social {
   position: relative;
-  margin-top: 7%;
+  margin-top: 30%;
   z-index: 3;
 }
 
@@ -177,11 +166,19 @@
 
 @media (max-width: 600px) {
   .svgHeader {
-    width: calc(280% + 1.3px);
     height: 600px;
   }
+  .footerText {
+    font-size: 14px;
+  }
+  .footerLink {
+    height: 5px;
+    width: 5px;
+  }
+  .social {
+    margin-top: 26%;
+  }
   .svgPortfolio {
-    width: calc(280% + 1.3px);
     height: 600px;
   }
   .tagline {
