@@ -25,9 +25,9 @@
 }
 
 .svgPortfolio {
-  width: calc(125% + 1.3px);
-  display: block;
-  height: 500px;
+    width: calc(125% + 1.3px);
+    display: block;
+    height: 500px;
 }
   
 .tagline {
@@ -54,13 +54,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: 10px;
-  max-width: 1200px;
+  max-width: 1250px;
   margin: 0 auto;
 }
 
 .portImg {
-  width: 250px;
-  height: 250px;
+  width: 275px;
+  height: 275px;
 }
 
 .modal-container {
@@ -104,8 +104,8 @@
 }
 
 .modal-image {
-  width: 200px;
-  height: 200px;
+  width: 350px;
+  height: auto;
   object-fit: cover;
   margin: 10px;
   border-radius: 5px;
@@ -119,6 +119,23 @@
     width: 100%;
     font-family: Marcellus;
 }
+
+.contact-index{
+    z-index: 2;
+}
+
+.contact-form {
+    border: 6px solid;
+    border-image: linear-gradient(to bottom right, #5e5e5e, #303030);
+    border-image-slice: 1;
+    width: 550px;
+    height: 350px;
+}
+
+.contact-header {
+    color: white;
+}
+
 
 /* FOOTER COMPONENT */
 
@@ -156,4 +173,22 @@
 }
 
 
-  
+/* RESPONSIVE SECTION */
+
+@media (max-width: 600px) {
+  .svgHeader {
+    width: calc(280% + 1.3px);
+    height: 600px;
+  }
+  .svgPortfolio {
+    width: calc(280% + 1.3px);
+    height: 600px;
+  }
+  .tagline {
+    font-size: 16px;
+  }
+  .contact-form {
+    width: 300px;
+    height: 350px;
+  }
+}
