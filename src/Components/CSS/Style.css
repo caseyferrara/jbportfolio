@@ -2,30 +2,21 @@
 
 .aboutContainer {
     background-color: #E8EAE5;
-    /* height: 100vh; */
+    height: auto;
     font-family: Marcellus;
     width: 100%;
 }
   
-.svgContainerHeader {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
-}
-  
-.svgHeader {
-    height: 750px;
-    z-index: 1;
+.headerText {
+    color: #303030;
+    text-align: center;
+    font-size: 75px;
 }
   
 .tagline {
-    color: white;
+    color: #303030;
     text-align: center;
     position: relative;
-    z-index: 2;
 }
   
 .link {
@@ -37,16 +28,13 @@
 
 .portfolioContainer {
   width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
+  height: auto;
+  font-family: Marcellus;
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 10px;
-  max-width: 1250px;
-  margin: 0 auto;
+.portfolioHeader {
+  font-size: 100px;
+  color: #303030;
 }
 
 .portImg {
@@ -108,6 +96,7 @@
 .contactContainer {
     background-color: #E8EAE5;
     width: 100%;
+    height: auto;
     font-family: Marcellus;
 }
 
@@ -124,30 +113,26 @@
 }
 
 .contact-header {
-    color: white;
+    color: #303030;
+    font-size: 75px;
 }
 
 
 /* FOOTER COMPONENT */
 
+.footerContainer {
+  background-color: #E8EAE5;
+  width: 100%;
+  height: 750px;
+  font-family: Marcellus;
+  position: relative;
+  background: url('../../Images/waveFooter.svg') no-repeat;  /* display the SVG as a background image */
+  background-size: cover;
+}
+
 .footerText {
   color: white;
   margin: 0 auto;
-}
-
-.svgContainerFooter {
-  position: absolute;
-  width: 100%;
-  overflow: hidden;
-}
-
-.svgFooter {
-  display: flex;
-  z-index: 1;
-}
-
-.shapeFill {
-  fill: #303030;
 }
 
 .footerLink {
@@ -156,18 +141,17 @@
 }
 
 .social {
-  position: relative;
-  margin-top: 30%;
-  z-index: 3;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 20px;  /* position the social div at the bottom of the footer container */
+  width: 100%;
+  height: 50px;
 }
 
 
 /* RESPONSIVE SECTION */
 
 @media (max-width: 600px) {
-  .svgHeader {
-    height: 600px;
-  }
   .footerText {
     font-size: 14px;
   }
@@ -175,11 +159,18 @@
     height: 5px;
     width: 5px;
   }
-  .social {
-    margin-top: 26%;
+  .headerText {
+    font-size: 30px;
   }
-  .svgPortfolio {
-    height: 600px;
+  .portfolioHeader {
+    font-size: 30px;
+  }
+  .portfolioContainer{
+    height: 950px;
+  }
+  .portImg {
+    height: 175px;
+    width: 175px;
   }
   .tagline {
     font-size: 16px;
@@ -187,5 +178,8 @@
   .contact-form {
     width: 300px;
     height: 350px;
+  }
+  .contactHeader{
+    font-size: 30px;
   }
 }

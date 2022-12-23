@@ -12,9 +12,9 @@ root.render(
   <BrowserRouter>
     <React.Fragment>
       <Navigation />
-      <Route path="/about" component={About} />
-      <Route path="/portfolio" component={Portfolio} />
-      <Route path="/contact" component={Contact} />
+      <About />
+      <Portfolio />
+      <Contact />
       <Footer />
     </React.Fragment>
   </BrowserRouter>
