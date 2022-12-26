@@ -68,9 +68,13 @@ function About() {
                     <VisibilityIcon fontSize="large" className="aboutIcon" />
                     <h3 className="iconText tracking-in-expand">Visionary</h3>
                   </Grid>
-                <Grid item xs={12} sm={12}>
-                <Box sx={{ width: 700, height: 650, overflowY: 'scroll' }}>
-                  <ImageList variant="masonry" cols={3} gap={8}>
+                <Grid align="center" container rowGap={2}>
+                <Box sx={{ width: 1000, height: 400, display: 'block', margin: 'auto', overflowY: 'scroll' }}>
+                  <ImageList 
+                    variant="masonry" 
+                    cols={2}
+                    gap={8} 
+                  >
                     {itemData.map((item) => (
                       <ImageListItem key={item.img}>
                         <img
