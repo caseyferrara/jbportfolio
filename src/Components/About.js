@@ -1,9 +1,39 @@
 import './CSS/Animation.css';
 import './CSS/Style.css';
 import avatar from '../Images/jb.jpeg';
-import { Grid, Avatar } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import BrushIcon from '@mui/icons-material/Brush';
+import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
+import { Box, ImageList, ImageListItem, Grid } from '@mui/material';
 
 function About() {
+
+  const itemData = [
+    {
+      img: avatar,
+      title: 'Jillian Brown'
+    },
+    {
+      img: avatar,
+      title: 'Jillian Brown'
+    },
+    {
+      img: avatar,
+      title: 'Jillian Brown'
+    },
+    {
+      img: avatar,
+      title: 'Jillian Brown'
+    },
+    {
+      img: avatar,
+      title: 'Jillian Brown'
+    },
+    {
+      img: avatar,
+      title: 'Jillian Brown'
+    }
+  ]
 
   return (
 
@@ -12,43 +42,48 @@ function About() {
                 <Grid 
                   item xs={12} 
                   sm={12}
-                  className="headerText"
+                  className="headerText tracking-in-expand"
                 >
                   ABOUT JILLIAN BROWN
                 </Grid>
-                <Grid item xs={4} sm={4}>
-                  <Avatar 
-                    alt="Jillian Brown" 
-                    src={avatar}
-                    className='swing-in-top-bck'
-                    sx={{ width: 'auto', height: 'auto' }}
-                  />
+                <Grid 
+                  item xs={12} 
+                  sm={12}
+                  className="paragraph tracking-in-expand"
+                >
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </Grid>
-                <Grid item xs={4} sm={4}>
-                  <Avatar 
-                    alt="Jillian Brown" 
-                    src={avatar}
-                    className='swing-in-top-bck'
-                    sx={{ width: 'auto', height: 'auto' }}
-                  />
-                </Grid>
-                <Grid item xs={4} sm={4}>
-                  <Avatar 
-                    alt="Jillian Brown" 
-                    src={avatar}
-                    className='swing-in-top-bck'
-                    sx={{ width: 'auto', height: 'auto' }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <h1 className="tracking-in-expand tagline">Hi! My name is Jillian Brown.</h1>
-                  <h2 className="tracking-in-expand tagline">Creating beautiful designs with passion and purpose</h2>
-                </Grid>
-                <Grid item xs={12}>
-                  <p className="tracking-in-expand">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                    Quisque eu sollicitudin erat, eu faucibus massa. Maecenas a lobortis magna. 
-                    Nunc quis augue a mi eleifend luctus eu eu nisi. Nullam pretium auctor neque, eu posuere dui vehicula ac. 
-                    Vivamus quis dui dolor. Quisque at eros ipsum.</p>
+                  <Grid item xs={4} sm={4}>
+                    <TipsAndUpdatesIcon fontSize="large" className="aboutIcon" />
+                    <h3 className="iconText tracking-in-expand">Innovative</h3>
+                  </Grid>
+                  <Grid item xs={4} sm={4}>
+                    <BrushIcon fontSize="large" className="aboutIcon" />
+                    <h3 className="iconText tracking-in-expand">Creative</h3>
+                  </Grid>
+                  <Grid item xs={4} sm={4}>
+                    <VisibilityIcon fontSize="large" className="aboutIcon" />
+                    <h3 className="iconText tracking-in-expand">Visionary</h3>
+                  </Grid>
+                <Grid item xs={12} sm={12}>
+                <Box sx={{ width: 700, height: 650, overflowY: 'scroll' }}>
+                  <ImageList variant="masonry" cols={3} gap={8}>
+                    {itemData.map((item) => (
+                      <ImageListItem key={item.img}>
+                        <img
+                          src={`${item.img}?w=248&fit=crop&auto=format`}
+                          srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                          className="slide-in-left"
+                          alt={item.title}
+                          loading="lazy"
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                </Box>
                 </Grid>
               </Grid> 
         </div>

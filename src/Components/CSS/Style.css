@@ -2,9 +2,20 @@
 
 .aboutContainer {
     background-color: #E8EAE5;
-    height: auto;
+    height: 100vh;
     font-family: Marcellus;
     width: 100%;
+}
+
+.aboutIcon {
+  height: 150px;
+  width: 150px;
+  color:#303030;
+}
+
+.iconText {
+  color:#303030;
+  font-style: italic;
 }
   
 .headerText {
@@ -12,8 +23,8 @@
     text-align: center;
     font-size: 75px;
 }
-  
-.tagline {
+
+.paragraph {
     color: #303030;
     text-align: center;
     position: relative;
