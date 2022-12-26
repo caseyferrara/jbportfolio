@@ -121,7 +121,7 @@ function Portfolio() {
           <Box sx={ { maxHeight: 500, maxWidth: 1000, display: 'block', margin: 'auto', overflowY: 'scroll' } }>
             <ImageList variant="masonry" cols={3} gap={8}>
               {filteredImages.slice(0, 8).map((image) => (
-                <ImageListItem key={image.src}>
+                <ImageListItem key={image.id}>
                   <img
                     src={`${image.src}?w=248&fit=crop&auto=format`}
                     srcSet={`${image.src}?w=248&fit=crop&auto=format&dpr=2 2x`}
@@ -145,7 +145,7 @@ function Portfolio() {
             <p className="modal-description" id="simple-modal-description">
             <ImageList variant='woven' cols={2} gap={8}>
               {filteredImages.map((image) => (
-                <ImageListItem key={image.src}>
+                <ImageListItem key={image.id}>
                     <img
                       src={`${image.src}?w=161&fit=crop&auto=format`}
                       srcSet={`${image.src}?w=161&fit=crop&auto=format&dpr=2 2x`}

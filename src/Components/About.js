@@ -10,26 +10,32 @@ function About() {
 
   const itemData = [
     {
+      id: 1,
       img: avatar,
       title: 'Jillian Brown'
     },
     {
+      id: 2,
       img: avatar,
       title: 'Jillian Brown'
     },
     {
+      id: 3,
       img: avatar,
       title: 'Jillian Brown'
     },
     {
+      id: 4,
       img: avatar,
       title: 'Jillian Brown'
     },
     {
+      id: 5,
       img: avatar,
       title: 'Jillian Brown'
     },
     {
+      id: 6,
       img: avatar,
       title: 'Jillian Brown'
     }
@@ -76,7 +82,7 @@ function About() {
                     gap={8} 
                   >
                     {itemData.map((item) => (
-                      <ImageListItem key={item.img}>
+                      <ImageListItem key={item.id}>
                         <img
                           src={`${item.img}?w=248&fit=crop&auto=format`}
                           srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}

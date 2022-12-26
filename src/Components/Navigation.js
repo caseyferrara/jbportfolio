@@ -1,4 +1,5 @@
 import './CSS/Style.css'
+import WaveSvg from '../Images/WavesOpacity.svg';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 
 function Navigation() {
@@ -7,9 +8,12 @@ function Navigation() {
     <div>
       <AppBar 
         position="sticky" 
-        sx={{
-          backgroundColor: '#303030',
-          alignItems: 'center'
+        elevation={0}
+        style={{
+          backgroundColor: '#E8EAE5',
+          backgroundImage: `url(${WaveSvg})`,
+          backgroundSize: 'cover',
+          alignItems: 'center',
         }}
       >
         <Toolbar>
