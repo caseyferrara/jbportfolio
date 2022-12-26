@@ -28,6 +28,7 @@
     color: #303030;
     text-align: center;
     position: relative;
+    max-width: 750px;
 }
   
 .link {

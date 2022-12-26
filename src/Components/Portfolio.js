@@ -5,7 +5,7 @@ import img2 from '../Images/img2.jpg';
 import img3 from '../Images/img3.jpeg';
 import img4 from '../Images/img4.jpg';
 import React, { useState, useEffect } from 'react';
-import { Grid, MenuItem, FormControl, Select, Modal, Button } from '@mui/material';
+import { Box, ImageList, ImageListItem, ImageListItemBar, Grid, MenuItem, FormControl, Select, Modal, Button } from '@mui/material';
 
 function Portfolio() {
 
@@ -118,11 +118,20 @@ function Portfolio() {
           )}
         </FormControl>
         <Grid container rowGap={2}>
-          {filteredImages.slice(0, 8).map((image) => (
-            <Grid item xs={6} sm={6} md={4} lg={3}>
-              <img className="portImg slide-in-left" src={image.src} alt={image.category} />
-            </Grid>
-          ))}
+          <Box sx={ { maxHeight: 500, maxWidth: 1000, display: 'block', margin: 'auto', overflowY: 'scroll' } }>
+            <ImageList variant="masonry" cols={3} gap={8}>
+              {filteredImages.slice(0, 8).map((image) => (
+                <ImageListItem key={image.src}>
+                  <img
+                    src={`${image.src}?w=248&fit=crop&auto=format`}
+                    srcSet={`${image.src}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                    alt={image.category}
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </Box>
         </Grid>
         <Modal
           open={openModal}
@@ -134,9 +143,18 @@ function Portfolio() {
           <div className="modal">
             <h2 className="modal-title" id="simple-modal-title">{selectedCategory}</h2>
             <p className="modal-description" id="simple-modal-description">
+            <ImageList variant='woven' cols={2} gap={8}>
               {filteredImages.map((image) => (
-                <img className="modal-image" src={image.src} alt={image.category} />
+                <ImageListItem key={image.src}>
+                    <img
+                      src={`${image.src}?w=161&fit=crop&auto=format`}
+                      srcSet={`${image.src}?w=161&fit=crop&auto=format&dpr=2 2x`}
+                      alt={image.category}
+                      loading="lazy"
+                    />
+                </ImageListItem>
               ))}
+            </ImageList>
             </p>
             <Button 
               onClick={handleModalClose}
