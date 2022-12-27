@@ -1,5 +1,5 @@
 import './CSS/Style.css'
-import WaveSvg from '../Images/WavesOpacity.svg';
+import WaveSvg from '../Images/waveNav.svg';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 
 function Navigation() {
@@ -14,6 +14,7 @@ function Navigation() {
           backgroundImage: `url(${WaveSvg})`,
           backgroundSize: 'cover',
           alignItems: 'center',
+          height: 200
         }}
       >
         <Toolbar>

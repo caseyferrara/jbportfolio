@@ -138,7 +138,7 @@
   height: 750px;
   font-family: Marcellus;
   position: relative;
-  background: url('../../Images/waveFooter.svg') no-repeat;  /* display the SVG as a background image */
+  background: url('../../Images/waveFooter.svg') no-repeat;
   background-size: cover;
 }
 
