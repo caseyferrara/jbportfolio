@@ -16,12 +16,14 @@
 .iconText {
   color:#303030;
   font-style: italic;
+  font-family: 'DM Serif Display';
 }
   
 .headerText {
     color: #303030;
     text-align: center;
     font-size: 75px;
+    font-family: 'DM Serif Display';
 }
 
 .paragraph {
@@ -45,8 +47,9 @@
 }
 
 .portfolioHeader {
-  font-size: 100px;
+  font-size: 75px;
   color: #303030;
+  font-family: 'DM Serif Display';
 }
 
 .portImg {
@@ -127,6 +130,7 @@
 .contactHeader {
     color: #303030;
     font-size: 75px;
+    font-family: 'DM Serif Display';
 }
 
 

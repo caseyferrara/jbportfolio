@@ -50,7 +50,7 @@ function About() {
                   sm={12}
                   className="headerText tracking-in-expand"
                 >
-                  ABOUT JILLIAN BROWN
+                  ABOUT
                 </Grid>
                 <Grid 
                   item xs={12} 

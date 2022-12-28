@@ -12,7 +12,7 @@ function Contact() {
             rowGap={4}
         >
           <Grid className='contact-index' item xs={12} sm={12}>
-            <h1 className='contactHeader tracking-in-expand'>Contact Jillian Brown</h1>
+            <h1 className='contactHeader tracking-in-expand'>CONTACT</h1>
           </Grid>
           <Grid className='contact-index' item xs={12} sm={12}>
             <Box
