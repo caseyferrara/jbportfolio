@@ -1,6 +1,7 @@
 import './CSS/Style.css'
 import WaveSvg from '../Images/waveNav.svg';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 function Navigation() {
 
@@ -63,6 +64,19 @@ function Navigation() {
             >
               Contact
             </Button>
+            <Link to="/admin">
+              <Button 
+                className="navLink"
+                style={{ 
+                  textDecoration: 'none',
+                  margin: 0,
+                  fontFamily: 'Marcellus',
+                  color: 'white'
+                }}
+              >
+                Admin
+              </Button>
+            </Link>
           </Typography>
         </Toolbar>
       </AppBar>

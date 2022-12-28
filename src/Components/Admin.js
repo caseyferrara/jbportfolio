@@ -1,7 +1,8 @@
 function Admin() {
+  
     return (
       <div className="Admin">
-          
+          Hello
       </div>
     );
   }
