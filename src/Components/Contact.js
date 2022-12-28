@@ -32,7 +32,7 @@ function Contact() {
                     sx={{
                       width: '35ch',
                       '@media (max-width: 600px)': {
-                        width: '20ch'
+                        width: '25ch'
                       }
                     }}
                 />
@@ -45,7 +45,7 @@ function Contact() {
                     sx={{
                       width: '35ch',
                       '@media (max-width: 600px)': {
-                        width: '20ch'
+                        width: '25ch'
                       }
                     }}
                 />
@@ -59,7 +59,7 @@ function Contact() {
                     sx={{
                       width: '35ch',
                       '@media (max-width: 600px)': {
-                        width: '20ch'
+                        width: '25ch'
                       }
                     }}
                 />
