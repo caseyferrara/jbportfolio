@@ -20,17 +20,19 @@ function Navigation() {
       >
         <Toolbar>
           <Typography variant="h6" className="navLinks">
-            <Button 
-              className="navLink"
-              style={{ 
-                textDecoration: 'none',
-                margin: 0,
-                fontFamily: 'Marcellus',
-                color: 'white',
-              }}
-            >
-              Home
-            </Button>
+            <Link to="/">
+              <Button 
+                className="navLink"
+                style={{ 
+                  textDecoration: 'none',
+                  margin: 0,
+                  fontFamily: 'Marcellus',
+                  color: 'white',
+                }}
+              >
+                Home
+              </Button>
+            </Link>
             <Button 
               className="navLink"
               style={{ 
