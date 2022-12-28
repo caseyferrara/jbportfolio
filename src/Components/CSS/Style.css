@@ -164,6 +164,27 @@
   height: 50px;
 }
 
+/* ADMIN COMPONENT */
+
+.adminContainer {
+  background-color: #E8EAE5;
+  font-family: Marcellus;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.adminHeader {
+  color: #303030;
+  text-align: center;
+  font-size: 75px;
+  font-family: 'DM Serif Display';
+}
+
+.projectImageSize {
+  width: 100px;
+  height: 100px;
+}
 
 /* RESPONSIVE SECTION */
 

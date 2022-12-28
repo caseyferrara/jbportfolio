@@ -11,6 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const Home = () => (
   <>
+    <Navigation />
     <About />
     <Portfolio />
     <Contact />
@@ -21,7 +22,6 @@ root.render(
 
   <BrowserRouter>
     <React.Fragment>
-      <Navigation />
       <Route exact path="/" component={Home}/>
       <Route exact path="/admin" component={Admin} />
     </React.Fragment>

@@ -66,19 +66,6 @@ function Navigation() {
             >
               Contact
             </Button>
-            <Link to="/admin">
-              <Button 
-                className="navLink"
-                style={{ 
-                  textDecoration: 'none',
-                  margin: 0,
-                  fontFamily: 'Marcellus',
-                  color: 'white'
-                }}
-              >
-                Admin
-              </Button>
-            </Link>
           </Typography>
         </Toolbar>
       </AppBar>
