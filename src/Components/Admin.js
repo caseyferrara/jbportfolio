@@ -3,9 +3,9 @@ import img2 from '../Images/img2.jpg';
 import img3 from '../Images/img3.jpeg';
 import img4 from '../Images/img4.jpg';
 import avatar from '../Images/jb.jpeg';
+import InfoIcon from '@mui/icons-material/Info';
 import React, { useState } from 'react';
-import { Box, TextField, Select, MenuItem, Button, Grid, Typography }  from '@mui/material';
-import { maxHeight } from '@mui/system';
+import { IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
 
 const Admin = () => {
 
@@ -52,31 +52,6 @@ const Admin = () => {
               <h1 className='adminHeader'>Admin Page</h1>
       </Grid>
       <Grid align="center" container spacing={3}>
-        <Grid item sx={12} sm={12} md={6}>
-          <Box
-            sx={{
-              border: 3,
-              borderRadius: 5,
-              borderColor: '#303030',
-              maxHeight: 500, 
-              maxWidth: 650,
-              display: 'block', 
-              margin: 'auto', 
-              overflowY: 'scroll'
-            }}
-            >
-              <Grid item xs={12}>
-                <h2>Existing projects</h2>
-              </Grid>
-                {existingProjects.map((project) => (
-                  <Grid item xs={12} sm={6} md={4}>
-                    {project.title}
-                    <p>{project.category}</p>
-                    <img className="projectImageSize" src={project.src}></img>
-                  </Grid>
-                ))}
-          </Box>
-        </Grid>
 
         <Grid item sx={12} sm={12} md={6}>
           <Box
@@ -154,15 +129,66 @@ const Admin = () => {
             }}
             >
               <Grid item xs={12}>
-                <h2>About images</h2>
+                <h2>Existing projects</h2>
               </Grid>
-                {aboutImages.map((about) => (
-                  <Grid item xs={12} sm={6} md={4}>
-                    <img className="projectImageSize" src={about.img}></img>
-                  </Grid>
-                ))}
+              <ImageList sx={{ maxWidth: 450 }} variant="woven" cols={3} gap={8}>
+                {existingProjects.map((project) => (
+                    <ImageListItem key={project.id}>
+                      <img
+                        src={`${project.src}?w=164&h=164&fit=crop&auto=format`}
+                        srcSet={`${project.src}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        alt={project.title}
+                        loading="lazy"
+                      />
+                      <ImageListItemBar
+                        title={project.title}
+                        subtitle={project.category}
+                        actionIcon={
+                          <IconButton
+                            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                            aria-label={`info about ${project.title}`}
+                          >
+                            <InfoIcon />
+                          </IconButton>
+                        }
+                      />
+                    </ImageListItem>
+                  ))}
+              </ImageList>
           </Box>
         </Grid>
+
+        <Grid item sx={12} sm={12} md={6}>
+          <Box
+            sx={{
+              border: 3,
+              borderRadius: 5,
+              borderColor: '#303030',
+              maxHeight: 500, 
+              maxWidth: 650,
+              display: 'block', 
+              margin: 'auto', 
+              overflowY: 'scroll'
+            }}
+            >
+              <Grid item xs={12}>
+                <h2>About images</h2>
+              </Grid>
+              <ImageList sx={{ maxWidth: 450 }} variant="masonry" cols={2} gap={8}>
+                {aboutImages.map((about) => (
+                  <ImageListItem key={about.id}>
+                    <img
+                      src={`${about.img}?w=248&fit=crop&auto=format`}
+                      srcSet={`${about.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                      alt={about.title}
+                      loading="lazy"
+                    />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+          </Box>
+        </Grid>
+
       </Grid>
     </div>
   );

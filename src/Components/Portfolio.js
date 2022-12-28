@@ -4,8 +4,9 @@ import img1 from '../Images/img1.jpg';
 import img2 from '../Images/img2.jpg';
 import img3 from '../Images/img3.jpeg';
 import img4 from '../Images/img4.jpg';
+import InfoIcon from '@mui/icons-material/Info';
 import React, { useState, useEffect } from 'react';
-import { Box, ImageList, ImageListItem, ImageListItemBar, Grid, MenuItem, FormControl, Select, Modal, Button } from '@mui/material';
+import { IconButton, Box, ImageList, ImageListItem, ImageListItemBar, Grid, MenuItem, FormControl, Select, Modal, Button } from '@mui/material';
 
 function Portfolio() {
 
@@ -30,18 +31,18 @@ function Portfolio() {
   useEffect(() => {
 
     setImages([
-      { id: 1, category: 'Brand Design', src: img1},
-      { id: 2, category: 'Brand Design', src: img2},
-      { id: 3, category: 'Brand Design', src: img3},
-      { id: 4, category: 'Brand Design', src: img4},
-      { id: 5, category: 'Personal', src: img1},
-      { id: 6, category: 'Personal', src: img2},
-      { id: 7, category: 'Other', src: img3},
-      { id: 8, category: 'Other', src: img4},
-      { id: 9, category: 'Personal', src: img1},
-      { id: 10, category: 'Personal', src: img2},
-      { id: 11, category: 'Brand Design', src: img1},
-      { id: 12, category: 'Brand Design', src: img2},
+      { id: 1, title: 'A wonderful piece of art', category: 'Brand Design', src: img1},
+      { id: 2, title: 'This looks really cool', category: 'Brand Design', src: img2},
+      { id: 3, title: 'I cant believe I made this', category: 'Brand Design', src: img3},
+      { id: 4, title: 'Please look at this!', category: 'Brand Design', src: img4},
+      { id: 5, title: 'A wonderful piece of art', category: 'Personal', src: img1},
+      { id: 6, title: 'This looks really cool', category: 'Personal', src: img2},
+      { id: 7, title: 'I cant believe I made this', category: 'Other', src: img3},
+      { id: 8, title: 'Please look at this!', category: 'Other', src: img4},
+      { id: 9, title: 'A wonderful piece of art', category: 'Personal', src: img1},
+      { id: 10, title: 'This looks really cool', category: 'Personal', src: img2},
+      { id: 11, title: 'I cant believe I made this', category: 'Brand Design', src: img1},
+      { id: 12, title: 'Please look at this!', category: 'Brand Design', src: img2},
       { id: 13, category: 'Other', src: img3},
       { id: 14, category: 'Other', src: img4},
     ]);
@@ -118,7 +119,15 @@ function Portfolio() {
           )}
         </FormControl>
         <Grid container rowGap={2}>
-          <Box sx={ { maxHeight: 500, maxWidth: 1000, display: 'block', margin: 'auto', overflowY: 'scroll' } }>
+          <Box 
+            sx={{ 
+              maxHeight: 500, 
+              maxWidth: 1000, 
+              display: 'block', 
+              margin: 'auto', 
+              overflowY: 'scroll'
+            }}
+          >
             <ImageList variant="masonry" cols={3} gap={8}>
               {filteredImages.slice(0, 8).map((image) => (
                 <ImageListItem key={image.id}>
@@ -128,6 +137,21 @@ function Portfolio() {
                     alt={image.category}
                     loading="lazy"
                   />
+                <ImageListItemBar
+                    title={image.title}
+                    subtitle={image.category}
+                    sx={{
+                      fontFamily: 'Marcellus'
+                    }}
+                    actionIcon={
+                      <IconButton
+                        sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                        aria-label={`info about ${image.title}`}
+                      >
+                      <InfoIcon />
+                      </IconButton>
+                    }
+                />
                 </ImageListItem>
               ))}
             </ImageList>
