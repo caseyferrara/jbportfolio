@@ -41,8 +41,9 @@
 /* PORTFOLIO COMPONENT */
 
 .portfolioContainer {
+  background-color: #E8EAE5;
   width: 100%;
-  height: auto;
+  height: 100vh;
   font-family: Marcellus;
 }
 
@@ -50,11 +51,6 @@
   font-size: 75px;
   color: #303030;
   font-family: 'DM Serif Display';
-}
-
-.portImg {
-  width: 275px;
-  height: 275px;
 }
 
 .modal-container {
@@ -111,7 +107,7 @@
 .contactContainer {
     background-color: #E8EAE5;
     width: 100%;
-    height: auto;
+    height: 100vh;
     font-family: Marcellus;
 }
 
@@ -202,15 +198,8 @@
   .portfolioHeader {
     font-size: 30px;
   }
-  .portfolioContainer{
-    height: 950px;
-  }
-  .portImg {
-    height: 175px;
-    width: 175px;
-  }
   .contact-form {
-    width: 400px;
+    width: 300px;
     height: 350px;
   }
   .contactHeader{

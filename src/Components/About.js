@@ -80,6 +80,11 @@ function About() {
                     variant="masonry" 
                     cols={2}
                     gap={8} 
+                    sx={{
+                      "@media (max-width: 600px)": {
+                        maxWidth: 250
+                      }
+                    }}
                   >
                     {itemData.map((item) => (
                       <ImageListItem key={item.id}>

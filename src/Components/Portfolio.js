@@ -7,6 +7,7 @@ import img4 from '../Images/img4.jpg';
 import InfoIcon from '@mui/icons-material/Info';
 import React, { useState, useEffect } from 'react';
 import { IconButton, Box, ImageList, ImageListItem, ImageListItemBar, Grid, MenuItem, FormControl, Select, Modal, Button } from '@mui/material';
+import { maxWidth } from '@mui/system';
 
 function Portfolio() {
 
@@ -125,10 +126,13 @@ function Portfolio() {
               maxWidth: 1000, 
               display: 'block', 
               margin: 'auto', 
-              overflowY: 'scroll'
+              overflowY: 'scroll',
+              "@media (max-width: 600px)": {
+                maxWidth: 250
+              }
             }}
           >
-            <ImageList variant="masonry" cols={3} gap={8}>
+            <ImageList variant="masonry" cols={2} gap={8}>
               {filteredImages.slice(0, 8).map((image) => (
                 <ImageListItem key={image.id}>
                   <img
