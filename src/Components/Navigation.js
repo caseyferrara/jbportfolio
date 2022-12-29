@@ -15,7 +15,7 @@ function Navigation() {
           backgroundImage: `url(${WaveSvg})`,
           backgroundSize: 'cover',
           alignItems: 'center',
-          height: 250
+          height: 200
         }}
       >
         <Toolbar>
