@@ -198,6 +198,9 @@
   .portfolioHeader {
     font-size: 30px;
   }
+  .modal {
+    width: 80%
+  }
   .contact-form {
     width: 300px;
     height: 350px;

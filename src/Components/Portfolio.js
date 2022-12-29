@@ -171,7 +171,7 @@ function Portfolio() {
           <div className="modal">
             <h2 className="modal-title" id="simple-modal-title">{selectedCategory}</h2>
             <p className="modal-description" id="simple-modal-description">
-            <ImageList variant='woven' cols={2} gap={8}>
+            <ImageList variant='masonry' cols={2} gap={8}>
               {filteredImages.map((image) => (
                 <ImageListItem key={image.id}>
                     <img
