@@ -23,11 +23,11 @@ const Admin = () => {
 
   const aboutImages = [
     { id: 1, img: avatar, title: 'Jillian Brown'},
-    { id: 1, img: avatar, title: 'Jillian Brown'},
-    { id: 1, img: avatar, title: 'Jillian Brown'},
-    { id: 1, img: avatar, title: 'Jillian Brown'},
-    { id: 1, img: avatar, title: 'Jillian Brown'},
-    { id: 1, img: avatar, title: 'Jillian Brown'},
+    { id: 2, img: avatar, title: 'Jillian Brown'},
+    { id: 3, img: avatar, title: 'Jillian Brown'},
+    { id: 4, img: avatar, title: 'Jillian Brown'},
+    { id: 5, img: avatar, title: 'Jillian Brown'},
+    { id: 6, img: avatar, title: 'Jillian Brown'},
   ]
 
   const handleChange = (event) => {
@@ -53,7 +53,7 @@ const Admin = () => {
       </Grid>
       <Grid align="center" container spacing={3}>
 
-        <Grid item sx={12} sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <Box
             sx={{
               border: 3,
@@ -115,7 +115,7 @@ const Admin = () => {
           </Box>
         </Grid>
 
-        <Grid item sx={12} sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <Box
             sx={{
               border: 3,
@@ -158,7 +158,7 @@ const Admin = () => {
           </Box>
         </Grid>
 
-        <Grid item sx={12} sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <Box
             sx={{
               border: 3,

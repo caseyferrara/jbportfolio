@@ -55,6 +55,7 @@ function About() {
                   </Grid>
                 <Grid align="center" container rowGap={2}>
                 <Box 
+                  className="scroll"
                   sx={{ 
                     width: 1000, 
                     height: 400, 

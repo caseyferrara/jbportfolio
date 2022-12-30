@@ -128,6 +128,7 @@ function Portfolio() {
           </FormControl>
           <Grid container rowGap={2}>
             <Box 
+              className="scroll"
               sx={{ 
                 maxHeight: 600, 
                 maxWidth: 1000, 

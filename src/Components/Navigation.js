@@ -22,9 +22,8 @@ function Navigation() {
 
   useEffect(() => {
     function handleScroll() {
-      // Get the bounding client rect of the second AppBar
+      
       const secondAppBarRect = secondAppBarRef.current.getBoundingClientRect();
-      // Get the height of the viewport
       const viewportHeight = window.innerHeight;
 
       if (secondAppBarRect.bottom <= viewportHeight) {

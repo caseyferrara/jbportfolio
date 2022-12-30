@@ -8,6 +8,10 @@
     overflow: hidden;
 }
 
+.scroll {
+  scrollbar-width: none;
+}
+
 .aboutIcon {
   color:#303030;
 }
