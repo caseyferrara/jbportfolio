@@ -5,10 +5,12 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import BrushIcon from '@mui/icons-material/Brush';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import React from 'react';
-import { Box, ImageList, ImageListItem, Grid } from '@mui/material';
+import { useMediaQuery, Box, ImageList, ImageListItem, Grid } from '@mui/material';
 import { Element } from 'react-scroll';
 
-function About(props) {
+function About() {
+
+  const isMobile = useMediaQuery('(max-width: 600px)');
 
   const itemData = [
     { id: 1, img: avatar, title: 'Jillian Brown' },
@@ -21,7 +23,7 @@ function About(props) {
 
   return (
       <Element id="about">
-        <div className="aboutContainer">
+        <div className="allContainer">
               <Grid spacing={1} align="center" container>
                 <Grid 
                   item xs={12} 
@@ -62,11 +64,11 @@ function About(props) {
                   }}>
                   <ImageList 
                     variant="masonry" 
-                    cols={2}
+                    cols={isMobile ? 1 : 2}
                     gap={8} 
                     sx={{
                       "@media (max-width: 600px)": {
-                        maxWidth: 250
+                        maxWidth: 300
                       }
                     }}
                   >

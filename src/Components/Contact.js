@@ -7,7 +7,7 @@ function Contact() {
     return (
       
       <Element id="contact">
-        <div className="contactContainer">
+        <div className="allContainer">
           <Grid
               container 
               direction="row" 

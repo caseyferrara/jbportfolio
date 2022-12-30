@@ -6,7 +6,7 @@ import img3 from '../Images/img3.jpeg';
 import img4 from '../Images/img4.jpg';
 import InfoIcon from '@mui/icons-material/Info';
 import React, { useState, useEffect } from 'react';
-import { IconButton, Box, ImageList, ImageListItem, ImageListItemBar, Grid, MenuItem, FormControl, Select, Modal, Button } from '@mui/material';
+import { useMediaQuery, IconButton, Box, ImageList, ImageListItem, ImageListItemBar, Grid, MenuItem, FormControl, Select, Modal, Button } from '@mui/material';
 import { Element } from 'react-scroll';
 
 function Portfolio() {
@@ -18,6 +18,8 @@ function Portfolio() {
   const [selectedCategory, setSelectedCategory] = useState('All Graphics');
   const [openModal, setModalOpen] = useState(false);
   const [openViewAllModal, setViewAllModalOpen] = useState(false);
+
+  const isMobile = useMediaQuery('(max-width: 600px)');
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
@@ -70,7 +72,7 @@ function Portfolio() {
 
   return (
     <Element id="portfolio">
-      <div className="portfolioContainer">
+      <div className="allContainer">
         <div align="center">
           <div className="headerText text-shadow-pop-top">
             PORTFOLIO
@@ -127,17 +129,18 @@ function Portfolio() {
           <Grid container rowGap={2}>
             <Box 
               sx={{ 
-                maxHeight: 500, 
+                maxHeight: 600, 
                 maxWidth: 1000, 
                 display: 'block', 
                 margin: 'auto', 
                 overflowY: 'scroll',
                 "@media (max-width: 600px)": {
-                  maxWidth: 250
+                  maxHeight: 700, 
+                  maxWidth: 300
                 }
               }}
             >
-              <ImageList variant="masonry" cols={2} gap={8}>
+              <ImageList variant="masonry" cols={isMobile ? 1 : 2} gap={8}>
                 {filteredImages.slice(0, 8).map((image) => (
                   <ImageListItem key={image.id}>
                     <img
@@ -152,7 +155,7 @@ function Portfolio() {
                       title={image.title}
                       subtitle={image.category}
                       sx={{
-                        fontFamily: 'Marcellus'
+                        fontFamily: 'Marcellus',
                       }}
                       actionIcon={
                         <IconButton

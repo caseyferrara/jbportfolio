@@ -1,10 +1,11 @@
 /* ABOUT COMPONENT */
 
-.aboutContainer {
+.allContainer {
     background-color: #E8EAE5;
     height: 100vh;
     font-family: Marcellus;
     width: 100%;
+    overflow: hidden;
 }
 
 .aboutIcon {
@@ -37,13 +38,6 @@
 }
 
 /* PORTFOLIO COMPONENT */
-
-.portfolioContainer {
-  background-color: #E8EAE5;
-  width: 100%;
-  height: 100vh;
-  font-family: Marcellus;
-}
 
 .modal-container {
   position: fixed;
@@ -89,13 +83,6 @@
 
 
 /* CONTACT COMPONENT */
-
-.contactContainer {
-    background-color: #E8EAE5;
-    width: 100%;
-    height: 100vh;
-    font-family: Marcellus;
-}
 
 .contact-index{
     z-index: 2;
@@ -167,14 +154,14 @@
     height: 5px;
     width: 5px;
   }
-  .headerText {
-    font-size: 30px;
-  }
   .modal {
     width: 80%
   }
   .contact-form {
     width: 300px;
     height: 350px;
+  }
+  .headerText{
+    font-size: 60px;
   }
 }
