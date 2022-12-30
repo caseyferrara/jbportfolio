@@ -79,12 +79,6 @@
   margin: 0;
 }
 
-.modal-description {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
 .modal-image {
   width: 350px;
   height: auto;

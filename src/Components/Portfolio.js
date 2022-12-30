@@ -13,20 +13,28 @@ function Portfolio() {
 
   const [images, setImages] = useState([]);
   const [filteredImages, setFilteredImages] = useState([]);
+  const [modalImage, setModalImage] = useState({});
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All Graphics');
   const [openModal, setModalOpen] = useState(false);
+  const [openViewAllModal, setViewAllModalOpen] = useState(false);
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
 
-  const handleModalOpen = () => {
-    setModalOpen(true);
+  const handleModalOpen = (image, modalType) => {
+    if (modalType === 'viewAll') {
+      setViewAllModalOpen(true);
+    } else {
+      setModalImage(image);
+      setModalOpen(true);
+    }
   };
     
   const handleModalClose = () => {
     setModalOpen(false);
+    setViewAllModalOpen(false);
   };
 
   useEffect(() => {
@@ -64,7 +72,7 @@ function Portfolio() {
     <Element id="portfolio">
       <div className="portfolioContainer">
         <div align="center">
-          <div className="headerText tracking-in-expand">
+          <div className="headerText text-shadow-pop-top">
             PORTFOLIO
           </div>
           <FormControl
@@ -99,7 +107,7 @@ function Portfolio() {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={handleModalOpen}
+                  onClick={() => handleModalOpen(null, 'viewAll')}
                   sx={{
                     backgroundColor: '#303030',
                     border: 1,
@@ -133,13 +141,14 @@ function Portfolio() {
                 {filteredImages.slice(0, 8).map((image) => (
                   <ImageListItem key={image.id}>
                     <img
+                      className="slide-in-left"
                       src={`${image.src}?w=248&fit=crop&auto=format`}
                       srcSet={`${image.src}?w=248&fit=crop&auto=format&dpr=2 2x`}
                       alt={image.category}
                       loading="lazy"
-                      className="tracking-in-expand"
                     />
                   <ImageListItemBar
+                      className="slide-in-left"
                       title={image.title}
                       subtitle={image.category}
                       sx={{
@@ -147,6 +156,7 @@ function Portfolio() {
                       }}
                       actionIcon={
                         <IconButton
+                          onClick={() => handleModalOpen(image, 'single')}
                           sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                           aria-label={`info about ${image.title}`}
                         >
@@ -160,7 +170,7 @@ function Portfolio() {
             </Box>
           </Grid>
           <Modal
-            open={openModal}
+            open={openViewAllModal}
             onClose={handleModalClose}
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
@@ -177,11 +187,53 @@ function Portfolio() {
                         srcSet={`${image.src}?w=161&fit=crop&auto=format&dpr=2 2x`}
                         alt={image.category}
                         loading="lazy"
-                        className="tracking-in-expand"
+                        className="slide-in-left"
                       />
                   </ImageListItem>
                 ))}
               </ImageList>
+              </p>
+              <Button 
+                onClick={handleModalClose}
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#303030',
+                  border: 1,
+                  fontFamily: 'Marcellus',
+                  borderColor: 'white',
+                  fontSize: '12px',
+                  margin: '5px',
+                  ':hover': {
+                    backgroundColor: '#3f3f3f',
+                  },
+                }}
+              >
+                Close
+              </Button>
+            </div>
+          </Modal>
+
+          <Modal
+            open={openModal}
+            onClose={handleModalClose}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            className="modal-container"
+          >
+            <div className="modal">
+              <h2 className="tracking-in-expand" id="simple-modal-title">{modalImage.title}</h2>
+                <img
+                  src={`${modalImage.src}`}
+                  srcSet={`${modalImage.src}`}
+                  alt={modalImage.category}
+                  loading="lazy"
+                  className="slide-in-left modal-image"
+                />
+              <h3 className="tracking-in-expand" id="simple-modal-title">{modalImage.category}</h3>
+              <p align="center">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
               </p>
               <Button 
                 onClick={handleModalClose}

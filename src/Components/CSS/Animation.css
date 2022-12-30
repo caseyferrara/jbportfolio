@@ -1,4 +1,6 @@
-/* .text-shadow-pop-top {
+/* TEXT HEADER ANIMATION */
+
+.text-shadow-pop-top {
 	-webkit-animation: text-shadow-pop-top 0.6s both;
 	        animation: text-shadow-pop-top 0.6s both;
 }
@@ -26,7 +28,7 @@
       -webkit-transform: translateY(8px);
               transform: translateY(8px);
     }
-  } */
+  }
 
 /* Tagline animation */
 

@@ -26,14 +26,13 @@ function About(props) {
                 <Grid 
                   item xs={12} 
                   sm={12}
-                  className="headerText tracking-in-expand"
+                  className="headerText text-shadow-pop-top"
                 >
                   ABOUT
                 </Grid>
                 <Grid 
                   item xs={12} 
                   sm={12}
-                  className="tracking-in-expand"
                 >
                 <p className="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
@@ -41,15 +40,15 @@ function About(props) {
                 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </Grid>
                   <Grid item xs={4} sm={4}>
-                    <TipsAndUpdatesIcon fontSize="large" className="aboutIcon" />
+                    <TipsAndUpdatesIcon fontSize="large" className="aboutIcon swing-in-top-bck" />
                     <h3 className="iconText tracking-in-expand">Innovative</h3>
                   </Grid>
                   <Grid item xs={4} sm={4}>
-                    <BrushIcon fontSize="large" className="aboutIcon" />
+                    <BrushIcon fontSize="large" className="aboutIcon swing-in-top-bck" />
                     <h3 className="iconText tracking-in-expand">Creative</h3>
                   </Grid>
                   <Grid item xs={4} sm={4}>
-                    <VisibilityIcon fontSize="large" className="aboutIcon" />
+                    <VisibilityIcon fontSize="large" className="aboutIcon swing-in-top-bck" />
                     <h3 className="iconText tracking-in-expand">Visionary</h3>
                   </Grid>
                 <Grid align="center" container rowGap={2}>

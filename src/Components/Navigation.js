@@ -81,6 +81,7 @@ function Navigation() {
                     duration={500}
                   >
                     <Button 
+                      onClick={handleClose}
                       className="navLink"
                       style={{ 
                         textDecoration: 'none',
