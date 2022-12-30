@@ -7,7 +7,7 @@ import img4 from '../Images/img4.jpg';
 import InfoIcon from '@mui/icons-material/Info';
 import React, { useState, useEffect } from 'react';
 import { IconButton, Box, ImageList, ImageListItem, ImageListItemBar, Grid, MenuItem, FormControl, Select, Modal, Button } from '@mui/material';
-import { maxWidth } from '@mui/system';
+import { Element } from 'react-scroll';
 
 function Portfolio() {
 
@@ -61,53 +61,136 @@ function Portfolio() {
   }, [images, selectedCategory]);
 
   return (
-  
-    <div className="portfolioContainer">
-      <div 
-        align="center" 
-        className="svgContainerHeader"
-      >
-        <div className="portfolioHeader">
-          PORTFOLIO
-        </div>
-        <FormControl
-          sx={{
-            padding: '1rem',
-            color: '#303030',
-            width: '250px',
-          }}
-        >
-          <Select
-            value={selectedCategory}
-            onChange={handleCategoryChange}
+    <Element id="portfolio">
+      <div className="portfolioContainer">
+        <div align="center">
+          <div className="headerText tracking-in-expand">
+            PORTFOLIO
+          </div>
+          <FormControl
             sx={{
-              fontFamily: 'Marcellus',
+              padding: '1rem',
               color: '#303030',
-              border: 1,
+              width: '250px',
             }}
           >
-            {categories.map((category) => (
-              <MenuItem 
-                value={category} 
-                key={category}
+            <Select
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              sx={{
+                fontFamily: 'Marcellus',
+                color: '#303030',
+                border: 1,
+              }}
+            >
+              {categories.map((category) => (
+                <MenuItem 
+                  value={category} 
+                  key={category}
+                  sx={{
+                    fontFamily: 'Marcellus',
+                  }}
+                >
+                  {category}
+                </MenuItem>
+              ))}
+            </Select>
+            {filteredImages.length > 8 && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleModalOpen}
+                  sx={{
+                    backgroundColor: '#303030',
+                    border: 1,
+                    fontFamily: 'Marcellus',
+                    borderColor: '#303030',
+                    fontSize: '12px',
+                    margin: '5px',
+                    ':hover': {
+                      backgroundColor: '#3f3f3f',
+                    },
+                  }}
+                >
+                  View All
+                </Button>
+            )}
+          </FormControl>
+          <Grid container rowGap={2}>
+            <Box 
+              sx={{ 
+                maxHeight: 500, 
+                maxWidth: 1000, 
+                display: 'block', 
+                margin: 'auto', 
+                overflowY: 'scroll',
+                "@media (max-width: 600px)": {
+                  maxWidth: 250
+                }
+              }}
+            >
+              <ImageList variant="masonry" cols={2} gap={8}>
+                {filteredImages.slice(0, 8).map((image) => (
+                  <ImageListItem key={image.id}>
+                    <img
+                      src={`${image.src}?w=248&fit=crop&auto=format`}
+                      srcSet={`${image.src}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                      alt={image.category}
+                      loading="lazy"
+                      className="tracking-in-expand"
+                    />
+                  <ImageListItemBar
+                      title={image.title}
+                      subtitle={image.category}
+                      sx={{
+                        fontFamily: 'Marcellus'
+                      }}
+                      actionIcon={
+                        <IconButton
+                          sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                          aria-label={`info about ${image.title}`}
+                        >
+                        <InfoIcon />
+                        </IconButton>
+                      }
+                  />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </Box>
+          </Grid>
+          <Modal
+            open={openModal}
+            onClose={handleModalClose}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            className="modal-container"
+          >
+            <div className="modal">
+              <h2 className="modal-title" id="simple-modal-title">{selectedCategory}</h2>
+              <p className="modal-description" id="simple-modal-description">
+              <ImageList variant='masonry' cols={2} gap={8}>
+                {filteredImages.map((image) => (
+                  <ImageListItem key={image.id}>
+                      <img
+                        src={`${image.src}?w=161&fit=crop&auto=format`}
+                        srcSet={`${image.src}?w=161&fit=crop&auto=format&dpr=2 2x`}
+                        alt={image.category}
+                        loading="lazy"
+                        className="tracking-in-expand"
+                      />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+              </p>
+              <Button 
+                onClick={handleModalClose}
                 sx={{
-                  fontFamily: 'Marcellus',
-                }}
-              >
-                {category}
-              </MenuItem>
-            ))}
-          </Select>
-          {filteredImages.length > 8 && (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleModalOpen}
-                sx={{
+                  color: 'white',
                   backgroundColor: '#303030',
                   border: 1,
                   fontFamily: 'Marcellus',
-                  borderColor: '#303030',
+                  borderColor: 'white',
                   fontSize: '12px',
                   margin: '5px',
                   ':hover': {
@@ -115,96 +198,13 @@ function Portfolio() {
                   },
                 }}
               >
-                View All
+                Close
               </Button>
-          )}
-        </FormControl>
-        <Grid container rowGap={2}>
-          <Box 
-            sx={{ 
-              maxHeight: 500, 
-              maxWidth: 1000, 
-              display: 'block', 
-              margin: 'auto', 
-              overflowY: 'scroll',
-              "@media (max-width: 600px)": {
-                maxWidth: 250
-              }
-            }}
-          >
-            <ImageList variant="masonry" cols={2} gap={8}>
-              {filteredImages.slice(0, 8).map((image) => (
-                <ImageListItem key={image.id}>
-                  <img
-                    src={`${image.src}?w=248&fit=crop&auto=format`}
-                    srcSet={`${image.src}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                    alt={image.category}
-                    loading="lazy"
-                  />
-                <ImageListItemBar
-                    title={image.title}
-                    subtitle={image.category}
-                    sx={{
-                      fontFamily: 'Marcellus'
-                    }}
-                    actionIcon={
-                      <IconButton
-                        sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                        aria-label={`info about ${image.title}`}
-                      >
-                      <InfoIcon />
-                      </IconButton>
-                    }
-                />
-                </ImageListItem>
-              ))}
-            </ImageList>
-          </Box>
-        </Grid>
-        <Modal
-          open={openModal}
-          onClose={handleModalClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          className="modal-container"
-        >
-          <div className="modal">
-            <h2 className="modal-title" id="simple-modal-title">{selectedCategory}</h2>
-            <p className="modal-description" id="simple-modal-description">
-            <ImageList variant='masonry' cols={2} gap={8}>
-              {filteredImages.map((image) => (
-                <ImageListItem key={image.id}>
-                    <img
-                      src={`${image.src}?w=161&fit=crop&auto=format`}
-                      srcSet={`${image.src}?w=161&fit=crop&auto=format&dpr=2 2x`}
-                      alt={image.category}
-                      loading="lazy"
-                    />
-                </ImageListItem>
-              ))}
-            </ImageList>
-            </p>
-            <Button 
-              onClick={handleModalClose}
-              sx={{
-                color: 'white',
-                backgroundColor: '#303030',
-                border: 1,
-                fontFamily: 'Marcellus',
-                borderColor: 'white',
-                fontSize: '12px',
-                margin: '5px',
-                ':hover': {
-                  backgroundColor: '#3f3f3f',
-                },
-              }}
-            >
-              Close
-            </Button>
-          </div>
-        </Modal>
+            </div>
+          </Modal>
+        </div>
       </div>
-    </div>
+    </Element>
 );
 }
 

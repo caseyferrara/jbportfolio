@@ -22,7 +22,7 @@ root.render(
 
   <BrowserRouter>
     <React.Fragment>
-      <Route exact path="/" component={Home}/>
+      <Home />
       <Route exact path="/admin" component={Admin} />
     </React.Fragment>
   </BrowserRouter>

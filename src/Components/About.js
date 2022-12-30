@@ -4,45 +4,23 @@ import avatar from '../Images/jb.jpeg';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import BrushIcon from '@mui/icons-material/Brush';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
+import React from 'react';
 import { Box, ImageList, ImageListItem, Grid } from '@mui/material';
+import { Element } from 'react-scroll';
 
-function About() {
+function About(props) {
 
   const itemData = [
-    {
-      id: 1,
-      img: avatar,
-      title: 'Jillian Brown'
-    },
-    {
-      id: 2,
-      img: avatar,
-      title: 'Jillian Brown'
-    },
-    {
-      id: 3,
-      img: avatar,
-      title: 'Jillian Brown'
-    },
-    {
-      id: 4,
-      img: avatar,
-      title: 'Jillian Brown'
-    },
-    {
-      id: 5,
-      img: avatar,
-      title: 'Jillian Brown'
-    },
-    {
-      id: 6,
-      img: avatar,
-      title: 'Jillian Brown'
-    }
+    { id: 1, img: avatar, title: 'Jillian Brown' },
+    { id: 2, img: avatar, title: 'Jillian Brown' },
+    { id: 3, img: avatar, title: 'Jillian Brown' },
+    { id: 4, img: avatar, title: 'Jillian Brown' },
+    { id: 5, img: avatar, title: 'Jillian Brown' },
+    { id: 6, img: avatar, title: 'Jillian Brown' },
   ]
 
   return (
-
+      <Element id="about">
         <div className="aboutContainer">
               <Grid spacing={1} align="center" container>
                 <Grid 
@@ -75,7 +53,14 @@ function About() {
                     <h3 className="iconText tracking-in-expand">Visionary</h3>
                   </Grid>
                 <Grid align="center" container rowGap={2}>
-                <Box sx={{ width: 1000, height: 400, display: 'block', margin: 'auto', overflowY: 'scroll' }}>
+                <Box 
+                  sx={{ 
+                    width: 1000, 
+                    height: 400, 
+                    display: 'block', 
+                    margin: 'auto', 
+                    overflowY: 'scroll' 
+                  }}>
                   <ImageList 
                     variant="masonry" 
                     cols={2}
@@ -102,6 +87,7 @@ function About() {
                 </Grid>
               </Grid> 
         </div>
+      </Element>
   );
 }
 
