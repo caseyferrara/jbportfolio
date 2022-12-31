@@ -8,8 +8,8 @@
     overflow: hidden;
 }
 
-.scroll {
-  scrollbar-width: none;
+.hidden-app-bar {
+  display: none !important;
 }
 
 .aboutIcon {
@@ -93,9 +93,8 @@
 }
 
 .contact-form {
-    border: 6px solid;
-    border-image: linear-gradient(to bottom right, #5e5e5e, #303030);
-    border-image-slice: 1;
+    border: 3px solid;
+    border-color: #303030;
     width: 550px;
     height: 350px;
 }

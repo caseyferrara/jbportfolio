@@ -74,7 +74,7 @@ function Portfolio() {
     <Element id="portfolio">
       <div className="allContainer">
         <div align="center">
-          <div className="headerText text-shadow-pop-top">
+          <div className="headerText">
             PORTFOLIO
           </div>
           <FormControl
@@ -128,13 +128,13 @@ function Portfolio() {
           </FormControl>
           <Grid container rowGap={2}>
             <Box 
-              className="scroll"
               sx={{ 
                 maxHeight: 600, 
                 maxWidth: 1000, 
                 display: 'block', 
                 margin: 'auto', 
                 overflowY: 'scroll',
+                scrollbarWidth: 'none',
                 "@media (max-width: 600px)": {
                   maxHeight: 700, 
                   maxWidth: 300

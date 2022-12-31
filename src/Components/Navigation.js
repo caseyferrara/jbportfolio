@@ -1,15 +1,13 @@
 import './CSS/Style.css'
 import WaveSvg from '../Images/waveNav.svg';
-import { Menu, MenuItem, AppBar, Toolbar, Typography, Button } from '@mui/material';
+import whiteLogo from '../Images/whitelogo.png';
+import { Menu, MenuItem, AppBar, Toolbar, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, Element } from 'react-scroll';
-import { useState, useEffect, useRef } from 'react';
 import React from 'react';
 
 function Navigation() {
 
-  const [firstAppBarStyle, setFirstAppBarStyle] = useState({ display: 'none' });
-  const secondAppBarRef = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   
@@ -20,32 +18,9 @@ function Navigation() {
     setAnchorEl(null);
   };
 
-  useEffect(() => {
-    function handleScroll() {
-      
-      const secondAppBarRect = secondAppBarRef.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-
-      if (secondAppBarRect.bottom <= viewportHeight) {
-        setFirstAppBarStyle({ display: 'block' });
-      } else {
-        setFirstAppBarStyle({ display: 'none' });
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll);
-
-    handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
     <Element id="top">
-      <div>
-          <div style={firstAppBarStyle}>
+      <div> 
             <AppBar
               elevation={0}
               sx={{
@@ -152,39 +127,55 @@ function Navigation() {
                 </MenuItem>
               </Menu>
             </AppBar>
-          </div>
 
             <AppBar
-              ref={secondAppBarRef}
               position="sticky" 
               elevation={0}
               style={{
                 backgroundColor: '#E8EAE5',
                 backgroundImage: `url(${WaveSvg})`,
-                backgroundSize: 'cover',
                 alignItems: 'center',
+                backgroundSize: 'cover',
                 height: 250
               }}
             >
-              <Toolbar>
-                <Typography variant="h6" className="navLinks">
+              <Toolbar style={{ display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+                <div 
+                  style={{ 
+                    display: 'flex', 
+                    justifyContent: 'flex-start', 
+                    alignItems: 'flex-start',
+                  }}
+                >
                   <Link 
                     to="top"
                     smooth={true}
                     duration={500}
                   >
-                    <Button 
-                      className="navLink"
-                      style={{ 
-                        textDecoration: 'none',
-                        margin: 0,
-                        fontFamily: 'Marcellus',
-                        color: 'white',
+                    <img 
+                      src={whiteLogo} 
+                      alt="logo"
+                      style={{
+                        height: 75,
+                        width: 'auto',
+                        cursor: 'pointer',
+                        paddingLeft: 15,
+                        paddingTop: 15
                       }}
                     >
-                      Logo
-                    </Button>
+                      
+                    </img>
                   </Link>
+                </div>
+                <div 
+                  style={{ 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    alignItems: 'center', 
+                    paddingRight: 75,
+                    width: '100%'
+                  }}
+                >
                   <Link
                     to="about"
                     smooth={true}
@@ -236,7 +227,7 @@ function Navigation() {
                     Contact
                     </Button>
                   </Link>
-                </Typography>
+                </div>
               </Toolbar>
             </AppBar>
       </div>

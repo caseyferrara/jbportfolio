@@ -28,7 +28,7 @@ function About() {
                 <Grid 
                   item xs={12} 
                   sm={12}
-                  className="headerText text-shadow-pop-top"
+                  className="headerText"
                 >
                   ABOUT
                 </Grid>
@@ -55,13 +55,13 @@ function About() {
                   </Grid>
                 <Grid align="center" container rowGap={2}>
                 <Box 
-                  className="scroll"
                   sx={{ 
                     width: 1000, 
                     height: 400, 
                     display: 'block', 
                     margin: 'auto', 
-                    overflowY: 'scroll' 
+                    overflowY: 'scroll', 
+                    scrollbarWidth: 'none'
                   }}>
                   <ImageList 
                     variant="masonry" 
