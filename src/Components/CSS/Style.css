@@ -43,6 +43,10 @@
 
 /* PORTFOLIO COMPONENT */
 
+.MuiPagination-ul { 
+  justify-content: center; 
+}
+
 .modal-container {
   position: fixed;
   top: 0;
