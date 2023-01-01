@@ -6,7 +6,7 @@ import img3 from '../Images/img3.jpeg';
 import img4 from '../Images/img4.jpg';
 import InfoIcon from '@mui/icons-material/Info';
 import React, { useState, useEffect } from 'react';
-import { Pagination, useMediaQuery, IconButton, Box, ImageList, ImageListItem, ImageListItemBar, Grid, MenuItem, FormControl, Select, Modal, Button } from '@mui/material';
+import { Pagination, useMediaQuery, IconButton, Box, ImageList, ImageListItem, ImageListItemBar, MenuItem, FormControl, Select, Modal, Button } from '@mui/material';
 import { Element } from 'react-scroll';
 
 function Portfolio() {
@@ -113,7 +113,7 @@ function Portfolio() {
             <>
               <Box
                 sx={{
-                  maxHeight: 600,
+                  maxHeight: 500,
                   maxWidth: 1000,
                   display: 'block',
                   margin: 'auto',
@@ -163,7 +163,10 @@ function Portfolio() {
                       page={page}
                       onChange={handlePageChange}
                       sx={{
-                        paddingTop: 5
+                        paddingTop: 3,
+                        '@media (max-width: 600px)': {
+                          paddingTop: 2
+                        },
                       }}
                 />
             </>

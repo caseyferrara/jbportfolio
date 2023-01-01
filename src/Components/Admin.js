@@ -5,14 +5,49 @@ import img4 from '../Images/img4.jpg';
 import avatar from '../Images/jb.jpeg';
 import InfoIcon from '@mui/icons-material/Info';
 import React, { useState } from 'react';
-import { IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
+import { Typography, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
+import PropTypes from 'prop-types';
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 const Admin = () => {
 
   const [projectTitle, setProjectTitle] = useState('');
   const [projectCategory, setProjectCategory] = useState('branddesign');
   const [projectImage, setProjectImage] = useState(null);
-  // const [existingProjects, setExistingProjects] = useState([]);
+  const [value, setValue] = React.useState(0);
+  
 
   const existingProjects = [
     { id: 1, title: 'A wonderful piece of art', category: 'Brand Design', src: img1},
@@ -38,6 +73,10 @@ const Admin = () => {
     }
   };
 
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const handleImageChange = (event) => {
     setProjectImage(event.target.files[0]);
   };
@@ -47,149 +86,199 @@ const Admin = () => {
   };
 
   return (
-    <div className='adminContainer'>
-      <Grid item xs={12}>
-              <h1 className='adminHeader'>Admin Page</h1>
-      </Grid>
-      <Grid align="center" container spacing={3}>
-
-        <Grid item xs={12} sm={12} md={6}>
-          <Box
-            sx={{
-              border: 3,
-              borderRadius: 5,
-              borderColor: '#303030',
-              maxWidth: 650,
-              height: 500, 
+      <div className='adminContainer'>
+        <Grid align="center" item xs={12}>
+                <h1 className='headerText'>Admin Page</h1>
+        </Grid>
+        <Box sx={{ display: 'block', margin: 'auto', width: 1200, borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs 
+            textColor='#303030'
+            value={value}
+            onChange={handleTabChange} 
+            aria-label="basic tabs example"
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: "#303030"
+              }
             }}
           >
-            <Grid  align="center" container spacing={3}>
-              <Grid item xs={12}>
-                <h2>Add a new project</h2>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Project Title"
-                  name="projectTitle"
-                  value={projectTitle}
-                  onChange={handleChange}
-                />
-                  <Select
-                    label="Project Category"
-                    name="projectCategory"
-                    value={projectCategory}
-                    onChange={handleChange}
-                  >
-                    <MenuItem value="branddesign">Brand Design</MenuItem>
-                    <MenuItem value="personal">Personal</MenuItem>
-                    <MenuItem value="other">Other</MenuItem>
-                  </Select>
-                </Grid>
-                <Grid item xs={12}>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Button 
-                    onClick={handleSubmit}
-                    sx={{
-                      color: 'white',
-                      backgroundColor: '#303030',
-                      border: 1,
-                      fontFamily: 'Marcellus',
-                      borderColor: 'white',
-                      fontSize: '12px',
-                      margin: '5px',
-                      ':hover': {
-                        backgroundColor: '#3f3f3f',
-                      },
-                    }}
-                  >
-                    Submit
-                  </Button>
-                </Grid>
-            </Grid>
-          </Box>
-        </Grid>
-
-        <Grid item xs={12} sm={12} md={6}>
-          <Box
-            sx={{
-              border: 3,
-              borderRadius: 5,
-              borderColor: '#303030',
-              maxHeight: 500, 
-              maxWidth: 650,
-              display: 'block', 
-              margin: 'auto', 
-              overflowY: 'scroll'
-            }}
+            <Tab 
+              sx={{ 
+                display: 'block', 
+                margin: 'auto',
+                fontFamily: 'Marcellus'
+              }} 
+              label="Add a project" 
+              {...a11yProps(0)} 
+            />
+            <Tab 
+              sx={{ 
+                display: 'block', 
+                margin: 'auto',
+                fontFamily: 'Marcellus'
+              }} 
+              label="View existing projects" 
+              {...a11yProps(1)} 
+            />
+            <Tab 
+              sx={{ 
+                display: 'block', 
+                margin: 'auto',
+                fontFamily: 'Marcellus'
+              }} 
+              label="View about images" 
+              {...a11yProps(2)} 
+            />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <Grid container rowSpacing={2}>
+            <Box
+              sx={{
+                width: 1000,
+                display: 'block', 
+                margin: 'auto', 
+              }}
             >
-              <Grid item xs={12}>
-                <h2>Existing projects</h2>
+              <Grid  align="center" container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField
+                    label="Project Title"
+                    name="projectTitle"
+                    value={projectTitle}
+                    onChange={handleChange}
+                    sx={{
+                      fontFamily: 'Marcellus'
+                    }}
+                  />
+                    <Select
+                      label="Project Category"
+                      name="projectCategory"
+                      value={projectCategory}
+                      onChange={handleChange}
+                      sx={{
+                        fontFamily: 'Marcellus'
+                      }}
+                    >
+                      <MenuItem 
+                        value="branddesign"
+                        sx={{
+                          fontFamily: 'Marcellus',
+                          color: '#303030'
+                        }}
+                      >
+                        Brand Design
+                      </MenuItem>
+                      <MenuItem 
+                        value="personal"
+                        sx={{
+                          fontFamily: 'Marcellus',
+                          color: '#303030'
+                        }}
+                      >
+                        Personal
+                      </MenuItem>
+                      <MenuItem 
+                        value="other"
+                        sx={{
+                          fontFamily: 'Marcellus',
+                          color: '#303030'
+                        }}
+                      >
+                        Other
+                      </MenuItem>
+                    </Select>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button 
+                      onClick={handleSubmit}
+                      sx={{
+                        color: 'white',
+                        backgroundColor: '#303030',
+                        fontFamily: 'Marcellus',
+                        borderColor: 'white',
+                        fontSize: '12px',
+                        margin: '5px',
+                        ':hover': {
+                          backgroundColor: '#3f3f3f',
+                        },
+                      }}
+                    >
+                      Submit
+                    </Button>
+                  </Grid>
               </Grid>
-              <ImageList sx={{ maxWidth: 450 }} variant="woven" cols={3} gap={8}>
-                {existingProjects.map((project) => (
-                    <ImageListItem key={project.id}>
+            </Box>
+          </Grid>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Grid container rowSpacing={2}>
+            <Box
+              sx={{
+                width: 1000,
+                display: 'block', 
+                margin: 'auto', 
+              }}
+              >
+                <ImageList sx={{ maxWidth: 900 }} variant="masonry" cols={3} gap={8}>
+                  {existingProjects.map((project) => (
+                      <ImageListItem key={project.id}>
+                        <img
+                          src={`${project.src}?w=164&h=164&fit=crop&auto=format`}
+                          srcSet={`${project.src}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                          alt={project.title}
+                          loading="lazy"
+                        />
+                        <ImageListItemBar
+                          title={project.title}
+                          subtitle={project.category}
+                          actionIcon={
+                            <IconButton
+                              sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                              aria-label={`info about ${project.title}`}
+                            >
+                              <InfoIcon />
+                            </IconButton>
+                          }
+                        />
+                      </ImageListItem>
+                    ))}
+                </ImageList>
+            </Box>
+          </Grid>
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <Grid container rowSpacing={2}>
+            <Box
+              align="center"
+              sx={{
+                width: 1000,
+                display: 'block', 
+                margin: 'auto', 
+              }}
+              >
+                <ImageList sx={{ maxWidth: 900 }} variant="masonry" cols={3} gap={8}>
+                  {aboutImages.map((about) => (
+                    <ImageListItem key={about.id}>
                       <img
-                        src={`${project.src}?w=164&h=164&fit=crop&auto=format`}
-                        srcSet={`${project.src}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                        alt={project.title}
+                        src={`${about.img}?w=248&fit=crop&auto=format`}
+                        srcSet={`${about.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                        alt={about.title}
                         loading="lazy"
-                      />
-                      <ImageListItemBar
-                        title={project.title}
-                        subtitle={project.category}
-                        actionIcon={
-                          <IconButton
-                            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                            aria-label={`info about ${project.title}`}
-                          >
-                            <InfoIcon />
-                          </IconButton>
-                        }
                       />
                     </ImageListItem>
                   ))}
-              </ImageList>
-          </Box>
-        </Grid>
-
-        <Grid item xs={12} sm={12} md={6}>
-          <Box
-            sx={{
-              border: 3,
-              borderRadius: 5,
-              borderColor: '#303030',
-              maxHeight: 500, 
-              maxWidth: 650,
-              display: 'block', 
-              margin: 'auto', 
-              overflowY: 'scroll'
-            }}
-            >
-              <Grid item xs={12}>
-                <h2>About images</h2>
-              </Grid>
-              <ImageList sx={{ maxWidth: 450 }} variant="masonry" cols={2} gap={8}>
-                {aboutImages.map((about) => (
-                  <ImageListItem key={about.id}>
-                    <img
-                      src={`${about.img}?w=248&fit=crop&auto=format`}
-                      srcSet={`${about.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                      alt={about.title}
-                      loading="lazy"
-                    />
-                  </ImageListItem>
-                ))}
-              </ImageList>
-          </Box>
-        </Grid>
-
-      </Grid>
+                </ImageList>
+            </Box>
+          </Grid>
+        </TabPanel>
     </div>
   );
 };
