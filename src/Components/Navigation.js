@@ -1,12 +1,26 @@
 import './CSS/Style.css'
 import WaveSvg from '../Images/waveNav.svg';
 import whiteLogo from '../Images/whitelogo.png';
+import blackLogo from '../Images/blacklogo.png';
 import { Menu, MenuItem, AppBar, Toolbar, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, Element } from 'react-scroll';
 import React from 'react';
+import styled from '@emotion/styled';
 
 function Navigation() {
+
+  const StyledImg = styled.img`
+  height: 75px;
+  width: auto;
+  cursor: pointer;
+  padding-left: 15px;
+  padding-top: 15px;
+
+  @media only screen and (max-width: 600px) {
+    height: 50px;
+  }
+`;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -25,107 +39,105 @@ function Navigation() {
               elevation={0}
               sx={{
                 backgroundColor: 'transparent',
-                alignItems: 'flex-end'
+                alignItems: 'center',
               }}
             >
-              <Button
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
+              <Toolbar 
+                style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  width: '100%',
+                }}
               >
-                <MenuIcon
-                  fontSize="large"
-                  sx={{
-                    color: '#303030'
-                  }}
-                />
-              </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="basic-demo-button"
-              >
-                <MenuItem onClick={handleClose}>
-                  <Link
+                <Link
                     to="top"
                     smooth={true}
                     duration={500}
                   >
-                    <Button 
-                      onClick={handleClose}
-                      className="navLink"
-                      style={{ 
-                        textDecoration: 'none',
-                        margin: 0,
-                        fontFamily: 'Marcellus',
-                        color: '#303030',
-                      }}
+                    <StyledImg 
+                      src={blackLogo} 
+                      alt="logo" 
+                    />
+                </Link>
+                <Button
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                >
+                  <MenuIcon
+                    fontSize="large"
+                    sx={{
+                      color: '#303030'
+                    }}
+                  />
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="basic-demo-button"
+                >
+                  <MenuItem onClick={handleClose}>
+                    <Link
+                      to="about"
+                      smooth={true}
+                      duration={500}
                     >
-                      Logo
-                    </Button>
-                  </Link>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Link
-                    to="about"
-                    smooth={true}
-                    duration={500}
-                  >
-                    <Button
-                      className="navLink"
-                      style={{ 
-                        textDecoration: 'none',
-                        margin: 0,
-                        fontFamily: 'Marcellus',
-                        color: '#303030',
-                      }}
+                      <Button
+                        className="navLink"
+                        style={{ 
+                          textDecoration: 'none',
+                          margin: 0,
+                          fontFamily: 'Marcellus',
+                          color: '#303030',
+                        }}
+                      >
+                      About 
+                      </Button>
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <Link
+                      to="portfolio"
+                      smooth={true}
+                      duration={500}
                     >
-                    About 
-                    </Button>
-                  </Link>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Link
-                    to="portfolio"
-                    smooth={true}
-                    duration={500}
-                  >
-                    <Button
-                      className="navLink"
-                      style={{ 
-                        textDecoration: 'none',
-                        margin: 0,
-                        fontFamily: 'Marcellus',
-                        color: '#303030',
-                      }}
+                      <Button
+                        className="navLink"
+                        style={{ 
+                          textDecoration: 'none',
+                          margin: 0,
+                          fontFamily: 'Marcellus',
+                          color: '#303030',
+                        }}
+                      >
+                      Portfolio 
+                      </Button>
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <Link
+                      to="contact"
+                      smooth={true}
+                      duration={500}
                     >
-                    Portfolio 
-                    </Button>
-                  </Link>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Link
-                    to="contact"
-                    smooth={true}
-                    duration={500}
-                  >
-                    <Button
-                      className="navLink"
-                      style={{ 
-                        textDecoration: 'none',
-                        margin: 0,
-                        fontFamily: 'Marcellus',
-                        color: '#303030',
-                      }}
-                    >
-                    Contact
-                    </Button>
-                  </Link>
-                </MenuItem>
-              </Menu>
+                      <Button
+                        className="navLink"
+                        style={{ 
+                          textDecoration: 'none',
+                          margin: 0,
+                          fontFamily: 'Marcellus',
+                          color: '#303030',
+                        }}
+                      >
+                      Contact
+                      </Button>
+                    </Link>
+                  </MenuItem>
+                </Menu>
+              </Toolbar>
             </AppBar>
 
             <AppBar
@@ -136,10 +148,18 @@ function Navigation() {
                 backgroundImage: `url(${WaveSvg})`,
                 alignItems: 'center',
                 backgroundSize: 'cover',
-                height: 250
+                width: '100%',
+                height: 250,
+                overflow: 'hidden'
               }}
             >
-              <Toolbar style={{ display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+              <Toolbar 
+                style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  width: '100%',
+                }}
+              >
                 <div 
                   style={{ 
                     display: 'flex', 
@@ -152,19 +172,10 @@ function Navigation() {
                     smooth={true}
                     duration={500}
                   >
-                    <img 
+                    <StyledImg 
                       src={whiteLogo} 
-                      alt="logo"
-                      style={{
-                        height: 75,
-                        width: 'auto',
-                        cursor: 'pointer',
-                        paddingLeft: 15,
-                        paddingTop: 15
-                      }}
-                    >
-                      
-                    </img>
+                      alt="logo" 
+                    />
                   </Link>
                 </div>
                 <div 
@@ -172,7 +183,7 @@ function Navigation() {
                     display: 'flex', 
                     justifyContent: 'center', 
                     alignItems: 'center', 
-                    paddingRight: 75,
+                    paddingRight: 60,
                     width: '100%'
                   }}
                 >
