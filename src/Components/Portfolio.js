@@ -78,7 +78,7 @@ function Portfolio() {
     <Element id="portfolio">
       <div className="allContainer">
         <div align="center">
-          <div className="headerText">
+          <div className="headerText tracking-in-expand">
             PORTFOLIO
           </div>
           <FormControl

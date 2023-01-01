@@ -88,7 +88,7 @@ const Admin = () => {
   return (
       <div className='adminContainer'>
         <Grid align="center" item xs={12}>
-                <h1 className='headerText'>Admin Page</h1>
+                <h1 className='headerText tracking-in-expand'>Admin Page</h1>
         </Grid>
         <Box sx={{ display: 'block', margin: 'auto', width: 1200, borderBottom: 1, borderColor: 'divider' }}>
           <Tabs 

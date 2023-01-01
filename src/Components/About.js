@@ -28,7 +28,7 @@ function About() {
                 <Grid 
                   item xs={12} 
                   sm={12}
-                  className="headerText"
+                  className="headerText tracking-in-expand"
                 >
                   ABOUT
                 </Grid>
