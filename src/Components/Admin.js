@@ -44,9 +44,12 @@ function a11yProps(index) {
 const Admin = () => {
 
   const [projectTitle, setProjectTitle] = useState('');
-  const [projectCategory, setProjectCategory] = useState('branddesign');
+  const [projectCategory, setProjectCategory] = useState('prints');
+  const [projectDescription, setProjectDescription] = useState('');
   const [projectImage, setProjectImage] = useState(null);
   const [value, setValue] = React.useState(0);
+  const id = 1;
+  
   
 
   const existingProjects = [
@@ -70,7 +73,11 @@ const Admin = () => {
       setProjectTitle(event.target.value);
     } else if (event.target.name === 'projectCategory') {
       setProjectCategory(event.target.value);
+    } else if (event.target.name === 'projectDescription') {
+      setProjectDescription(event.target.value);
     }
+    console.log(projectTitle);
+    console.log(projectDescription);
   };
 
   const handleTabChange = (event, newValue) => {
@@ -81,9 +88,21 @@ const Admin = () => {
     setProjectImage(event.target.files[0]);
   };
 
-  const handleSubmit = () => {
-    // Submit the new project to the server here
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // Send a POST request to the server
+    fetch('http://localhost:3001/projects/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id, projectTitle, projectCategory, projectDescription, projectImage }),
+    })
+    .then(res => res.json())
+    .then(project => console.log(project));
   };
+  
 
   return (
       <div className='adminContainer'>
@@ -145,29 +164,42 @@ const Admin = () => {
                   <TextField
                     label="Project Title"
                     name="projectTitle"
+                    variant="filled"
                     value={projectTitle}
                     onChange={handleChange}
-                    sx={{
-                      fontFamily: 'Marcellus'
+                    InputProps={{
+                      style: {
+                        fontFamily: 'Marcellus',
+                        width: 250
+                      }
+                    }}
+                    InputLabelProps={{
+                      style: {
+                        fontFamily: 'Marcellus',
+                        color: '#303030'
+                      }
                     }}
                   />
+                </Grid>
+                <Grid item xs={12}>
                     <Select
                       label="Project Category"
                       name="projectCategory"
                       value={projectCategory}
                       onChange={handleChange}
                       sx={{
-                        fontFamily: 'Marcellus'
+                        fontFamily: 'Marcellus',
+                        width: 250
                       }}
                     >
                       <MenuItem 
-                        value="branddesign"
+                        value="prints"
                         sx={{
                           fontFamily: 'Marcellus',
                           color: '#303030'
                         }}
                       >
-                        Brand Design
+                        Prints
                       </MenuItem>
                       <MenuItem 
                         value="personal"
@@ -177,6 +209,15 @@ const Admin = () => {
                         }}
                       >
                         Personal
+                      </MenuItem>
+                      <MenuItem 
+                        value="logos"
+                        sx={{
+                          fontFamily: 'Marcellus',
+                          color: '#303030'
+                        }}
+                      >
+                        Logos
                       </MenuItem>
                       <MenuItem 
                         value="other"
@@ -190,15 +231,39 @@ const Admin = () => {
                     </Select>
                   </Grid>
                   <Grid item xs={12}>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
+                    <TextField
+                      label="Project Description"
+                      name="projectDescription"
+                      variant="filled"
+                      value={projectDescription}
+                      onChange={handleChange}
+                      multiline={true}
+                      rows={3}
+                      InputProps={{
+                        style: {
+                          fontFamily: 'Marcellus',
+                          width: 500
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          fontFamily: 'Marcellus',
+                          color: '#303030'
+                        }
+                      }}
                     />
+                  </Grid>
+                  <Grid item xs={12}>
+                      <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageChange}
+                      />
                   </Grid>
                   <Grid item xs={12}>
                     <Button 
                       onClick={handleSubmit}
+                      size="large"
                       sx={{
                         color: 'white',
                         backgroundColor: '#303030',

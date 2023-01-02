@@ -17,22 +17,26 @@ function Portfolio() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All Graphics');
   const [openModal, setModalOpen] = useState(false);
-  const isMobile = useMediaQuery('(max-width: 600px)');
   const [page, setPage] = useState(1);
   const itemsPerPage = 8;
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = page * itemsPerPage;
+  const isMobile = useMediaQuery('(max-width: 600px)');
   const currentImages = filteredImages.slice(startIndex, endIndex);
 
   const handlePageChange = (event, value) => {
+
     setPage(value);
+
   };
 
   const handleCategoryChange = (event) => {
+
     setSelectedCategory(event.target.value);
+
   };
 
-  const handleModalOpen = (image, modalType) => {
+  const handleModalOpen = (image) => {
 
     setModalImage(image);
     setModalOpen(true);
@@ -40,28 +44,28 @@ function Portfolio() {
   };
     
   const handleModalClose = () => {
+
     setModalOpen(false);
+
   };
 
   useEffect(() => {
 
     setImages([
-      { id: 1, title: 'A wonderful piece of art', category: 'Brand Design', src: img1},
-      { id: 2, title: 'This looks really cool', category: 'Brand Design', src: img2},
-      { id: 3, title: 'I cant believe I made this', category: 'Brand Design', src: img3},
-      { id: 4, title: 'Please look at this!', category: 'Brand Design', src: img4},
+      { id: 1, title: 'A wonderful piece of art', category: 'Prints', src: img1},
+      { id: 2, title: 'This looks really cool', category: 'Prints', src: img2},
+      { id: 3, title: 'I cant believe I made this', category: 'Prints', src: img3},
+      { id: 4, title: 'Please look at this!', category: 'Prints', src: img4},
       { id: 5, title: 'A wonderful piece of art', category: 'Personal', src: img1},
       { id: 6, title: 'This looks really cool', category: 'Personal', src: img2},
       { id: 7, title: 'I cant believe I made this', category: 'Other', src: img3},
       { id: 8, title: 'Please look at this!', category: 'Other', src: img4},
       { id: 9, title: 'A wonderful piece of art', category: 'Personal', src: img1},
       { id: 10, title: 'This looks really cool', category: 'Personal', src: img2},
-      { id: 11, title: 'I cant believe I made this', category: 'Brand Design', src: img1},
-      { id: 12, title: 'Please look at this!', category: 'Brand Design', src: img2},
-      { id: 13, category: 'Other', src: img3},
-      { id: 14, category: 'Other', src: img4},
+      { id: 11, title: 'I cant believe I made this', category: 'Prints', src: img3},
+      { id: 12, title: 'Please look at this!', category: 'Prints', src: img4},
     ]);
-    setCategories(['All Graphics','Brand Design', 'Personal', 'Other']);
+    setCategories(['All Graphics','Prints', 'Personal', 'Logos', 'Other']);
   }, []);
 
   useEffect(() => {

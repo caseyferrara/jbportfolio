@@ -12,7 +12,7 @@
     path {
       transform: scale(1, 1);
     }
-    @media (max-width: 675px) {
+    @media (max-width: 700px) {
       path {
         transform: scale(1, 2.0);
       }
