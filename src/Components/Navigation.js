@@ -11,15 +11,15 @@ import styled from '@emotion/styled';
 function Navigation() {
 
   const StyledImg = styled.img`
-  height: 75px;
-  width: auto;
-  cursor: pointer;
-  padding-left: 15px;
-  padding-top: 15px;
+    height: 75px;
+    width: auto;
+    cursor: pointer;
+    padding-left: 15px;
+    padding-top: 15px;
 
-  @media only screen and (max-width: 600px) {
-    height: 50px;
-  }
+    @media only screen and (max-width: 600px) {
+      height: 50px;
+    }
 `;
 
   const [anchorEl, setAnchorEl] = React.useState(null);

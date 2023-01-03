@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import HomePage from './Components/Home';
 import Portfolio from './Components/Portfolio';
 import Navigation from './Components/Navigation';
 import About from './Components/About';
@@ -12,6 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const Home = () => (
   <>
     <Navigation />
+    <HomePage />
     <About />
     <Portfolio />
     <Contact />
