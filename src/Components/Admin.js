@@ -5,7 +5,7 @@ import img4 from '../Images/img4.jpg';
 import avatar from '../Images/jb.jpeg';
 import InfoIcon from '@mui/icons-material/Info';
 import React, { useState } from 'react';
-import { Typography, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
+import { Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
 import PropTypes from 'prop-types';
 
 function TabPanel(props) {
@@ -21,7 +21,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+            <div>{children}</div>
         </Box>
       )}
     </div>
@@ -111,13 +111,12 @@ const Admin = () => {
         </Grid>
         <Box sx={{ display: 'block', margin: 'auto', width: 1200, borderBottom: 1, borderColor: 'divider' }}>
           <Tabs 
-            textColor='#303030'
             value={value}
             onChange={handleTabChange} 
             aria-label="basic tabs example"
             TabIndicatorProps={{
               style: {
-                backgroundColor: "#303030"
+                backgroundColor: "#303030",
               }
             }}
           >

@@ -16,9 +16,9 @@ client.connect((err) => {
     }
 });
 
-const insertProject = async (id, projectTitle, projectCategory, projectDescription, projectImage) => {
-  const text = 'INSERT INTO projects(id, title, category, description, image) VALUES($1, $2, $3, $4, $5) RETURNING *';
-  const values = [id, projectTitle, projectCategory, projectDescription, projectImage];
+const insertProject = async (projectTitle, projectCategory, projectDescription, projectImage) => {
+  const text = 'INSERT INTO projects(title, category, description, image) VALUES($1, $2, $3, $4) RETURNING *';
+  const values = [projectTitle, projectCategory, projectDescription, projectImage];
   const res = await client.query(text, values);
   return res.rows[0];
 };

@@ -12,10 +12,10 @@ app.use(bodyParser.json());
 // Set up the routes
 app.post('/projects/submit', async (req, res) => {
   // Extract the project data from the request body
-  const { id, projectTitle, projectCategory, projectDescription, projectImage } = req.body;
+  const { projectTitle, projectCategory, projectDescription, projectImage } = req.body;
 
   // Insert the project into the database
-  const project = await insertProject(id, projectTitle, projectCategory, projectDescription, projectImage);
+  const project = await insertProject( projectTitle, projectCategory, projectDescription, projectImage);
 
   // Send the inserted project as the response
   res.json(project);
