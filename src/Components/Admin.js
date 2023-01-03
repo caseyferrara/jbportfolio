@@ -48,7 +48,6 @@ const Admin = () => {
   const [projectDescription, setProjectDescription] = useState('');
   const [projectImage, setProjectImage] = useState(null);
   const [value, setValue] = React.useState(0);
-  const id = 1;
   
   
 
@@ -97,7 +96,7 @@ const Admin = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id, projectTitle, projectCategory, projectDescription, projectImage }),
+      body: JSON.stringify({ projectTitle, projectCategory, projectDescription, projectImage }),
     })
     .then(res => res.json())
     .then(project => console.log(project));

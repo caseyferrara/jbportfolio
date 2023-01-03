@@ -7,18 +7,13 @@ function HomePage() {
     <Element id="homepage">
       <div align="center" className="allContainer">
         <div
-          align="center"
           style={{
             backgroundImage: `url(${homepage})`,
-            backgroundSize: 'cover',
-            height: 600,
-            width: 650
+            // backgroundSize: 'cover',
+            height: 740,
+            width: 705
           }}
         >
-          <div className="headerText">
-            <p>hey!</p>
-            <p>i think we'd click.</p>
-          </div>
         </div>
       </div>
     </Element>

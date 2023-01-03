@@ -15,7 +15,7 @@ app.post('/projects/submit', async (req, res) => {
   const { projectTitle, projectCategory, projectDescription, projectImage } = req.body;
 
   // Insert the project into the database
-  const project = await insertProject( projectTitle, projectCategory, projectDescription, projectImage);
+  const project = await insertProject(projectTitle, projectCategory, projectDescription, projectImage);
 
   // Send the inserted project as the response
   res.json(project);
