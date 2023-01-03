@@ -21,72 +21,72 @@ function HomePage() {
 
   const options = {
     background: {
-      color: {
-          value: "transparent",
-      },
-  },
-  fpsLimit: 120,
-  interactivity: {
-      events: {
-          onClick: {
-              enable: true,
-              mode: "push",
-          },
-          resize: true,
-      },
-      modes: {
-          push: {
-              quantity: 4,
-          },
-      },
-  },
-  particles: {
-      color: {
-          value: "#303030",
-      },
-      stars: {
-          color: "#303030",
-          distance: 150,
-          enable: true,
-          opacity: 0.5,
-          width: 5,
-      },
-      collisions: {
-          enable: true,
-      },
-      move: {
-          directions: "none",
-          enable: true,
-          outModes: {
-              default: "out",
-          },
-          random: true,
-          speed: 0.5,
-          straight: false,
-      },
-      number: {
-          density: {
-              enable: true,
-              area: 1200,
-          },
-          value: 80,
-      },
-      opacity: {
-          animation: {
+        color: {
+            value: "transparent",
+        },
+    },
+    fpsLimit: 120,
+    interactivity: {
+        events: {
+            onClick: {
+                enable: true,
+                mode: "push",
+            },
+            resize: true,
+        },
+        modes: {
+            push: {
+                quantity: 4,
+            },
+        },
+    },
+    particles: {
+        color: {
+            value: "#303030",
+        },
+        stars: {
+            color: "#303030",
+            distance: 150,
             enable: true,
-            speed: 1,
-            sync: false,
-          },
-          value: { min: 0, max: 1}
-      },
-      shape: {
-          type: "star",
-      },
-      size: {
-          value: { min: 1, max: 3 },
-      },
-  },
-  detectRetina: true,
+            opacity: 0.5,
+            width: 5,
+        },
+        collisions: {
+            enable: true,
+        },
+        move: {
+            directions: "none",
+            enable: true,
+            outModes: {
+                default: "out",
+            },
+            random: true,
+            speed: 0.5,
+            straight: false,
+        },
+        number: {
+            density: {
+                enable: true,
+                area: 1200,
+            },
+            value: 80,
+        },
+        opacity: {
+            animation: {
+              enable: true,
+              speed: 1,
+              sync: false,
+            },
+            value: { min: 0, max: 1}
+        },
+        shape: {
+            type: "star",
+        },
+        size: {
+            value: { min: 1, max: 6 },
+        },
+    },
+    detectRetina: true,
   }
   
   return (

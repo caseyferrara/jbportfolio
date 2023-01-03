@@ -291,7 +291,7 @@ const Admin = () => {
                       InputProps={{
                         style: {
                           fontFamily: 'Marcellus',
-                          width: 200
+                          width: 250
                         }
                       }}
                       InputLabelProps={{
