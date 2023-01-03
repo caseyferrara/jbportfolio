@@ -5,7 +5,7 @@ import img4 from '../Images/img4.jpg';
 import avatar from '../Images/jb.jpeg';
 import InfoIcon from '@mui/icons-material/Info';
 import React, { useState } from 'react';
-import { Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
+import { Snackbar, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
 import PropTypes from 'prop-types';
 
 function TabPanel(props) {
@@ -48,6 +48,9 @@ const Admin = () => {
   const [projectDescription, setProjectDescription] = useState('');
   const [projectImage, setProjectImage] = useState(null);
   const [value, setValue] = React.useState(0);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
   
   
 
@@ -75,8 +78,6 @@ const Admin = () => {
     } else if (event.target.name === 'projectDescription') {
       setProjectDescription(event.target.value);
     }
-    console.log(projectTitle);
-    console.log(projectDescription);
   };
 
   const handleTabChange = (event, newValue) => {
@@ -90,29 +91,67 @@ const Admin = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Send a POST request to the server
-    fetch('http://localhost:3001/projects/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ projectTitle, projectCategory, projectDescription, projectImage }),
-    })
-    .then(res => res.json())
-    .then(project => console.log(project));
-  };
+
+    if (!projectTitle) {
+      setAlertMessage('Please enter a project title');
+      setSnackbarOpen(true);
+      return;
+    }
   
+    if (!projectDescription) {
+      setAlertMessage('Please enter a project description');
+      setSnackbarOpen(true);
+      return;
+    }
+  
+    if (!projectImage) {
+      setAlertMessage('Please upload an image');
+      setSnackbarOpen(true);
+      return;
+    }
+        fetch('http://localhost:3001/projects/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ projectTitle, projectCategory, projectDescription, projectImage }),
+        })
+        .then(res => res.json())
+        .then(project => console.log(project));
+    
+        setProjectTitle('');
+        setProjectCategory('prints');
+        setProjectDescription('');
+        setProjectImage('');
+    
+        setAlertMessage('Your project has been added!');
+        setSnackbarOpen(true);
+  };
+
+  const alertClose = () => {
+    setAlertMessage('');
+    setSnackbarOpen(false);
+  }
 
   return (
-      <div className='adminContainer'>
+      <div align="center" className='adminContainer'>
         <Grid align="center" item xs={12}>
-                <h1 className='headerText tracking-in-expand'>Admin Page</h1>
+                <h1 className='headerText tracking-in-expand'>Admin</h1>
         </Grid>
-        <Box sx={{ display: 'block', margin: 'auto', width: 1200, borderBottom: 1, borderColor: 'divider' }}>
+        <Box 
+          sx={{ 
+            display: 'block',
+            margin: 'auto', 
+            borderBottom: 1, 
+            borderColor: 'divider',
+            '@media (max-width: 600px)': {
+              maxWidth: 300
+            }
+          }}
+        >
           <Tabs 
             value={value}
             onChange={handleTabChange} 
-            aria-label="basic tabs example"
             TabIndicatorProps={{
               style: {
                 backgroundColor: "#303030",
@@ -123,7 +162,11 @@ const Admin = () => {
               sx={{ 
                 display: 'block', 
                 margin: 'auto',
-                fontFamily: 'Marcellus'
+                fontFamily: 'Marcellus',
+                '@media (max-width: 600px)': {
+                  maxWidth: 100,
+                  fontSize: '10px'
+                }
               }} 
               label="Add a project" 
               {...a11yProps(0)} 
@@ -132,7 +175,11 @@ const Admin = () => {
               sx={{ 
                 display: 'block', 
                 margin: 'auto',
-                fontFamily: 'Marcellus'
+                fontFamily: 'Marcellus',
+                '@media (max-width: 600px)': {
+                  maxWidth: 100,
+                  fontSize: '10px'
+                }
               }} 
               label="View existing projects" 
               {...a11yProps(1)} 
@@ -141,7 +188,11 @@ const Admin = () => {
               sx={{ 
                 display: 'block', 
                 margin: 'auto',
-                fontFamily: 'Marcellus'
+                fontFamily: 'Marcellus',
+                '@media (max-width: 600px)': {
+                  maxWidth: 100,
+                  fontSize: '10px'
+                }
               }} 
               label="View about images" 
               {...a11yProps(2)} 
@@ -240,7 +291,7 @@ const Admin = () => {
                       InputProps={{
                         style: {
                           fontFamily: 'Marcellus',
-                          width: 500
+                          width: 200
                         }
                       }}
                       InputLabelProps={{
@@ -277,6 +328,7 @@ const Admin = () => {
                       Submit
                     </Button>
                   </Grid>
+                  <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
               </Grid>
             </Box>
           </Grid>

@@ -1,4 +1,14 @@
-/* ABOUT COMPONENT */
+/* ALL */
+
+.allContainer {
+  background-color: #E8EAE5;
+  height: 100vh;
+  font-family: Marcellus;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* HOME COMPONENT */
 
 .homeImg {
   max-width: 95%;
@@ -13,13 +23,7 @@
   overflow: hidden;
 }
 
-.allContainer {
-    background-color: #E8EAE5;
-    height: 100vh;
-    font-family: Marcellus;
-    width: 100%;
-    overflow: hidden;
-}
+/* ABOUT COMPONENT */
 
 .hidden-app-bar {
   display: none !important;
@@ -151,7 +155,7 @@
 .adminContainer {
   background-color: #E8EAE5;
   font-family: Marcellus;
-  width: 100%;
+  width: 80%;
   height: 100%;
   margin: 0 auto;
 }
