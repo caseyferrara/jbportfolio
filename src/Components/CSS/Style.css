@@ -1,5 +1,18 @@
 /* ABOUT COMPONENT */
 
+.homeImg {
+  max-width: 95%;
+  max-height: 95%;
+}
+
+.homeContainer {
+  background-color: #E8EAE5;
+  height: 100vh;
+  font-family: Marcellus;
+  width: 100%;
+  overflow: hidden;
+}
+
 .allContainer {
     background-color: #E8EAE5;
     height: 100vh;
@@ -151,6 +164,12 @@
 /* RESPONSIVE SECTION */
 
 @media (max-width: 600px) {
+  .homeContainer {
+    height: 50vh;
+  }
+  /* .homepageImg {
+    margin-top: 250px;
+  } */
   .paragraph {
     max-width: 300px;
   }

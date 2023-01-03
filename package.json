@@ -21,6 +21,8 @@
     "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
     "react-scroll": "^1.8.9",
+    "react-tsparticles": "^2.7.1",
+    "tsparticles": "^2.7.1",
     "tss-react": "^4.4.5",
     "web-vitals": "^2.1.4"
   },
