@@ -1,26 +1,37 @@
-const insertProject = require('./src/Database/db');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
-
 const app = express();
+
+const { insertProject, getProjects } = require('./src/Database/db');
 
 app.use(cors());
 app.use(bodyParser.json());
 
-// Set up the routes
+
+
+
+app.get('/projects', async (req, res) => {
+  try {
+    const projects = await getProjects();
+    projects.forEach((project) => {
+      project.image = `data:image/png;base64,${Buffer.from(project.image).toString('base64')}`;
+    });
+    res.json(projects);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
 app.post('/projects/submit', async (req, res) => {
-  // Extract the project data from the request body
+
   const { projectTitle, projectCategory, projectDescription, projectImage } = req.body;
 
-  // Insert the project into the database
   const project = await insertProject(projectTitle, projectCategory, projectDescription, projectImage);
 
-  // Send the inserted project as the response
   res.json(project);
 });
 
-// Start the server
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Server listening on port ${port}`));

@@ -42,10 +42,10 @@ function HomePage() {
     },
     particles: {
         color: {
-            value: "#303030",
+            value: "#fff",
         },
         stars: {
-            color: "#303030",
+            color: "#fff",
             distance: 150,
             enable: true,
             opacity: 0.5,
@@ -67,7 +67,7 @@ function HomePage() {
         number: {
             density: {
                 enable: true,
-                area: 1200,
+                area: 600,
             },
             value: 80,
         },
@@ -96,6 +96,9 @@ function HomePage() {
         init={particlesInit}
         loaded={particlesLoaded}
         options={options}
+        style={{
+          zIndex: 0
+        }}
       />
       <div align="center" className="homeContainer">
         <img

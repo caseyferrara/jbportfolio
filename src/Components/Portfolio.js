@@ -11,6 +11,8 @@ import { Element } from 'react-scroll';
 
 function Portfolio() {
 
+  const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState([]);
   const [images, setImages] = useState([]);
   const [filteredImages, setFilteredImages] = useState([]);
   const [modalImage, setModalImage] = useState({});
@@ -51,20 +53,15 @@ function Portfolio() {
 
   useEffect(() => {
 
-    setImages([
-      { id: 1, title: 'A wonderful piece of art', category: 'Prints', src: img1},
-      { id: 2, title: 'This looks really cool', category: 'Prints', src: img2},
-      { id: 3, title: 'I cant believe I made this', category: 'Prints', src: img3},
-      { id: 4, title: 'Please look at this!', category: 'Prints', src: img4},
-      { id: 5, title: 'A wonderful piece of art', category: 'Personal', src: img1},
-      { id: 6, title: 'This looks really cool', category: 'Personal', src: img2},
-      { id: 7, title: 'I cant believe I made this', category: 'Other', src: img3},
-      { id: 8, title: 'Please look at this!', category: 'Other', src: img4},
-      { id: 9, title: 'A wonderful piece of art', category: 'Personal', src: img1},
-      { id: 10, title: 'This looks really cool', category: 'Personal', src: img2},
-      { id: 11, title: 'I cant believe I made this', category: 'Prints', src: img3},
-      { id: 12, title: 'Please look at this!', category: 'Prints', src: img4},
-    ]);
+    async function fetchData() {
+      const res = await fetch('http://localhost:3001/projects');
+      const data = await res.json();
+      setProjects(data);
+      setLoading(false);
+    }
+    fetchData();
+    console.log(projects);
+
     setCategories(['All Graphics','Prints', 'Personal', 'Logos', 'Other']);
   }, []);
 
@@ -130,27 +127,27 @@ function Portfolio() {
                 }}
               >
                 <ImageList variant="masonry" cols={isMobile ? 1 : 2} gap={8}>
-                  {currentImages.map((image) => (
-                    <ImageListItem key={image.id}>
+                  {projects.map((project) => (
+                    <ImageListItem key={project.id}>
                       <img
                         className="slide-in-left"
-                        src={`${image.src}?w=248&fit=crop&auto=format`}
-                        srcSet={`${image.src}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                        alt={image.category}
+                        src={`${project.image}`}
+                        srcSet={`${project.image}`}
+                        alt={project.category}
                         loading="lazy"
                       />
                       <ImageListItemBar
                         className="slide-in-left"
-                        title={image.title}
-                        subtitle={image.category}
+                        title={project.title}
+                        subtitle={project.category}
                         sx={{
                           fontFamily: 'Marcellus',
                         }}
                         actionIcon={
                           <IconButton
-                            onClick={() => handleModalOpen(image, 'single')}
+                            onClick={() => handleModalOpen(project, 'single')}
                             sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                            aria-label={`info about ${image.title}`}
+                            aria-label={`info about ${project.title}`}
                           >
                             <InfoIcon />
                           </IconButton>

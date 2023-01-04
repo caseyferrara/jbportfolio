@@ -6,6 +6,7 @@
   font-family: Marcellus;
   width: 100%;
   overflow: hidden;
+  z-index: 1;
 }
 
 /* HOME COMPONENT */
@@ -13,6 +14,7 @@
 .homeImg {
   max-width: 95%;
   max-height: 95%;
+  z-index: 1;
 }
 
 .homeContainer {

@@ -23,4 +23,20 @@ const insertProject = async (projectTitle, projectCategory, projectDescription, 
   return res.rows[0];
 };
 
-module.exports = insertProject;
+const getProjects = async () => {
+  const text = 'SELECT * FROM projects';
+  return new Promise((resolve, reject) => {
+    client.query(text, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res.rows);
+      }
+    });
+  });
+};
+
+module.exports = {
+  insertProject,
+  getProjects
+}

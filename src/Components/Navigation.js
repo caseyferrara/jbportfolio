@@ -156,7 +156,6 @@ function Navigation() {
               <Toolbar 
                 style={{ 
                   display: 'flex', 
-                  justifyContent: 'space-between', 
                   width: '100%',
                 }}
               >
@@ -181,9 +180,8 @@ function Navigation() {
                 <div 
                   style={{ 
                     display: 'flex', 
-                    justifyContent: 'center', 
-                    alignItems: 'center', 
-                    paddingRight: 60,
+                    justifyContent: 'flex-end', 
+                    alignItems: 'flex-end', 
                     width: '100%'
                   }}
                 >
