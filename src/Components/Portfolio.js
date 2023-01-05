@@ -190,11 +190,7 @@ function Portfolio() {
                   className="slide-in-left modal-image"
                 />
               <h3 className="tracking-in-expand" id="simple-modal-title">{modalImage.category}</h3>
-              <p align="center">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              </p>
+              <p align="center">{modalImage.description}</p>
               <Button 
                 onClick={handleModalClose}
                 sx={{

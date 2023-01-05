@@ -11,7 +11,6 @@ app.use(cors());
 
 app.use('/images', express.static('./src/Images'));
 
-
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, './src/Images');
@@ -22,17 +21,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-
-app.get('/projects', async (req, res) => {
-  try {
-    const projects = await getProjects();
-    res.json(projects);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-});
 
 app.post('/projects/submit', upload.single('image'), async (req, res) => {
   const { projectTitle, projectCategory, projectDescription } = req.body;
@@ -56,6 +44,16 @@ app.post('/projects/submit', upload.single('image'), async (req, res) => {
     const project = insertProject(projectTitle, projectCategory, projectDescription, `${projectTitle}.jpg`);
     res.json(project);
   });
+});
+
+app.get('/projects', async (req, res) => {
+  try {
+    const projects = await getProjects();
+    res.json(projects);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 });
 
 const port = process.env.PORT || 3001;

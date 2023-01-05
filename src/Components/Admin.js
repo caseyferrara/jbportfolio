@@ -51,10 +51,6 @@ const Admin = () => {
   
 
   const existingProjects = [
-    { id: 1, title: 'A wonderful piece of art', category: 'Brand Design', src: ''},
-    { id: 2, title: 'This looks really cool', category: 'Brand Design', src: ''},
-    { id: 3, title: 'I cant believe I made this', category: 'Brand Design', src: ''},
-    { id: 4, title: 'Please look at this!', category: 'Brand Design', src: ''},
   ]
 
   const aboutImages = [
