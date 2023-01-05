@@ -1,7 +1,3 @@
-import img1 from '../Images/img1.jpg';
-import img2 from '../Images/img2.jpg';
-import img3 from '../Images/img3.jpeg';
-import img4 from '../Images/img4.jpg';
 import avatar from '../Images/jb.jpeg';
 import InfoIcon from '@mui/icons-material/Info';
 import React, { useState } from 'react';
@@ -46,7 +42,7 @@ const Admin = () => {
   const [projectTitle, setProjectTitle] = useState('');
   const [projectCategory, setProjectCategory] = useState('prints');
   const [projectDescription, setProjectDescription] = useState('');
-  const [projectImage, setProjectImage] = useState(null);
+  const [projectImage, setProjectImage] = useState('');
   const [value, setValue] = React.useState(0);
   const [alertMessage, setAlertMessage] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -55,10 +51,10 @@ const Admin = () => {
   
 
   const existingProjects = [
-    { id: 1, title: 'A wonderful piece of art', category: 'Brand Design', src: img1},
-    { id: 2, title: 'This looks really cool', category: 'Brand Design', src: img2},
-    { id: 3, title: 'I cant believe I made this', category: 'Brand Design', src: img3},
-    { id: 4, title: 'Please look at this!', category: 'Brand Design', src: img4},
+    { id: 1, title: 'A wonderful piece of art', category: 'Brand Design', src: ''},
+    { id: 2, title: 'This looks really cool', category: 'Brand Design', src: ''},
+    { id: 3, title: 'I cant believe I made this', category: 'Brand Design', src: ''},
+    { id: 4, title: 'Please look at this!', category: 'Brand Design', src: ''},
   ]
 
   const aboutImages = [
@@ -88,10 +84,9 @@ const Admin = () => {
     setProjectImage(event.target.files[0]);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-
+  
     if (!projectTitle) {
       setAlertMessage('Please enter a project title');
       setSnackbarOpen(true);
@@ -109,24 +104,36 @@ const Admin = () => {
       setSnackbarOpen(true);
       return;
     }
-        fetch('http://localhost:3001/projects/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ projectTitle, projectCategory, projectDescription, projectImage }),
-        })
-        .then(res => res.json())
-        .then(project => console.log(project));
-    
-        setProjectTitle('');
-        setProjectCategory('prints');
-        setProjectDescription('');
-        setProjectImage('');
-    
-        setAlertMessage('Your project has been added!');
-        setSnackbarOpen(true);
+  
+    const formData = new FormData();
+    formData.append('projectTitle', projectTitle);
+    formData.append('projectCategory', projectCategory);
+    formData.append('projectDescription', projectDescription);
+    formData.append('image', projectImage);
+  
+    try {
+      const response = await fetch('http://localhost:3001/projects/submit', {
+        method: 'POST',
+        body: formData,
+      });
+  
+      const project = await response.json();
+      console.log(project);
+  
+      setProjectTitle('');
+      setProjectCategory('prints');
+      setProjectDescription('');
+      setProjectImage('');
+  
+      setAlertMessage('Your project has been added!');
+      setSnackbarOpen(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
+  
+  
+  
 
   const alertClose = () => {
     setAlertMessage('');

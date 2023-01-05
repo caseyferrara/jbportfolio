@@ -1,9 +1,5 @@
 import './CSS/Style.css';
 import './CSS/Animation.css';
-import img1 from '../Images/img1.jpg';
-import img2 from '../Images/img2.jpg';
-import img3 from '../Images/img3.jpeg';
-import img4 from '../Images/img4.jpg';
 import InfoIcon from '@mui/icons-material/Info';
 import React, { useState, useEffect } from 'react';
 import { Pagination, useMediaQuery, IconButton, Box, ImageList, ImageListItem, ImageListItemBar, MenuItem, FormControl, Select, Modal, Button } from '@mui/material';
@@ -11,10 +7,8 @@ import { Element } from 'react-scroll';
 
 function Portfolio() {
 
-  const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState([]);
-  const [images, setImages] = useState([]);
-  const [filteredImages, setFilteredImages] = useState([]);
+  const [filteredProjects, setFilteredProjects] = useState([]);
   const [modalImage, setModalImage] = useState({});
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All Graphics');
@@ -24,7 +18,7 @@ function Portfolio() {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = page * itemsPerPage;
   const isMobile = useMediaQuery('(max-width: 600px)');
-  const currentImages = filteredImages.slice(startIndex, endIndex);
+  const currentImages = filteredProjects.slice(startIndex, endIndex);
 
   const handlePageChange = (event, value) => {
 
@@ -53,27 +47,34 @@ function Portfolio() {
 
   useEffect(() => {
 
-    async function fetchData() {
-      const res = await fetch('http://localhost:3001/projects');
-      const data = await res.json();
-      setProjects(data);
-      setLoading(false);
-    }
-    fetchData();
-    console.log(projects);
+      async function fetchData() {
+        const res = await fetch('http://localhost:3001/projects');
+        const data = await res.json();
 
-    setCategories(['All Graphics','Prints', 'Personal', 'Logos', 'Other']);
+        data.forEach(project => {
+          setProjects(current => [...current, {
+            title: project.title,
+            category: project.category,
+            description: project.description,
+            image: `http://localhost:3001/images/${project.title}.jpg`
+          }])
+        });        
+      }
+      fetchData();
+
+      setCategories(['All Graphics','Prints', 'Personal', 'Logos', 'Other']);
+
   }, []);
 
   useEffect(() => {
     if (selectedCategory === 'All Graphics') {
-      setFilteredImages(images);
+      setFilteredProjects(projects);
     } else {
-      setFilteredImages(
-        images.filter((image) => image.category === selectedCategory)
+      setFilteredProjects(
+        projects.filter((image) => projects.category === selectedCategory)
       );
     }
-  }, [images, selectedCategory]);
+  }, [projects, selectedCategory]);
 
   return (
     <Element id="portfolio">
@@ -131,8 +132,8 @@ function Portfolio() {
                     <ImageListItem key={project.id}>
                       <img
                         className="slide-in-left"
-                        src={`${project.image}`}
-                        srcSet={`${project.image}`}
+                        src={project.image}
+                        srcSet={project.image}
                         alt={project.category}
                         loading="lazy"
                       />
@@ -160,7 +161,7 @@ function Portfolio() {
                 <Pagination
                       variant="outlined" 
                       shape="rounded"
-                      count={Math.ceil(filteredImages.length / itemsPerPage)}
+                      count={Math.ceil(filteredProjects.length / itemsPerPage)}
                       page={page}
                       onChange={handlePageChange}
                       sx={{
@@ -182,8 +183,8 @@ function Portfolio() {
             <div className="modal">
               <h2 className="tracking-in-expand" id="simple-modal-title">{modalImage.title}</h2>
                 <img
-                  src={`${modalImage.src}`}
-                  srcSet={`${modalImage.src}`}
+                  src={`${modalImage.image}`}
+                  srcSet={`${modalImage.image}`}
                   alt={modalImage.category}
                   loading="lazy"
                   className="slide-in-left modal-image"

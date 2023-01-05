@@ -124,15 +124,15 @@
 
 /* FOOTER COMPONENT */
 
-.footerContainer {
+/* .footerContainer {
   background-color: #E8EAE5;
   width: 100%;
   height: 750px;
   font-family: Marcellus;
   position: relative;
-  background: url('../../Images/waveFooter.svg') no-repeat;
+  background: url('./Images/waveFooter.svg') no-repeat;
   background-size: cover;
-}
+} */
 
 .footerText {
   color: white;
