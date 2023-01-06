@@ -92,6 +92,7 @@ function Navigation() {
                           margin: 0,
                           fontFamily: 'Marcellus',
                           color: '#303030',
+                          textTransform: 'lowercase'
                         }}
                       >
                       About 
@@ -111,6 +112,7 @@ function Navigation() {
                           margin: 0,
                           fontFamily: 'Marcellus',
                           color: '#303030',
+                          textTransform: 'lowercase'
                         }}
                       >
                       Portfolio 
@@ -130,6 +132,7 @@ function Navigation() {
                           margin: 0,
                           fontFamily: 'Marcellus',
                           color: '#303030',
+                          textTransform: 'lowercase'
                         }}
                       >
                       Contact
@@ -197,6 +200,7 @@ function Navigation() {
                         margin: 0,
                         fontFamily: 'Marcellus',
                         color: 'white',
+                        textTransform: 'lowercase'
                       }}
                     >
                     About 
@@ -214,6 +218,7 @@ function Navigation() {
                         margin: 0,
                         fontFamily: 'Marcellus',
                         color: 'white',
+                        textTransform: 'lowercase'
                       }}
                     >
                     Portfolio
@@ -231,6 +236,7 @@ function Navigation() {
                         margin: 0,
                         fontFamily: 'Marcellus',
                         color: 'white',
+                        textTransform: 'lowercase'
                       }}
                     >
                     Contact

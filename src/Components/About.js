@@ -43,15 +43,15 @@ function About() {
                 </Grid>
                   <Grid item xs={4} sm={4}>
                     <TipsAndUpdatesIcon fontSize="large" className="aboutIcon swing-in-top-bck" />
-                    <h3 className="iconText tracking-in-expand">Innovative</h3>
+                    <h3 className="iconText tracking-in-expand">innovative</h3>
                   </Grid>
                   <Grid item xs={4} sm={4}>
                     <BrushIcon fontSize="large" className="aboutIcon swing-in-top-bck" />
-                    <h3 className="iconText tracking-in-expand">Creative</h3>
+                    <h3 className="iconText tracking-in-expand">creative</h3>
                   </Grid>
                   <Grid item xs={4} sm={4}>
                     <VisibilityIcon fontSize="large" className="aboutIcon swing-in-top-bck" />
-                    <h3 className="iconText tracking-in-expand">Visionary</h3>
+                    <h3 className="iconText tracking-in-expand">visionary</h3>
                   </Grid>
                 <Grid align="center" container rowGap={2}>
                 <Box 
