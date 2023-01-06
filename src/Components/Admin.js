@@ -1,7 +1,8 @@
+import './CSS/Style.css';
 import avatar from '../Images/jb.jpeg';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, useMediaQuery, Snackbar, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
+import { Modal, Dialog, DialogTitle, DialogContent, DialogActions, useMediaQuery, Snackbar, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
 import PropTypes from 'prop-types';
 
 function TabPanel(props) {
@@ -43,6 +44,7 @@ const Admin = () => {
   const [projectCategory, setProjectCategory] = useState('prints');
   const [projectDescription, setProjectDescription] = useState('');
   const [projectImage, setProjectImage] = useState('');
+  const [openModal, setModalOpen] = useState(false);
   const [value, setValue] = React.useState(0);
   const [alertMessage, setAlertMessage] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -148,6 +150,7 @@ const Admin = () => {
 
   const handleSubmitAndReload = async (event) => {
     await handleSubmit(event);
+    setModalOpen(false);
     window.location.reload();
   }
   
@@ -256,6 +259,18 @@ const Admin = () => {
     setSnackbarOpen(false);
   }
 
+  const handleModalOpen = (image) => {
+
+    setModalOpen(true);
+
+  };
+
+  const handleModalClose = () => {
+
+    setModalOpen(false);
+
+  };
+
   return (
       <div align="center" className='adminContainer'>
         <Grid align="center" item xs={12}>
@@ -292,178 +307,47 @@ const Admin = () => {
                   fontSize: '10px'
                 }
               }} 
-              label="Add a project" 
+              label="existing projects" 
               {...a11yProps(0)} 
             />
             <Tab 
               sx={{ 
                 display: 'block', 
                 margin: 'auto',
-                textTransform: 'lowercase',
                 fontFamily: 'Marcellus',
+                textTransform: 'lowercase',
                 '@media (max-width: 600px)': {
                   maxWidth: 100,
                   fontSize: '10px'
                 }
               }} 
-              label="View existing projects" 
+              label="about images" 
               {...a11yProps(1)} 
-            />
-            <Tab 
-              sx={{ 
-                display: 'block', 
-                margin: 'auto',
-                fontFamily: 'Marcellus',
-                textTransform: 'lowercase',
-                '@media (max-width: 600px)': {
-                  maxWidth: 100,
-                  fontSize: '10px'
-                }
-              }} 
-              label="View about images" 
-              {...a11yProps(2)} 
             />
           </Tabs>
         </Box>
+
         <TabPanel value={value} index={0}>
           <Grid container rowSpacing={2}>
-            <Box
-              sx={{
-                width: 1000,
-                display: 'block', 
-                margin: 'auto', 
-              }}
-            >
-              <Grid  align="center" container spacing={3}>
-                <Grid item xs={12}>
-                  <TextField
-                    label="project title"
-                    name="projectTitle"
-                    variant="filled"
-                    value={projectTitle}
-                    onChange={handleChange}
-                    InputProps={{
-                      style: {
-                        fontFamily: 'Marcellus',
-                        width: 250
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        fontFamily: 'Marcellus',
-                        color: '#303030'
-                      }
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                    <Select
-                      label="project category"
-                      name="projectCategory"
-                      value={projectCategory}
-                      onChange={handleChange}
-                      sx={{
-                        fontFamily: 'Marcellus',
-                        width: 450,
-                        '@media (max-width: 700px)': {
-                          width: 250
-                        }
-                      }}
-                    >
-                      <MenuItem 
-                        value="prints"
-                        sx={{
-                          fontFamily: 'Marcellus',
-                          color: '#303030'
-                        }}
-                      >
-                        prints
-                      </MenuItem>
-                      <MenuItem 
-                        value="personal"
-                        sx={{
-                          fontFamily: 'Marcellus',
-                          color: '#303030'
-                        }}
-                      >
-                        personal
-                      </MenuItem>
-                      <MenuItem 
-                        value="logos"
-                        sx={{
-                          fontFamily: 'Marcellus',
-                          color: '#303030'
-                        }}
-                      >
-                        logos
-                      </MenuItem>
-                      <MenuItem 
-                        value="other"
-                        sx={{
-                          fontFamily: 'Marcellus',
-                          color: '#303030'
-                        }}
-                      >
-                        other
-                      </MenuItem>
-                    </Select>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="project description"
-                      name="projectDescription"
-                      variant="filled"
-                      value={projectDescription}
-                      onChange={handleChange}
-                      multiline={true}
-                      rows={3}
-                      InputProps={{
-                        style: {
-                          fontFamily: 'Marcellus',
-                          width: 250
-                        }
-                      }}
-                      InputLabelProps={{
-                        style: {
-                          fontFamily: 'Marcellus',
-                          color: '#303030'
-                        }
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                      <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleImageChange}
-                      />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Button 
-                      onClick={handleSubmitAndReload}
-                      size="large"
-                      sx={{
-                        color: 'white',
-                        backgroundColor: '#303030',
-                        fontFamily: 'Marcellus',
-                        borderColor: 'white',
-                        fontSize: '12px',
-                        margin: '5px',
-                        ':hover': {
-                          backgroundColor: '#3f3f3f',
-                        },
-                      }}
-                    >
-                      Submit
-                    </Button>
-                  </Grid>
-                  <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
-              </Grid>
-            </Box>
-          </Grid>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Grid container rowSpacing={2}>
+              <Button
+                onClick={handleModalOpen}
+                size="large"
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#303030',
+                  textTransform: 'lowercase',
+                  fontFamily: 'Marcellus',
+                  borderColor: 'white',
+                  fontSize: '12px',
+                  display: 'block',
+                  margin: 'auto',
+                  ':hover': {
+                    backgroundColor: '#3f3f3f',
+                  },
+                }}
+              >
+                add a new project
+              </Button>
             <Box
               sx={{
                 width: 1000,
@@ -502,11 +386,151 @@ const Admin = () => {
                       </ImageListItem>
                     ))}
                 </ImageList>
+                <Modal
+                  open={openModal}
+                  onClose={handleModalClose}
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                  className="modal-container"
+                >
+                  <div className='modal'>
+                    <Grid container rowSpacing={2}>
+                      <Box>
+                        <Grid  align="center" container spacing={3}>
+                          <Grid item xs={12}>
+                            <h1>add a new project</h1>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              label="project title"
+                              name="projectTitle"
+                              variant="filled"
+                              value={projectTitle}
+                              onChange={handleChange}
+                              InputProps={{
+                                style: {
+                                  fontFamily: 'Marcellus',
+                                  width: 250
+                                }
+                              }}
+                              InputLabelProps={{
+                                style: {
+                                  fontFamily: 'Marcellus',
+                                  color: '#303030'
+                                }
+                              }}
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                              <Select
+                                label="project category"
+                                name="projectCategory"
+                                value={projectCategory}
+                                onChange={handleChange}
+                                sx={{
+                                  fontFamily: 'Marcellus',
+                                  width: 250,
+                                }}
+                              >
+                                <MenuItem 
+                                  value="prints"
+                                  sx={{
+                                    fontFamily: 'Marcellus',
+                                    color: '#303030'
+                                  }}
+                                >
+                                  prints
+                                </MenuItem>
+                                <MenuItem 
+                                  value="personal"
+                                  sx={{
+                                    fontFamily: 'Marcellus',
+                                    color: '#303030'
+                                  }}
+                                >
+                                  personal
+                                </MenuItem>
+                                <MenuItem 
+                                  value="logos"
+                                  sx={{
+                                    fontFamily: 'Marcellus',
+                                    color: '#303030'
+                                  }}
+                                >
+                                  logos
+                                </MenuItem>
+                                <MenuItem 
+                                  value="other"
+                                  sx={{
+                                    fontFamily: 'Marcellus',
+                                    color: '#303030'
+                                  }}
+                                >
+                                  other
+                                </MenuItem>
+                              </Select>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <TextField
+                                label="project description"
+                                name="projectDescription"
+                                variant="filled"
+                                value={projectDescription}
+                                onChange={handleChange}
+                                multiline={true}
+                                rows={3}
+                                InputProps={{
+                                  style: {
+                                    fontFamily: 'Marcellus',
+                                    width: 250
+                                  }
+                                }}
+                                InputLabelProps={{
+                                  style: {
+                                    fontFamily: 'Marcellus',
+                                    color: '#303030'
+                                  }
+                                }}
+                              />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Button 
+                                onClick={handleSubmitAndReload}
+                                size="large"
+                                sx={{
+                                  color: 'white',
+                                  backgroundColor: '#303030',
+                                  textTransform: 'lowercase',
+                                  fontFamily: 'Marcellus',
+                                  borderColor: 'white',
+                                  fontSize: '12px',
+                                  margin: '5px',
+                                  ':hover': {
+                                    backgroundColor: '#3f3f3f',
+                                  },
+                                }}
+                              >
+                                Submit
+                              </Button>
+                            </Grid>
+                            <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
+                        </Grid>
+                      </Box>
+                    </Grid>
+                  </div>
+                </Modal>
                 <DeleteDialog open={open} onClose={handleClose} onDelete={handleDeleteAndReload} />
             </Box>
           </Grid>
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={1}>
           <Grid container rowSpacing={2}>
             <Box
               align="center"
