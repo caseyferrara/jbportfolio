@@ -196,6 +196,7 @@ function Portfolio() {
                 sx={{
                   color: 'white',
                   backgroundColor: '#303030',
+                  textTransform: 'lowercase',
                   border: 1,
                   fontFamily: 'Marcellus',
                   borderColor: 'white',

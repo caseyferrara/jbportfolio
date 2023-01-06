@@ -1,7 +1,7 @@
 import avatar from '../Images/jb.jpeg';
-import InfoIcon from '@mui/icons-material/Info';
-import React, { useState } from 'react';
-import { Snackbar, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import React, { useState, useEffect } from 'react';
+import { Dialog, DialogTitle, DialogContent, DialogActions, useMediaQuery, Snackbar, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
 import PropTypes from 'prop-types';
 
 function TabPanel(props) {
@@ -46,12 +46,30 @@ const Admin = () => {
   const [value, setValue] = React.useState(0);
   const [alertMessage, setAlertMessage] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [projects, setProjects] = useState([]);
+  const isMobile = useMediaQuery('(max-width: 600px)');
+  const [open, setOpen] = useState(false);
+  const [projectId, setProjectId] = useState(null);
 
-  
-  
+  useEffect(() => {
 
-  const existingProjects = [
-  ]
+    async function fetchData() {
+      const res = await fetch('http://localhost:3001/projects');
+      const data = await res.json();
+
+      data.forEach(project => {
+        setProjects(current => [...current, {
+          id: project.id,
+          title: project.title,
+          category: project.category,
+          description: project.description,
+          image: `http://localhost:3001/images/${project.title}.jpg`
+        }])
+      });        
+    }
+    fetchData();
+
+    }, []);
 
   const aboutImages = [
     { id: 1, img: avatar, title: 'Jillian Brown'},
@@ -127,8 +145,110 @@ const Admin = () => {
       console.error(error);
     }
   };
+
+  const handleSubmitAndReload = async (event) => {
+    await handleSubmit(event);
+    window.location.reload();
+  }
   
   
+  const deleteProject = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3001/projects/${id}`, {
+        method: 'DELETE',
+      });
+      
+      if (response.ok) {
+        // Update the frontend to reflect the deleted project
+        setProjects((prevProjects) => prevProjects.filter((project) => project.id !== id));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  function DeleteDialog({ open, onClose, onDelete }) {
+    return (
+      <Dialog 
+        open={open} 
+        onClose={onClose}
+      >
+        <DialogTitle
+          sx={{
+            color: '#303030',
+            fontFamily: 'Marcellus'
+          }}
+        >
+          Delete Project
+        </DialogTitle>
+        <DialogContent
+          sx={{
+            color: '#303030',
+            fontFamily: 'Marcellus'
+          }}
+        >
+          Are you sure you want to delete this project?
+        </DialogContent>
+        <DialogActions>
+          <Button 
+            onClick={onClose}
+            sx={{
+              color: 'white',
+              backgroundColor: '#303030',
+              textTransform: 'lowercase',
+              border: 1,
+              fontFamily: 'Marcellus',
+              borderColor: 'white',
+              fontSize: '12px',
+              margin: '5px',
+              ':hover': {
+                backgroundColor: '#3f3f3f',
+              },
+            }}
+          >
+            Cancel
+          </Button>
+          <Button 
+            onClick={onDelete}
+            sx={{
+              color: 'white',
+              backgroundColor: 'red',
+              textTransform: 'lowercase',
+              border: 1,
+              fontFamily: 'Marcellus',
+              borderColor: 'white',
+              fontSize: '12px',
+              margin: '5px',
+              ':hover': {
+                backgroundColor: 'darkred',
+              },
+            }}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+
+  const handleDeleteClick = (id) => {
+    setProjectId(id);
+    setOpen(true);
+  };
+
+  const handleDelete = () => {
+    deleteProject(projectId);
+    setOpen(false);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDeleteAndReload = async () => {
+    await handleDelete();
+    window.location.reload();
+  }
   
 
   const alertClose = () => {
@@ -165,6 +285,7 @@ const Admin = () => {
               sx={{ 
                 display: 'block', 
                 margin: 'auto',
+                textTransform: 'lowercase',
                 fontFamily: 'Marcellus',
                 '@media (max-width: 600px)': {
                   maxWidth: 100,
@@ -178,6 +299,7 @@ const Admin = () => {
               sx={{ 
                 display: 'block', 
                 margin: 'auto',
+                textTransform: 'lowercase',
                 fontFamily: 'Marcellus',
                 '@media (max-width: 600px)': {
                   maxWidth: 100,
@@ -192,6 +314,7 @@ const Admin = () => {
                 display: 'block', 
                 margin: 'auto',
                 fontFamily: 'Marcellus',
+                textTransform: 'lowercase',
                 '@media (max-width: 600px)': {
                   maxWidth: 100,
                   fontSize: '10px'
@@ -214,7 +337,7 @@ const Admin = () => {
               <Grid  align="center" container spacing={3}>
                 <Grid item xs={12}>
                   <TextField
-                    label="Project Title"
+                    label="project title"
                     name="projectTitle"
                     variant="filled"
                     value={projectTitle}
@@ -235,13 +358,16 @@ const Admin = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <Select
-                      label="Project Category"
+                      label="project category"
                       name="projectCategory"
                       value={projectCategory}
                       onChange={handleChange}
                       sx={{
                         fontFamily: 'Marcellus',
-                        width: 250
+                        width: 450,
+                        '@media (max-width: 700px)': {
+                          width: 250
+                        }
                       }}
                     >
                       <MenuItem 
@@ -251,7 +377,7 @@ const Admin = () => {
                           color: '#303030'
                         }}
                       >
-                        Prints
+                        prints
                       </MenuItem>
                       <MenuItem 
                         value="personal"
@@ -260,7 +386,7 @@ const Admin = () => {
                           color: '#303030'
                         }}
                       >
-                        Personal
+                        personal
                       </MenuItem>
                       <MenuItem 
                         value="logos"
@@ -269,7 +395,7 @@ const Admin = () => {
                           color: '#303030'
                         }}
                       >
-                        Logos
+                        logos
                       </MenuItem>
                       <MenuItem 
                         value="other"
@@ -278,13 +404,13 @@ const Admin = () => {
                           color: '#303030'
                         }}
                       >
-                        Other
+                        other
                       </MenuItem>
                     </Select>
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      label="Project Description"
+                      label="project description"
                       name="projectDescription"
                       variant="filled"
                       value={projectDescription}
@@ -314,7 +440,7 @@ const Admin = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <Button 
-                      onClick={handleSubmit}
+                      onClick={handleSubmitAndReload}
                       size="large"
                       sx={{
                         color: 'white',
@@ -345,30 +471,38 @@ const Admin = () => {
                 margin: 'auto', 
               }}
               >
-                <ImageList sx={{ maxWidth: 900 }} variant="masonry" cols={3} gap={8}>
-                  {existingProjects.map((project) => (
+                <ImageList sx={{ maxWidth: 900 }} variant="masonry" cols={isMobile ? 1 : 2} gap={8}>
+                  {projects.map((project) => (
                       <ImageListItem key={project.id}>
                         <img
-                          src={`${project.src}?w=164&h=164&fit=crop&auto=format`}
-                          srcSet={`${project.src}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                          alt={project.title}
+                          className="slide-in-left"
+                          src={project.image}
+                          srcSet={project.image}
+                          alt={project.category}
                           loading="lazy"
                         />
                         <ImageListItemBar
                           title={project.title}
                           subtitle={project.category}
+                          className="slide-in-left"
                           actionIcon={
                             <IconButton
+                              onClick={() => handleDeleteClick(project.id)}
                               sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                               aria-label={`info about ${project.title}`}
                             >
-                              <InfoIcon />
+                              <DeleteIcon 
+                                sx={{
+                                  color: 'red'
+                                }}
+                              />
                             </IconButton>
                           }
                         />
                       </ImageListItem>
                     ))}
                 </ImageList>
+                <DeleteDialog open={open} onClose={handleClose} onDelete={handleDeleteAndReload} />
             </Box>
           </Grid>
         </TabPanel>

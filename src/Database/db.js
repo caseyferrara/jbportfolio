@@ -17,17 +17,8 @@ client.connect((err) => {
     }
 });
 
-const insertProject = async (projectTitle, projectCategory, projectDescription) => {
-  // Insert the binary data into the "image" column of the "projects" table
-  const text = "INSERT INTO projects(title, category, description) VALUES($1, $2, $3) RETURNING *";
-  const values = [projectTitle, projectCategory, projectDescription];
-  const res = await client.query(text, values);
-  return res.rows[0];
-};
-
-
 const getProjects = async () => {
-  const text = "SELECT title, category, description FROM projects";
+  const text = "SELECT id, title, category, description FROM projects";
   return new Promise((resolve, reject) => {
     client.query(text, (err, res) => {
       if (err) {
@@ -39,7 +30,44 @@ const getProjects = async () => {
   });
 };
 
+const insertProject = async (projectTitle, projectCategory, projectDescription) => {
+  const text = "INSERT INTO projects(title, category, description) VALUES($1, $2, $3) RETURNING *";
+  const values = [projectTitle, projectCategory, projectDescription];
+  const res = await client.query(text, values);
+  return res.rows[0];
+};
+
+const deleteProject = async (id) => {
+  const text = "DELETE FROM projects WHERE id = $1 RETURNING *";
+  const values = [id];
+  return new Promise((resolve, reject) => {
+    client.query(text, values, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res.rowCount);
+      }
+    });
+  });
+};
+
+const getProjectById = async (id) => {
+  const text = "SELECT id, title, category, description FROM projects WHERE id = $1";
+  const values = [id];
+  return new Promise((resolve, reject) => {
+    client.query(text, values, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res.rows[0]);
+      }
+    });
+  });
+};
+
 module.exports = {
   insertProject,
-  getProjects
+  getProjects,
+  deleteProject,
+  getProjectById
 }

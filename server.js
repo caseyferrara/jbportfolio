@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const app = express();
 
-const { insertProject, getProjects } = require('./src/Database/db');
+const { insertProject, getProjects, deleteProject, getProjectById } = require('./src/Database/db');
 
 app.use(cors());
 
@@ -55,6 +55,30 @@ app.get('/projects', async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+app.delete('/projects/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    // Retrieve the project with the given id
+    const project = await getProjectById(id);
+
+    // Extract the project title from the project
+    const { title } = project;
+
+    // Delete the image file with the same title as the project
+    fs.unlinkSync(`./src/Images/${title}.jpg`);
+    fs.unlinkSync(`./src/Images/${title}`);
+
+    await deleteProject(id);
+
+    res.sendStatus(200);
+
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Server listening on port ${port}`));
