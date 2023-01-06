@@ -53,6 +53,7 @@ function Portfolio() {
 
         data.forEach(project => {
           setProjects(current => [...current, {
+            id: project.id,
             title: project.title,
             category: project.category,
             description: project.description,
@@ -115,14 +116,14 @@ function Portfolio() {
             <>
               <Box
                 sx={{
-                  maxHeight: 500,
+                  maxHeight: 700,
                   maxWidth: 1000,
                   display: 'block',
                   margin: 'auto',
                   overflowY: 'scroll',
                   scrollbarWidth: 'none',
                   '@media (max-width: 600px)': {
-                    maxHeight: 700,
+                    maxHeight: 600,
                     maxWidth: 300,
                   },
                 }}
@@ -133,7 +134,6 @@ function Portfolio() {
                       <img
                         className="slide-in-left"
                         src={project.image}
-                        srcSet={project.image}
                         alt={project.category}
                         loading="lazy"
                       />
@@ -184,7 +184,6 @@ function Portfolio() {
               <h2 className="tracking-in-expand" id="simple-modal-title">{modalImage.title}</h2>
                 <img
                   src={`${modalImage.image}`}
-                  srcSet={`${modalImage.image}`}
                   alt={modalImage.category}
                   loading="lazy"
                   className="slide-in-left modal-image"

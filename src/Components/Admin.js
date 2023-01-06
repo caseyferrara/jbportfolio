@@ -40,38 +40,58 @@ function a11yProps(index) {
 
 const Admin = () => {
 
+  const [projects, setProjects] = useState([]);
+  const [projectId, setProjectId] = useState(null);
   const [projectTitle, setProjectTitle] = useState('');
   const [projectCategory, setProjectCategory] = useState('prints');
   const [projectDescription, setProjectDescription] = useState('');
   const [projectImage, setProjectImage] = useState('');
+
   const [openModal, setModalOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [value, setValue] = React.useState(0);
+
   const [alertMessage, setAlertMessage] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [projects, setProjects] = useState([]);
+
   const isMobile = useMediaQuery('(max-width: 600px)');
-  const [open, setOpen] = useState(false);
-  const [projectId, setProjectId] = useState(null);
 
-  useEffect(() => {
+    useEffect(() => {
 
-    async function fetchData() {
-      const res = await fetch('http://localhost:3001/projects');
-      const data = await res.json();
+      async function fetchData() {
+        const res = await fetch('http://localhost:3001/projects');
+        const data = await res.json();
 
-      data.forEach(project => {
-        setProjects(current => [...current, {
-          id: project.id,
-          title: project.title,
-          category: project.category,
-          description: project.description,
-          image: `http://localhost:3001/images/${project.title}.jpg`
-        }])
-      });        
-    }
-    fetchData();
+        data.forEach(project => {
+          setProjects(current => [...current, {
+            id: project.id,
+            title: project.title,
+            category: project.category,
+            description: project.description,
+            image: `http://localhost:3001/images/${project.title}.jpg`
+          }])
+        });        
+      }
+      fetchData();
 
-    }, []);
+  }, []);
+
+  const alertClose = () => {
+    setAlertMessage('');
+    setSnackbarOpen(false);
+  }
+
+  const handleModalOpen = (image) => {
+
+    setModalOpen(true);
+
+  };
+
+  const handleModalClose = () => {
+
+    setModalOpen(false);
+
+  };
 
   const aboutImages = [
     { id: 1, img: avatar, title: 'Jillian Brown'},
@@ -143,14 +163,13 @@ const Admin = () => {
   
       setAlertMessage('Your project has been added!');
       setSnackbarOpen(true);
+      setTimeout(reloadPage, 3000);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleSubmitAndReload = async (event) => {
-    await handleSubmit(event);
-    setModalOpen(false);
+  const reloadPage = () => {
     window.location.reload();
   }
   
@@ -182,7 +201,7 @@ const Admin = () => {
             fontFamily: 'Marcellus'
           }}
         >
-          Delete Project
+          delete project
         </DialogTitle>
         <DialogContent
           sx={{
@@ -190,7 +209,7 @@ const Admin = () => {
             fontFamily: 'Marcellus'
           }}
         >
-          Are you sure you want to delete this project?
+          are you sure you want to delete this project?
         </DialogContent>
         <DialogActions>
           <Button 
@@ -242,34 +261,13 @@ const Admin = () => {
   const handleDelete = () => {
     deleteProject(projectId);
     setOpen(false);
+    setTimeout(reloadPage, 3000);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleDeleteAndReload = async () => {
-    await handleDelete();
-    window.location.reload();
-  }
-  
-
-  const alertClose = () => {
-    setAlertMessage('');
-    setSnackbarOpen(false);
-  }
-
-  const handleModalOpen = (image) => {
-
-    setModalOpen(true);
-
-  };
-
-  const handleModalClose = () => {
-
-    setModalOpen(false);
-
-  };
 
   return (
       <div align="center" className='adminContainer'>
@@ -361,7 +359,6 @@ const Admin = () => {
                         <img
                           className="slide-in-left"
                           src={project.image}
-                          srcSet={project.image}
                           alt={project.category}
                           loading="lazy"
                         />
@@ -502,7 +499,7 @@ const Admin = () => {
                             </Grid>
                             <Grid item xs={12}>
                               <Button 
-                                onClick={handleSubmitAndReload}
+                                onClick={handleSubmit}
                                 size="large"
                                 sx={{
                                   color: 'white',
@@ -526,7 +523,7 @@ const Admin = () => {
                     </Grid>
                   </div>
                 </Modal>
-                <DeleteDialog open={open} onClose={handleClose} onDelete={handleDeleteAndReload} />
+                <DeleteDialog open={open} onClose={handleClose} onDelete={handleDelete} />
             </Box>
           </Grid>
         </TabPanel>
