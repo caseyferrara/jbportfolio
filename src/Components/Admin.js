@@ -139,7 +139,7 @@ const Admin = () => {
   return (
       <div align="center" className='adminContainer'>
         <Grid align="center" item xs={12}>
-                <h1 className='headerText tracking-in-expand'>Admin</h1>
+                <h1 className='headerText tracking-in-expand'>admin</h1>
         </Grid>
         <Box 
           sx={{ 

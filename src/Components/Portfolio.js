@@ -11,14 +11,14 @@ function Portfolio() {
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [modalImage, setModalImage] = useState({});
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('All Graphics');
+  const [selectedCategory, setSelectedCategory] = useState('all graphics');
   const [openModal, setModalOpen] = useState(false);
   const [page, setPage] = useState(1);
   const itemsPerPage = 8;
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = page * itemsPerPage;
   const isMobile = useMediaQuery('(max-width: 600px)');
-  const currentImages = filteredProjects.slice(startIndex, endIndex);
+  const currentProjects = filteredProjects.slice(startIndex, endIndex);
 
   const handlePageChange = (event, value) => {
 
@@ -62,16 +62,16 @@ function Portfolio() {
       }
       fetchData();
 
-      setCategories(['All Graphics','Prints', 'Personal', 'Logos', 'Other']);
+      setCategories(['all graphics','prints', 'personal', 'logos', 'other']);
 
   }, []);
 
   useEffect(() => {
-    if (selectedCategory === 'All Graphics') {
+    if (selectedCategory === 'all graphics') {
       setFilteredProjects(projects);
     } else {
       setFilteredProjects(
-        projects.filter((image) => projects.category === selectedCategory)
+        projects.filter((project) => project.category === selectedCategory)
       );
     }
   }, [projects, selectedCategory]);
@@ -81,7 +81,7 @@ function Portfolio() {
       <div className="allContainer">
         <div align="center">
           <div className="headerText tracking-in-expand">
-            PORTFOLIO
+            portfolio
           </div>
           <FormControl
             sx={{
@@ -128,7 +128,7 @@ function Portfolio() {
                 }}
               >
                 <ImageList variant="masonry" cols={isMobile ? 1 : 2} gap={8}>
-                  {projects.map((project) => (
+                  {currentProjects.map((project) => (
                     <ImageListItem key={project.id}>
                       <img
                         className="slide-in-left"
