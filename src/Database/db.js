@@ -71,6 +71,20 @@ const deleteProject = async (id) => {
   });
 };
 
+const deleteAboutImage = async (id) => {
+  const text = "DELETE FROM about WHERE id = $1 RETURNING *";
+  const values = [id];
+  return new Promise((resolve, reject) => {
+    client.query(text, values, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res.rowCount);
+      }
+    });
+  });
+};
+
 const getProjectById = async (id) => {
   const text = "SELECT id, title, category, description FROM projects WHERE id = $1";
   const values = [id];
@@ -106,6 +120,7 @@ module.exports = {
   getProjects,
   getAbout,
   deleteProject,
+  deleteAboutImage,
   getProjectById,
   getAboutById
 }

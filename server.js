@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const app = express();
 
-const { insertProject, insertAboutImage, getProjects, getAbout, deleteProject, getProjectById, getAboutById } = require('./src/Database/db');
+const { insertProject, insertAboutImage, getProjects, getAbout, deleteProject, deleteAboutImage, getProjectById, getAboutById } = require('./src/Database/db');
 
 app.use(cors());
 
@@ -133,6 +133,8 @@ app.delete('/about/:id', async (req, res) => {
     fs.unlinkSync(`./src/Images/${title}`);
 
     res.sendStatus(200);
+
+    await deleteAboutImage(id);
 
   } catch (err) {
     console.error(err);
