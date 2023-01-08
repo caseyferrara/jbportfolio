@@ -3,22 +3,32 @@ import './CSS/Style.css';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import BrushIcon from '@mui/icons-material/Brush';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMediaQuery, Box, ImageList, ImageListItem, Grid } from '@mui/material';
 import { Element } from 'react-scroll';
 
 function About() {
 
   const isMobile = useMediaQuery('(max-width: 600px)');
+  const [aboutImages, setAboutImages] = useState([]);
 
-  // const itemData = [
-  //   { id: 1, img: avatar, title: 'Jillian Brown' },
-  //   { id: 2, img: avatar, title: 'Jillian Brown' },
-  //   { id: 3, img: avatar, title: 'Jillian Brown' },
-  //   { id: 4, img: avatar, title: 'Jillian Brown' },
-  //   { id: 5, img: avatar, title: 'Jillian Brown' },
-  //   { id: 6, img: avatar, title: 'Jillian Brown' },
-  // ]
+  useEffect(() => {
+
+    async function fetchData() {
+      const res = await fetch('http://localhost:3001/about');
+      const data = await res.json();
+
+      data.forEach(about => {
+        setAboutImages(current => [...current, {
+          id: about.id,
+          title: about.title,
+          image: `http://localhost:3001/images/${about.title}.jpg`
+        }])
+      });        
+    }
+    fetchData();
+
+  }, []); 
 
   return (
       <Element id="about">
@@ -72,17 +82,16 @@ function About() {
                       }
                     }}
                   >
-                    {/* {itemData.map((item) => (
+                    {aboutImages.map((item) => (
                       <ImageListItem key={item.id}>
                         <img
-                          src={`${item.img}?w=248&fit=crop&auto=format`}
-                          srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                          src={item.image}
                           className="slide-in-left"
                           alt={item.title}
                           loading="lazy"
                         />
                       </ImageListItem>
-                    ))} */}
+                    ))}
                   </ImageList>
                 </Box>
                 </Grid>
