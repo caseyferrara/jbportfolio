@@ -40,7 +40,6 @@ function a11yProps(index) {
 const Admin = () => {
 
   const [projects, setProjects] = useState([]);
-  const [projectId, setProjectId] = useState(null);
   const [projectTitle, setProjectTitle] = useState('');
   const [projectCategory, setProjectCategory] = useState('prints');
   const [projectDescription, setProjectDescription] = useState('');
@@ -48,6 +47,8 @@ const Admin = () => {
   const [aboutImages, setAboutImages] = useState([]);
   const [aboutImage, setAboutImage] = useState('');
   const [imageTitle, setImageTitle] = useState('');
+  const [itemType, setItemType] = useState('');
+  const [itemId, setItemId] = useState(null);
 
   const [modalOpen, setModalOpen] = useState({
     projectModal: false,
@@ -242,7 +243,32 @@ const Admin = () => {
     }
   };
 
+  const deleteAboutImage = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3001/about/${id}`, {
+        method: 'DELETE',
+      });
+      
+      if (response.ok) {
+        setAboutImages((prevAbout) => prevAbout.filter((about) => about.id !== id));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   function DeleteDialog({ open, onClose, onDelete }) {
+
+    let itemTypeText;
+    switch (itemType) {
+      case "project":
+        itemTypeText = "project";
+        break;
+      case "about image":
+        itemTypeText = "about image";
+        break;
+    }
+
     return (
       <Dialog 
         open={open} 
@@ -254,7 +280,7 @@ const Admin = () => {
             fontFamily: 'Marcellus'
           }}
         >
-          delete project
+          delete {itemTypeText}
         </DialogTitle>
         <DialogContent
           sx={{
@@ -262,7 +288,7 @@ const Admin = () => {
             fontFamily: 'Marcellus'
           }}
         >
-          are you sure you want to delete this project?
+          are you sure you want to delete this {itemTypeText}?
         </DialogContent>
         <DialogActions>
           <Button 
@@ -306,15 +332,29 @@ const Admin = () => {
     );
   }
 
-  const handleDeleteClick = (id) => {
-    setProjectId(id);
+  const handleDeleteClick = (id, itemType) => {
+    setItemType(itemType);
+    setItemId(id);
     setOpen(true);
   };
 
   const handleDelete = () => {
-    deleteProject(projectId);
+    deleteItem(itemId, itemType);
     setOpen(false);
     setTimeout(reloadPage, 3000);
+  };
+
+  const deleteItem = async (id, itemType) => {
+    switch (itemType) {
+      case "project":
+        await deleteProject(id);
+        break;
+      case "about image":
+        await deleteAboutImage(id);
+        break;
+      default:
+        console.error(`Unrecognized item type: ${itemType}`);
+    }
   };
 
   const handleDeleteClose = () => {
@@ -437,7 +477,7 @@ const Admin = () => {
                           className="slide-in-left"
                           actionIcon={
                             <IconButton
-                              onClick={() => handleDeleteClick(project.id)}
+                              onClick={() => handleDeleteClick(project.id, "project")}
                               sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                               aria-label={`info about ${project.title}`}
                             >
@@ -594,10 +634,10 @@ const Admin = () => {
                     </Grid>
                   </div>
                 </Modal>
-                <DeleteDialog open={open} onClose={handleDeleteClose} onDelete={handleDelete} />
             </Box>
           </Grid>
         </TabPanel>
+        <DeleteDialog open={open} onClose={handleDeleteClose} onDelete={handleDelete} />
         <TabPanel value={value} index={1}>
           <Grid container rowSpacing={2}>
               <Button
@@ -640,7 +680,7 @@ const Admin = () => {
                           className="slide-in-left"
                           actionIcon={
                             <IconButton
-                              onClick={() => handleDeleteClick()}
+                              onClick={() => handleDeleteClick(about.id, "about image")}
                               sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                               aria-label={`info about ${about.title}`}
                             >

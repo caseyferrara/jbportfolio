@@ -85,11 +85,27 @@ const getProjectById = async (id) => {
   });
 };
 
+const getAboutById = async (id) => {
+  const text = "SELECT id, title FROM about WHERE id = $1";
+  const values = [id];
+  return new Promise((resolve, reject) => {
+    client.query(text, values, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res.rows[0]);
+      }
+    });
+  });
+};
+
+
 module.exports = {
   insertProject,
   insertAboutImage,
   getProjects,
   getAbout,
   deleteProject,
-  getProjectById
+  getProjectById,
+  getAboutById
 }

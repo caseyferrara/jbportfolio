@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const app = express();
 
-const { insertProject, insertAboutImage, getProjects, getAbout, deleteProject, getProjectById } = require('./src/Database/db');
+const { insertProject, insertAboutImage, getProjects, getAbout, deleteProject, getProjectById, getAboutById } = require('./src/Database/db');
 
 app.use(cors());
 
@@ -119,13 +119,18 @@ app.delete('/projects/:id', async (req, res) => {
   }
 });
 
-app.delete('/about/:title', async (req, res) => {
+app.delete('/about/:id', async (req, res) => {
   try {
-    const title = req.params.title;
+
+    const id = req.params.id;
+    // Retrieve the project with the given id
+    const about = await getAboutById(id);
+
+    const { title } = about;
 
     // Delete the image file with the same title as the iamge title
     fs.unlinkSync(`./src/Images/${title}.jpg`);
-    fs.unlinkSync(`./src/Images/undefined`);
+    fs.unlinkSync(`./src/Images/${title}`);
 
     res.sendStatus(200);
 
