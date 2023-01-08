@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const app = express();
 
-const { insertProject, getProjects, deleteProject, getProjectById } = require('./src/Database/db');
+const { insertProject, insertAboutImage, getProjects, getAbout, deleteProject, getProjectById } = require('./src/Database/db');
 
 app.use(cors());
 
@@ -16,7 +16,13 @@ const storage = multer.diskStorage({
     cb(null, './src/Images');
   },
   filename: function(req, file, cb) {
-    cb(null, `${req.body.projectTitle}`);
+    let field;
+    if (req.body.type === 'project') {
+      field = req.body.projectTitle;
+    } else if (req.body.type === 'about') {
+      field = req.body.imageTitle;
+    }
+    cb(null, `${field}`);
   }
 });
 
@@ -24,10 +30,10 @@ const upload = multer({ storage: storage });
 
 app.post('/projects/submit', upload.single('image'), async (req, res) => {
   const { projectTitle, projectCategory, projectDescription } = req.body;
-  const image = req.file;
+  const projectImage = req.file;
 
   // Use Multer to handle the image upload
-  const uploadedImagePath = image.path;
+  const uploadedImagePath = projectImage.path;
 
   // Read the binary data of the uploaded image
   const imageData = fs.readFileSync(uploadedImagePath);
@@ -46,10 +52,44 @@ app.post('/projects/submit', upload.single('image'), async (req, res) => {
   });
 });
 
+app.post('/about/submit', upload.single('image'), async (req, res) => {
+  
+  const { imageTitle } = req.body;
+  const aboutImage = req.file;
+
+  // Use Multer to handle the image upload
+  const aboutImagePath = aboutImage.path;
+
+  // Read the binary data of the uploaded image
+  const aboutImageData = fs.readFileSync(aboutImagePath);
+
+  // Write the binary data to a new jpg file
+  fs.writeFile(`./src/Images/${imageTitle}.jpg`, aboutImageData, 'binary', (err) => {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+      return;
+    }
+    
+    const about = insertAboutImage(imageTitle, `${imageTitle}.jpg`);
+    res.json(about);
+  });
+});
+
 app.get('/projects', async (req, res) => {
   try {
     const projects = await getProjects();
     res.json(projects);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+app.get('/about', async (req, res) => {
+  try {
+    const about = await getAbout();
+    res.json(about);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
@@ -70,6 +110,22 @@ app.delete('/projects/:id', async (req, res) => {
     fs.unlinkSync(`./src/Images/${title}`);
 
     await deleteProject(id);
+
+    res.sendStatus(200);
+
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+app.delete('/about/:title', async (req, res) => {
+  try {
+    const title = req.params.title;
+
+    // Delete the image file with the same title as the iamge title
+    fs.unlinkSync(`./src/Images/${title}.jpg`);
+    fs.unlinkSync(`./src/Images/undefined`);
 
     res.sendStatus(200);
 

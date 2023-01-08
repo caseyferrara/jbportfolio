@@ -1,5 +1,4 @@
 import './CSS/Style.css';
-import avatar from '../Images/jb.jpeg';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React, { useState, useEffect } from 'react';
 import { Modal, Dialog, DialogTitle, DialogContent, DialogActions, useMediaQuery, Snackbar, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
@@ -46,8 +45,14 @@ const Admin = () => {
   const [projectCategory, setProjectCategory] = useState('prints');
   const [projectDescription, setProjectDescription] = useState('');
   const [projectImage, setProjectImage] = useState('');
+  const [aboutImages, setAboutImages] = useState([]);
+  const [aboutImage, setAboutImage] = useState('');
+  const [imageTitle, setImageTitle] = useState('');
 
-  const [openModal, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState({
+    projectModal: false,
+    aboutModal: false,
+  });
   const [open, setOpen] = useState(false);
   const [value, setValue] = React.useState(0);
 
@@ -56,9 +61,9 @@ const Admin = () => {
 
   const isMobile = useMediaQuery('(max-width: 600px)');
 
-    useEffect(() => {
+  useEffect(() => {
 
-      async function fetchData() {
+      async function fetchProjectData() {
         const res = await fetch('http://localhost:3001/projects');
         const data = await res.json();
 
@@ -72,7 +77,22 @@ const Admin = () => {
           }])
         });        
       }
-      fetchData();
+
+      async function fetchAboutData() {
+        const res = await fetch('http://localhost:3001/about');
+        const data = await res.json();
+
+        data.forEach(about => {
+          setAboutImages(current => [...current, {
+            id: about.id,
+            title: about.title,
+            image: `http://localhost:3001/images/${about.title}.jpg`
+          }])
+        });        
+      }
+
+      fetchProjectData();
+      fetchAboutData();
 
   }, []);
 
@@ -81,26 +101,19 @@ const Admin = () => {
     setSnackbarOpen(false);
   }
 
-  const handleModalOpen = (image) => {
-
-    setModalOpen(true);
-
+  const handleModalOpen = (modalName) => {
+    setModalOpen({
+      ...modalOpen,
+      [modalName]: true,
+    });
   };
-
-  const handleModalClose = () => {
-
-    setModalOpen(false);
-
+  
+  const handleModalClose = (modalName) => {
+    setModalOpen({
+      ...modalOpen,
+      [modalName]: false,
+    });
   };
-
-  const aboutImages = [
-    { id: 1, img: avatar, title: 'Jillian Brown'},
-    { id: 2, img: avatar, title: 'Jillian Brown'},
-    { id: 3, img: avatar, title: 'Jillian Brown'},
-    { id: 4, img: avatar, title: 'Jillian Brown'},
-    { id: 5, img: avatar, title: 'Jillian Brown'},
-    { id: 6, img: avatar, title: 'Jillian Brown'},
-  ]
 
   const handleChange = (event) => {
     if (event.target.name === 'projectTitle') {
@@ -109,6 +122,8 @@ const Admin = () => {
       setProjectCategory(event.target.value);
     } else if (event.target.name === 'projectDescription') {
       setProjectDescription(event.target.value);
+    } else if (event.target.name === 'imageTitle') {
+      setImageTitle(event.target.value);
     }
   };
 
@@ -120,7 +135,11 @@ const Admin = () => {
     setProjectImage(event.target.files[0]);
   };
 
-  const handleSubmit = async (event) => {
+  const handleAboutImageChange = (event) => {
+    setAboutImage(event.target.files[0]);
+  };
+
+  const handleProjectSubmit = async (event) => {
     event.preventDefault();
   
     if (!projectTitle) {
@@ -142,6 +161,7 @@ const Admin = () => {
     }
   
     const formData = new FormData();
+    formData.append('type', 'about');
     formData.append('projectTitle', projectTitle);
     formData.append('projectCategory', projectCategory);
     formData.append('projectDescription', projectDescription);
@@ -169,10 +189,43 @@ const Admin = () => {
     }
   };
 
+  const handleAboutSubmit = async (event) => {
+    event.preventDefault();
+  
+    if (!aboutImage) {
+      setAlertMessage('Please upload an image');
+      setSnackbarOpen(true);
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append('type', 'about');
+    formData.append('imageTitle', imageTitle);
+    formData.append('image', aboutImage);
+    
+    try {
+      const response = await fetch('http://localhost:3001/about/submit', {
+        method: 'POST',
+        body: formData,
+      });
+  
+      const about = await response.json();
+      console.log(about);
+  
+    } catch (error) {
+      console.error(error);
+    }
+
+    console.log(aboutImages);
+    setAboutImage('');
+    setAlertMessage('Your about image has been added!');
+    setSnackbarOpen(true);
+    setTimeout(reloadPage, 3000);
+  };
+
   const reloadPage = () => {
     window.location.reload();
   }
-  
   
   const deleteProject = async (id) => {
     try {
@@ -264,9 +317,25 @@ const Admin = () => {
     setTimeout(reloadPage, 3000);
   };
 
-  const handleClose = () => {
+  const handleDeleteClose = () => {
     setOpen(false);
   };
+
+  const projectModalOpen = () => {
+      handleModalOpen('projectModal');
+  }
+  
+  const projectModalClose = () => {
+      handleModalClose('projectModal')
+  }
+
+  const aboutModalOpen = () => {
+    handleModalOpen('aboutModal');
+  }
+
+  const aboutModalClose = () => {
+      handleModalClose('aboutModal')
+  }
 
 
   return (
@@ -328,7 +397,7 @@ const Admin = () => {
         <TabPanel value={value} index={0}>
           <Grid container rowSpacing={2}>
               <Button
-                onClick={handleModalOpen}
+                onClick={projectModalOpen}
                 size="large"
                 sx={{
                   color: 'white',
@@ -384,13 +453,13 @@ const Admin = () => {
                     ))}
                 </ImageList>
                 <Modal
-                  open={openModal}
-                  onClose={handleModalClose}
+                  open={modalOpen.projectModal}
+                  onClose={projectModalClose}
                   aria-labelledby="simple-modal-title"
                   aria-describedby="simple-modal-description"
                   className="modal-container"
                 >
-                  <div className='modal'>
+                  <div className='modal-admin'>
                     <Grid container rowSpacing={2}>
                       <Box>
                         <Grid  align="center" container spacing={3}>
@@ -495,11 +564,13 @@ const Admin = () => {
                                     type="file"
                                     accept="image/*"
                                     onChange={handleImageChange}
+                                    name="type" 
+                                    value="project" 
                                 />
                             </Grid>
                             <Grid item xs={12}>
                               <Button 
-                                onClick={handleSubmit}
+                                onClick={handleProjectSubmit}
                                 size="large"
                                 sx={{
                                   color: 'white',
@@ -523,12 +594,31 @@ const Admin = () => {
                     </Grid>
                   </div>
                 </Modal>
-                <DeleteDialog open={open} onClose={handleClose} onDelete={handleDelete} />
+                <DeleteDialog open={open} onClose={handleDeleteClose} onDelete={handleDelete} />
             </Box>
           </Grid>
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Grid container rowSpacing={2}>
+              <Button
+                onClick={aboutModalOpen}
+                size="large"
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#303030',
+                  textTransform: 'lowercase',
+                  fontFamily: 'Marcellus',
+                  borderColor: 'white',
+                  fontSize: '12px',
+                  display: 'block',
+                  margin: 'auto',
+                  ':hover': {
+                    backgroundColor: '#3f3f3f',
+                  },
+                }}
+              >
+                add a new about image
+              </Button>
             <Box
               align="center"
               sx={{
@@ -537,18 +627,103 @@ const Admin = () => {
                 margin: 'auto', 
               }}
               >
-                <ImageList sx={{ maxWidth: 900 }} variant="masonry" cols={3} gap={8}>
+                <ImageList sx={{ maxWidth: 900 }} variant="masonry" cols={isMobile ? 1 : 2} gap={8}>
                   {aboutImages.map((about) => (
                     <ImageListItem key={about.id}>
                       <img
-                        src={`${about.img}?w=248&fit=crop&auto=format`}
-                        srcSet={`${about.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                        src={about.image}
                         alt={about.title}
                         loading="lazy"
                       />
+                        <ImageListItemBar
+                          title={about.title}
+                          className="slide-in-left"
+                          actionIcon={
+                            <IconButton
+                              onClick={() => handleDeleteClick()}
+                              sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                              aria-label={`info about ${about.title}`}
+                            >
+                              <DeleteIcon 
+                                sx={{
+                                  color: 'red'
+                                }}
+                              />
+                            </IconButton>
+                          }
+                        />
                     </ImageListItem>
                   ))}
                 </ImageList>
+                <Modal
+                  open={modalOpen.aboutModal}
+                  onClose={aboutModalClose}
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                  className="modal-container"
+                >
+                  <div className='modal-admin-about'>
+                    <Grid container rowSpacing={2}>
+                      <Box>
+                        <Grid  align="center" container spacing={3}>
+                          <Grid item xs={12}>
+                            <h1>add a new about image</h1>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              label="image title"
+                              name="imageTitle"
+                              variant="filled"
+                              value={imageTitle}
+                              onChange={handleChange}
+                              InputProps={{
+                                style: {
+                                  fontFamily: 'Marcellus',
+                                  width: 250
+                                }
+                              }}
+                              InputLabelProps={{
+                                style: {
+                                  fontFamily: 'Marcellus',
+                                  color: '#303030'
+                                }
+                              }}
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                                  <input
+                                      type="file"
+                                      accept="image/*"
+                                      onChange={handleAboutImageChange}
+                                  />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Button
+                              onClick={handleAboutSubmit}
+                              size="large"
+                              sx={{
+                                color: 'white',
+                                backgroundColor: '#303030',
+                                textTransform: 'lowercase',
+                                fontFamily: 'Marcellus',
+                                borderColor: 'white',
+                                fontSize: '12px',
+                                display: 'block',
+                                margin: 'auto',
+                                ':hover': {
+                                  backgroundColor: '#3f3f3f',
+                                },
+                              }}
+                            >
+                              submit
+                            </Button>
+                          </Grid>
+                          <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
+                        </Grid>
+                      </Box>
+                    </Grid>
+                  </div>
+                </Modal>
             </Box>
           </Grid>
         </TabPanel>

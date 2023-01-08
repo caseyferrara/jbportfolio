@@ -116,7 +116,7 @@ function Portfolio() {
             <>
               <Box
                 sx={{
-                  maxHeight: 700,
+                  maxHeight: 500,
                   maxWidth: 1000,
                   display: 'block',
                   margin: 'auto',

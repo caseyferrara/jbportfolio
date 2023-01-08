@@ -30,9 +30,29 @@ const getProjects = async () => {
   });
 };
 
+const getAbout = async () => {
+  const text = "SELECT id, title FROM about";
+  return new Promise((resolve, reject) => {
+    client.query(text, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res.rows);
+      }
+    });
+  });
+};
+
 const insertProject = async (projectTitle, projectCategory, projectDescription) => {
   const text = "INSERT INTO projects(title, category, description) VALUES($1, $2, $3) RETURNING *";
   const values = [projectTitle, projectCategory, projectDescription];
+  const res = await client.query(text, values);
+  return res.rows[0];
+};
+
+const insertAboutImage = async (imageTitle) => {
+  const text = "INSERT INTO about(title) VALUES($1) RETURNING *";
+  const values = [imageTitle];
   const res = await client.query(text, values);
   return res.rows[0];
 };
@@ -67,7 +87,9 @@ const getProjectById = async (id) => {
 
 module.exports = {
   insertProject,
+  insertAboutImage,
   getProjects,
+  getAbout,
   deleteProject,
   getProjectById
 }

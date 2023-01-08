@@ -1,6 +1,5 @@
 import './CSS/Animation.css';
 import './CSS/Style.css';
-import avatar from '../Images/jb.jpeg';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import BrushIcon from '@mui/icons-material/Brush';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
@@ -12,14 +11,14 @@ function About() {
 
   const isMobile = useMediaQuery('(max-width: 600px)');
 
-  const itemData = [
-    { id: 1, img: avatar, title: 'Jillian Brown' },
-    { id: 2, img: avatar, title: 'Jillian Brown' },
-    { id: 3, img: avatar, title: 'Jillian Brown' },
-    { id: 4, img: avatar, title: 'Jillian Brown' },
-    { id: 5, img: avatar, title: 'Jillian Brown' },
-    { id: 6, img: avatar, title: 'Jillian Brown' },
-  ]
+  // const itemData = [
+  //   { id: 1, img: avatar, title: 'Jillian Brown' },
+  //   { id: 2, img: avatar, title: 'Jillian Brown' },
+  //   { id: 3, img: avatar, title: 'Jillian Brown' },
+  //   { id: 4, img: avatar, title: 'Jillian Brown' },
+  //   { id: 5, img: avatar, title: 'Jillian Brown' },
+  //   { id: 6, img: avatar, title: 'Jillian Brown' },
+  // ]
 
   return (
       <Element id="about">
@@ -73,7 +72,7 @@ function About() {
                       }
                     }}
                   >
-                    {itemData.map((item) => (
+                    {/* {itemData.map((item) => (
                       <ImageListItem key={item.id}>
                         <img
                           src={`${item.img}?w=248&fit=crop&auto=format`}
@@ -83,7 +82,7 @@ function About() {
                           loading="lazy"
                         />
                       </ImageListItem>
-                    ))}
+                    ))} */}
                   </ImageList>
                 </Box>
                 </Grid>
