@@ -1,4 +1,5 @@
 import './CSS/Style.css';
+import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React, { useState, useEffect } from 'react';
 import { Modal, Dialog, DialogTitle, DialogContent, DialogActions, useMediaQuery, Snackbar, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
@@ -40,6 +41,7 @@ function a11yProps(index) {
 const Admin = () => {
 
   const [projects, setProjects] = useState([]);
+  const [projectId, setProjectId] = useState(null);
   const [projectTitle, setProjectTitle] = useState('');
   const [projectCategory, setProjectCategory] = useState('prints');
   const [projectDescription, setProjectDescription] = useState('');
@@ -52,6 +54,7 @@ const Admin = () => {
 
   const [modalOpen, setModalOpen] = useState({
     projectModal: false,
+    projectEditModal: false,
     aboutModal: false,
   });
   const [open, setOpen] = useState(false);
@@ -96,6 +99,7 @@ const Admin = () => {
       fetchAboutData();
 
   }, []);
+  
 
   const alertClose = () => {
     setAlertMessage('');
@@ -162,7 +166,7 @@ const Admin = () => {
     }
   
     const formData = new FormData();
-    formData.append('type', 'about');
+    formData.append('type', 'project');
     formData.append('projectTitle', projectTitle);
     formData.append('projectCategory', projectCategory);
     formData.append('projectDescription', projectDescription);
@@ -217,8 +221,8 @@ const Admin = () => {
       console.error(error);
     }
 
-    console.log(aboutImages);
     setAboutImage('');
+    setImageTitle('');
     setAlertMessage('Your about image has been added!');
     setSnackbarOpen(true);
     setTimeout(reloadPage, 3000);
@@ -227,6 +231,68 @@ const Admin = () => {
   const reloadPage = () => {
     window.location.reload();
   }
+
+  const handleEditClick = async (id) => {
+      try {
+        const response = await fetch(`http://localhost:3001/project/${id}`, {
+          method: 'GET',
+        });
+        
+        if (response.ok) {
+          const project = await response.json();
+          setProjectId(project.id);
+          setProjectTitle(project.title);
+          setProjectCategory(project.category);
+          setProjectDescription(project.description);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+      handleModalOpen('projectEditModal');
+
+  }
+
+  const handleEditSubmit = async (event, id) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch(`http://localhost:3001/project/update/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          projectTitle: projectTitle,
+          projectCategory: projectCategory,
+          projectDescription: projectDescription,
+        }),
+      });
+  
+      if (response.ok) {
+        const updatedProject = await response.json();
+        console.log(updatedProject);
+  
+        setProjects(prevProjects => prevProjects.map(project => {
+          if (project.id === id) {
+            return updatedProject;
+          }
+          return project;
+        }));
+  
+        setProjectTitle('');
+        setProjectCategory('prints');
+        setProjectDescription('');
+  
+        setAlertMessage('Your project has been updated!');
+        setSnackbarOpen(true);
+        setTimeout(reloadPage, 3000);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  
   
   const deleteProject = async (id) => {
     try {
@@ -369,6 +435,10 @@ const Admin = () => {
       handleModalClose('projectModal')
   }
 
+  const projectEditModalClose = () => {
+      handleModalClose('projectEditModal')
+  }
+
   const aboutModalOpen = () => {
     handleModalOpen('aboutModal');
   }
@@ -376,7 +446,6 @@ const Admin = () => {
   const aboutModalClose = () => {
       handleModalClose('aboutModal')
   }
-
 
   return (
       <div align="center" className='adminContainer'>
@@ -476,17 +545,30 @@ const Admin = () => {
                           subtitle={project.category}
                           className="slide-in-left"
                           actionIcon={
-                            <IconButton
+                            <>
+                              <IconButton
+                                onClick={() => handleEditClick(project.id)}
+                                sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                                aria-label={`edit ${project.title}`}
+                              >
+                                <EditIcon 
+                                  sx={{
+                                    color: 'rgba(255, 255, 255, 0.54)'
+                                  }}
+                                />
+                              </IconButton>
+                              <IconButton
                               onClick={() => handleDeleteClick(project.id, "project")}
                               sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                               aria-label={`info about ${project.title}`}
-                            >
-                              <DeleteIcon 
-                                sx={{
-                                  color: 'red'
-                                }}
-                              />
-                            </IconButton>
+                              >
+                                <DeleteIcon 
+                                  sx={{
+                                    color: 'red'
+                                  }}
+                                />
+                              </IconButton>
+                            </>
                           }
                         />
                       </ImageListItem>
@@ -604,8 +686,6 @@ const Admin = () => {
                                     type="file"
                                     accept="image/*"
                                     onChange={handleImageChange}
-                                    name="type" 
-                                    value="project" 
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -626,6 +706,139 @@ const Admin = () => {
                                 }}
                               >
                                 Submit
+                              </Button>
+                            </Grid>
+                            <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
+                        </Grid>
+                      </Box>
+                    </Grid>
+                  </div>
+                </Modal>
+                <Modal
+                  open={modalOpen.projectEditModal}
+                  onClose={projectEditModalClose}
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                  className="modal-container"
+                >
+                  <div className='modal-admin'>
+                    <Grid container rowSpacing={2}>
+                      <Box>
+                        <Grid  align="center" container spacing={3}>
+                          <Grid item xs={12}>
+                            <h1>edit this project</h1>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              label="project title"
+                              name="projectTitle"
+                              variant="filled"
+                              value={projectTitle}
+                              onChange={handleChange}
+                              InputProps={{
+                                style: {
+                                  fontFamily: 'Marcellus',
+                                  width: 250
+                                }
+                              }}
+                              InputLabelProps={{
+                                style: {
+                                  fontFamily: 'Marcellus',
+                                  color: '#303030'
+                                }
+                              }}
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                              <Select
+                                label="project category"
+                                name="projectCategory"
+                                value={projectCategory}
+                                onChange={handleChange}
+                                sx={{
+                                  fontFamily: 'Marcellus',
+                                  width: 250,
+                                }}
+                              >
+                                <MenuItem 
+                                  value="prints"
+                                  sx={{
+                                    fontFamily: 'Marcellus',
+                                    color: '#303030'
+                                  }}
+                                >
+                                  prints
+                                </MenuItem>
+                                <MenuItem 
+                                  value="personal"
+                                  sx={{
+                                    fontFamily: 'Marcellus',
+                                    color: '#303030'
+                                  }}
+                                >
+                                  personal
+                                </MenuItem>
+                                <MenuItem 
+                                  value="logos"
+                                  sx={{
+                                    fontFamily: 'Marcellus',
+                                    color: '#303030'
+                                  }}
+                                >
+                                  logos
+                                </MenuItem>
+                                <MenuItem 
+                                  value="other"
+                                  sx={{
+                                    fontFamily: 'Marcellus',
+                                    color: '#303030'
+                                  }}
+                                >
+                                  other
+                                </MenuItem>
+                              </Select>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <TextField
+                                label="project description"
+                                name="projectDescription"
+                                variant="filled"
+                                value={projectDescription}
+                                onChange={handleChange}
+                                multiline={true}
+                                rows={3}
+                                InputProps={{
+                                  style: {
+                                    fontFamily: 'Marcellus',
+                                    width: 250
+                                  }
+                                }}
+                                InputLabelProps={{
+                                  style: {
+                                    fontFamily: 'Marcellus',
+                                    color: '#303030'
+                                  }
+                                }}
+                              />
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Button 
+                                onClick={(event) => handleEditSubmit(event, projectId)}
+                                size="large"
+                                sx={{
+                                  color: 'white',
+                                  backgroundColor: '#303030',
+                                  textTransform: 'lowercase',
+                                  fontFamily: 'Marcellus',
+                                  borderColor: 'white',
+                                  fontSize: '12px',
+                                  margin: '5px',
+                                  ':hover': {
+                                    backgroundColor: '#3f3f3f',
+                                  },
+                                }}
+                              >
+                                save project
                               </Button>
                             </Grid>
                             <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />

@@ -50,6 +50,13 @@ const insertProject = async (projectTitle, projectCategory, projectDescription) 
   return res.rows[0];
 };
 
+const updateProject = async (id, projectTitle, projectCategory, projectDescription) => {
+  const text = "UPDATE projects SET title = $1, category = $2, description = $3 WHERE id = $4 RETURNING *";
+  const values = [projectTitle, projectCategory, projectDescription, id];
+  const res = await client.query(text, values);
+  return res.rows[0];
+};
+
 const insertAboutImage = async (imageTitle) => {
   const text = "INSERT INTO about(title) VALUES($1) RETURNING *";
   const values = [imageTitle];
@@ -116,6 +123,7 @@ const getAboutById = async (id) => {
 
 module.exports = {
   insertProject,
+  updateProject,
   insertAboutImage,
   getProjects,
   getAbout,

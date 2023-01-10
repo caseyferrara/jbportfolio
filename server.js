@@ -5,11 +5,13 @@ const fs = require('fs');
 
 const app = express();
 
-const { insertProject, insertAboutImage, getProjects, getAbout, deleteProject, deleteAboutImage, getProjectById, getAboutById } = require('./src/Database/db');
+const { insertProject, updateProject, insertAboutImage, getProjects, getAbout, deleteProject, deleteAboutImage, getProjectById, getAboutById } = require('./src/Database/db');
 
 app.use(cors());
 
 app.use('/images', express.static('./src/Images'));
+
+app.use(express.json());
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -52,6 +54,38 @@ app.post('/projects/submit', upload.single('image'), async (req, res) => {
   });
 });
 
+app.post('/project/update/:id', async (req, res) => {
+  const { id } = req.params;
+  const oldProject = await getProjectById(id);
+  const oldProjectTitle = oldProject.title;
+  const { projectTitle, projectCategory, projectDescription } = req.body;
+
+  fs.rename(`./src/Images/${oldProjectTitle}.jpg`, `./src/Images/${projectTitle}.jpg`, (err) => {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+      return;
+    }
+  });
+
+  fs.rename(`./src/Images/${oldProjectTitle}`, `./src/Images/${projectTitle}`, (err) => {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+      return;
+    }
+  });
+
+  try {
+    const project = await updateProject(id, projectTitle, projectCategory, projectDescription);
+    res.json(project);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
+
+
 app.post('/about/submit', upload.single('image'), async (req, res) => {
   
   const { imageTitle } = req.body;
@@ -79,6 +113,17 @@ app.post('/about/submit', upload.single('image'), async (req, res) => {
 app.get('/projects', async (req, res) => {
   try {
     const projects = await getProjects();
+    res.json(projects);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+app.get('/project/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const projects = await getProjectById(id);
     res.json(projects);
   } catch (err) {
     console.error(err);
