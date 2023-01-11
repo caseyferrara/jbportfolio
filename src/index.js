@@ -6,6 +6,7 @@ import Navigation from './Components/Navigation';
 import About from './Components/About';
 import Contact from './Components/Contact';
 import Admin from './Components/Admin';
+import Login from './Components/Login';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -24,7 +25,8 @@ root.render(
 
   <BrowserRouter>
     <React.Fragment>
-    <Route exact path="/" component={Home} />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/" component={Home} />
       <Route exact path="/admin" component={Admin} />
     </React.Fragment>
   </BrowserRouter>

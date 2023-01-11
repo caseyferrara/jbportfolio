@@ -1,5 +1,6 @@
 const multer = require('multer');
 const express = require('express');
+const request = require('request');
 const cors = require('cors');
 const fs = require('fs');
 
@@ -12,6 +13,64 @@ app.use(cors());
 app.use('/images', express.static('./src/Images'));
 
 app.use(express.json());
+
+app.get('/callback', (req, res) => {
+  const code = req.query.code;
+  console.log(code)
+  const clientId = 'vAKqtbL2JR7mmz24hMlxf993JJQIiBg9';
+  const clientSecret = 'YSt1mGdU2YXBMtV73g5O7xHpYIqE9bI7vfbD8eku3Dm_k0b6xPHMnhCxdmW7womM';
+  const redirectUri = 'https://edd4-162-211-34-192.ngrok.io/callback';
+
+  // Exchange the authorization code for an access token
+  request.post({
+    url: 'https://dev-apyiutdwrm7rajdb.us.auth0.com/oauth/token',
+    form: {
+      grant_type: 'authorization_code',
+      client_id: clientId,
+      client_secret: clientSecret,
+      code: code,
+      redirect_uri: redirectUri,
+    },
+    json: true
+  }, (err, response, body) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+
+    const accessToken = body.access_token;
+
+    // Use the access token to retrieve the user's email address
+    request.get({
+      url: 'https://dev-apyiutdwrm7rajdb.us.auth0.com/userinfo',
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      },
+      json: true
+    }, (err, response, body) => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+
+      const email = body.email;
+
+      // Check if the email address is allowed
+      if (isAllowedEmail(email)) {
+        // Email is allowed, authenticate the user and redirect to the app
+        res.redirect(`http://localhost:3000/admin`);
+      } else {
+        // Email is not allowed, show an error message
+        res.send('Sorry, your email address is not allowed to access the app.');
+      }
+    });
+  });
+});
+
+function isAllowedEmail(email) {
+  const allowedEmails = ['casey.ferrara@outlook.com', 'jillian22brown@gmail.com'];
+  return allowedEmails.includes(email);
+}
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {

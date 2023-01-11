@@ -9,6 +9,16 @@
   z-index: 1;
 }
 
+.loginContainer {
+  background-color: #E8EAE5;
+  height: 100vh;
+  font-family: Marcellus;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* HOME COMPONENT */
 
 .homeImg {
