@@ -1,4 +1,4 @@
-/* ALL */
+/* CONTAINERS */
 
 .allContainer {
   background-color: #E8EAE5;
@@ -7,6 +7,21 @@
   width: 100%;
   overflow: hidden;
   z-index: 1;
+}
+
+.noAccessContainer {
+  background-color: #E8EAE5;
+  height: 100vh;
+  font-family: Marcellus;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .loginContainer {

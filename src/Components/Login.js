@@ -11,17 +11,15 @@ function Login() {
     cursor: pointer;
   `;
 
-
     const auth0ClientId = 'vAKqtbL2JR7mmz24hMlxf993JJQIiBg9';
     const auth0Domain = 'dev-apyiutdwrm7rajdb.us.auth0.com';
-    const redirectUri = encodeURIComponent('https://edd4-162-211-34-192.ngrok.io/callback');
+    const redirectUri = encodeURIComponent('http://localhost:3001/callback');
     const googleConnection = 'google-oauth2';
       
     const handleClick = () => {
       const auth0Url = `https://${auth0Domain}/authorize?client_id=${auth0ClientId}&redirect_uri=${redirectUri}&response_type=code&connection=${googleConnection}&scope=openid%20profile%20email`;
       window.location.replace(auth0Url);
     }
-
 
     return (
       <div

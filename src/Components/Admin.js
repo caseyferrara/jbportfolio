@@ -1,9 +1,11 @@
 import './CSS/Style.css';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DangerousIcon from '@mui/icons-material/Dangerous';
 import React, { useState, useEffect } from 'react';
 import { Modal, Dialog, DialogTitle, DialogContent, DialogActions, useMediaQuery, Snackbar, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
 import PropTypes from 'prop-types';
+import jwtDecode from 'jwt-decode';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -40,6 +42,17 @@ function a11yProps(index) {
 
 const Admin = () => {
 
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const token = urlParams.get('token');
+  let decoded;
+  let email;
+  if (token) {
+     decoded = jwtDecode(token);
+     email = decoded.email;
+  }
+  const [users, setUsers] = useState([]);
+
   const [projects, setProjects] = useState([]);
   const [projectId, setProjectId] = useState(null);
   const [projectTitle, setProjectTitle] = useState('');
@@ -51,7 +64,6 @@ const Admin = () => {
   const [imageTitle, setImageTitle] = useState('');
   const [itemType, setItemType] = useState('');
   const [itemId, setItemId] = useState(null);
-
   const [modalOpen, setModalOpen] = useState({
     projectModal: false,
     projectEditModal: false,
@@ -65,10 +77,23 @@ const Admin = () => {
 
   const isMobile = useMediaQuery('(max-width: 600px)');
 
+
   useEffect(() => {
 
+      async function fetchUserData() {
+        const res = await fetch('http://localhost:3001/users');
+        const data = await res.json();
+
+        data.forEach(user => {
+          setUsers(current => [...current, {
+            id: user.id,
+            email: user.email
+          }])
+        });
+      }
+
       async function fetchProjectData() {
-        const res = await fetch('http://localhost:3001/projects');
+        const res = await fetch('http://localhost:3001/admin/projects');
         const data = await res.json();
 
         data.forEach(project => {
@@ -83,7 +108,7 @@ const Admin = () => {
       }
 
       async function fetchAboutData() {
-        const res = await fetch('http://localhost:3001/about');
+        const res = await fetch('http://localhost:3001/admin/about');
         const data = await res.json();
 
         data.forEach(about => {
@@ -95,6 +120,7 @@ const Admin = () => {
         });        
       }
 
+      fetchUserData();
       fetchProjectData();
       fetchAboutData();
 
@@ -173,7 +199,7 @@ const Admin = () => {
     formData.append('image', projectImage);
   
     try {
-      const response = await fetch('http://localhost:3001/projects/submit', {
+      const response = await fetch('http://localhost:3001/admin/projects/submit', {
         method: 'POST',
         body: formData,
       });
@@ -209,7 +235,7 @@ const Admin = () => {
     formData.append('image', aboutImage);
     
     try {
-      const response = await fetch('http://localhost:3001/about/submit', {
+      const response = await fetch('http://localhost:3001/admin/about/submit', {
         method: 'POST',
         body: formData,
       });
@@ -256,7 +282,7 @@ const Admin = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3001/project/update/${id}`, {
+      const response = await fetch(`http://localhost:3001/admin/project/update/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -292,11 +318,9 @@ const Admin = () => {
     }
   };
   
-  
-  
   const deleteProject = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3001/projects/${id}`, {
+      const response = await fetch(`http://localhost:3001/admin/projects/${id}`, {
         method: 'DELETE',
       });
       
@@ -311,7 +335,7 @@ const Admin = () => {
 
   const deleteAboutImage = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3001/about/${id}`, {
+      const response = await fetch(`http://localhost:3001/admin/about/${id}`, {
         method: 'DELETE',
       });
       
@@ -407,7 +431,6 @@ const Admin = () => {
   const handleDelete = () => {
     deleteItem(itemId, itemType);
     setOpen(false);
-    setTimeout(reloadPage, 3000);
   };
 
   const deleteItem = async (id, itemType) => {
@@ -448,454 +471,121 @@ const Admin = () => {
   }
 
   return (
+    email 
+    ? 
       <div align="center" className='adminContainer'>
-        <Grid align="center" item xs={12}>
-                <h1 className='headerText tracking-in-expand'>admin</h1>
-        </Grid>
-        <Box 
-          sx={{ 
-            display: 'block',
-            margin: 'auto', 
-            borderBottom: 1, 
-            borderColor: 'divider',
-            '@media (max-width: 600px)': {
-              maxWidth: 300
+      <Grid align="center" item xs={12}>
+              <h1 className='headerText tracking-in-expand'>admin</h1>
+      </Grid>
+      <Box 
+        sx={{ 
+          display: 'block',
+          margin: 'auto', 
+          borderBottom: 1, 
+          borderColor: 'divider',
+          '@media (max-width: 600px)': {
+            maxWidth: 300
+          }
+        }}
+      >
+        <Tabs 
+          value={value}
+          onChange={handleTabChange} 
+          TabIndicatorProps={{
+            style: {
+              backgroundColor: "#303030",
             }
           }}
         >
-          <Tabs 
-            value={value}
-            onChange={handleTabChange} 
-            TabIndicatorProps={{
-              style: {
-                backgroundColor: "#303030",
+          <Tab 
+            sx={{ 
+              display: 'block', 
+              margin: 'auto',
+              textTransform: 'lowercase',
+              fontFamily: 'Marcellus',
+              '@media (max-width: 600px)': {
+                maxWidth: 100,
+                fontSize: '10px'
               }
-            }}
-          >
-            <Tab 
-              sx={{ 
-                display: 'block', 
-                margin: 'auto',
-                textTransform: 'lowercase',
-                fontFamily: 'Marcellus',
-                '@media (max-width: 600px)': {
-                  maxWidth: 100,
-                  fontSize: '10px'
-                }
-              }} 
-              label="existing projects" 
-              {...a11yProps(0)} 
-            />
-            <Tab 
-              sx={{ 
-                display: 'block', 
-                margin: 'auto',
-                fontFamily: 'Marcellus',
-                textTransform: 'lowercase',
-                '@media (max-width: 600px)': {
-                  maxWidth: 100,
-                  fontSize: '10px'
-                }
-              }} 
-              label="about images" 
-              {...a11yProps(1)} 
-            />
-          </Tabs>
-        </Box>
+            }} 
+            label="existing projects" 
+            {...a11yProps(0)} 
+          />
+          <Tab 
+            sx={{ 
+              display: 'block', 
+              margin: 'auto',
+              fontFamily: 'Marcellus',
+              textTransform: 'lowercase',
+              '@media (max-width: 600px)': {
+                maxWidth: 100,
+                fontSize: '10px'
+              }
+            }} 
+            label="about images" 
+            {...a11yProps(1)} 
+          />
+        </Tabs>
+      </Box>
 
-        <TabPanel value={value} index={0}>
-          <Grid container rowSpacing={2}>
-              <Button
-                onClick={projectModalOpen}
-                size="large"
-                sx={{
-                  color: 'white',
-                  backgroundColor: '#303030',
-                  textTransform: 'lowercase',
-                  fontFamily: 'Marcellus',
-                  borderColor: 'white',
-                  fontSize: '12px',
-                  display: 'block',
-                  margin: 'auto',
-                  ':hover': {
-                    backgroundColor: '#3f3f3f',
-                  },
-                }}
-              >
-                add a new project
-              </Button>
-            <Box
+      <TabPanel value={value} index={0}>
+        <Grid container rowSpacing={2}>
+            <Button
+              onClick={projectModalOpen}
+              size="large"
               sx={{
-                width: 1000,
-                display: 'block', 
-                margin: 'auto', 
+                color: 'white',
+                backgroundColor: '#303030',
+                textTransform: 'lowercase',
+                fontFamily: 'Marcellus',
+                borderColor: 'white',
+                fontSize: '12px',
+                display: 'block',
+                margin: 'auto',
+                ':hover': {
+                  backgroundColor: '#3f3f3f',
+                },
               }}
-              >
-                <ImageList sx={{ maxWidth: 900 }} variant="masonry" cols={isMobile ? 1 : 2} gap={8}>
-                  {projects.map((project) => (
-                      <ImageListItem key={project.id}>
-                        <img
-                          className="slide-in-left"
-                          src={project.image}
-                          alt={project.category}
-                          loading="lazy"
-                        />
-                        <ImageListItemBar
-                          title={project.title}
-                          subtitle={project.category}
-                          className="slide-in-left"
-                          actionIcon={
-                            <>
-                              <IconButton
-                                onClick={() => handleEditClick(project.id)}
-                                sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                aria-label={`edit ${project.title}`}
-                              >
-                                <EditIcon 
-                                  sx={{
-                                    color: 'rgba(255, 255, 255, 0.54)'
-                                  }}
-                                />
-                              </IconButton>
-                              <IconButton
-                              onClick={() => handleDeleteClick(project.id, "project")}
-                              sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                              aria-label={`info about ${project.title}`}
-                              >
-                                <DeleteIcon 
-                                  sx={{
-                                    color: 'red'
-                                  }}
-                                />
-                              </IconButton>
-                            </>
-                          }
-                        />
-                      </ImageListItem>
-                    ))}
-                </ImageList>
-                <Modal
-                  open={modalOpen.projectModal}
-                  onClose={projectModalClose}
-                  aria-labelledby="simple-modal-title"
-                  aria-describedby="simple-modal-description"
-                  className="modal-container"
-                >
-                  <div className='modal-admin'>
-                    <Grid container rowSpacing={2}>
-                      <Box>
-                        <Grid  align="center" container spacing={3}>
-                          <Grid item xs={12}>
-                            <h1>add a new project</h1>
-                          </Grid>
-                          <Grid item xs={12}>
-                            <TextField
-                              label="project title"
-                              name="projectTitle"
-                              variant="filled"
-                              value={projectTitle}
-                              onChange={handleChange}
-                              InputProps={{
-                                style: {
-                                  fontFamily: 'Marcellus',
-                                  width: 250
-                                }
-                              }}
-                              InputLabelProps={{
-                                style: {
-                                  fontFamily: 'Marcellus',
-                                  color: '#303030'
-                                }
-                              }}
-                            />
-                          </Grid>
-                          <Grid item xs={12}>
-                              <Select
-                                label="project category"
-                                name="projectCategory"
-                                value={projectCategory}
-                                onChange={handleChange}
-                                sx={{
-                                  fontFamily: 'Marcellus',
-                                  width: 250,
-                                }}
-                              >
-                                <MenuItem 
-                                  value="prints"
-                                  sx={{
-                                    fontFamily: 'Marcellus',
-                                    color: '#303030'
-                                  }}
-                                >
-                                  prints
-                                </MenuItem>
-                                <MenuItem 
-                                  value="personal"
-                                  sx={{
-                                    fontFamily: 'Marcellus',
-                                    color: '#303030'
-                                  }}
-                                >
-                                  personal
-                                </MenuItem>
-                                <MenuItem 
-                                  value="logos"
-                                  sx={{
-                                    fontFamily: 'Marcellus',
-                                    color: '#303030'
-                                  }}
-                                >
-                                  logos
-                                </MenuItem>
-                                <MenuItem 
-                                  value="other"
-                                  sx={{
-                                    fontFamily: 'Marcellus',
-                                    color: '#303030'
-                                  }}
-                                >
-                                  other
-                                </MenuItem>
-                              </Select>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <TextField
-                                label="project description"
-                                name="projectDescription"
-                                variant="filled"
-                                value={projectDescription}
-                                onChange={handleChange}
-                                multiline={true}
-                                rows={3}
-                                InputProps={{
-                                  style: {
-                                    fontFamily: 'Marcellus',
-                                    width: 250
-                                  }
-                                }}
-                                InputLabelProps={{
-                                  style: {
-                                    fontFamily: 'Marcellus',
-                                    color: '#303030'
-                                  }
-                                }}
-                              />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleImageChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Button 
-                                onClick={handleProjectSubmit}
-                                size="large"
-                                sx={{
-                                  color: 'white',
-                                  backgroundColor: '#303030',
-                                  textTransform: 'lowercase',
-                                  fontFamily: 'Marcellus',
-                                  borderColor: 'white',
-                                  fontSize: '12px',
-                                  margin: '5px',
-                                  ':hover': {
-                                    backgroundColor: '#3f3f3f',
-                                  },
-                                }}
-                              >
-                                Submit
-                              </Button>
-                            </Grid>
-                            <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
-                        </Grid>
-                      </Box>
-                    </Grid>
-                  </div>
-                </Modal>
-                <Modal
-                  open={modalOpen.projectEditModal}
-                  onClose={projectEditModalClose}
-                  aria-labelledby="simple-modal-title"
-                  aria-describedby="simple-modal-description"
-                  className="modal-container"
-                >
-                  <div className='modal-admin'>
-                    <Grid container rowSpacing={2}>
-                      <Box>
-                        <Grid  align="center" container spacing={3}>
-                          <Grid item xs={12}>
-                            <h1>edit this project</h1>
-                          </Grid>
-                          <Grid item xs={12}>
-                            <TextField
-                              label="project title"
-                              name="projectTitle"
-                              variant="filled"
-                              value={projectTitle}
-                              onChange={handleChange}
-                              InputProps={{
-                                style: {
-                                  fontFamily: 'Marcellus',
-                                  width: 250
-                                }
-                              }}
-                              InputLabelProps={{
-                                style: {
-                                  fontFamily: 'Marcellus',
-                                  color: '#303030'
-                                }
-                              }}
-                            />
-                          </Grid>
-                          <Grid item xs={12}>
-                              <Select
-                                label="project category"
-                                name="projectCategory"
-                                value={projectCategory}
-                                onChange={handleChange}
-                                sx={{
-                                  fontFamily: 'Marcellus',
-                                  width: 250,
-                                }}
-                              >
-                                <MenuItem 
-                                  value="prints"
-                                  sx={{
-                                    fontFamily: 'Marcellus',
-                                    color: '#303030'
-                                  }}
-                                >
-                                  prints
-                                </MenuItem>
-                                <MenuItem 
-                                  value="personal"
-                                  sx={{
-                                    fontFamily: 'Marcellus',
-                                    color: '#303030'
-                                  }}
-                                >
-                                  personal
-                                </MenuItem>
-                                <MenuItem 
-                                  value="logos"
-                                  sx={{
-                                    fontFamily: 'Marcellus',
-                                    color: '#303030'
-                                  }}
-                                >
-                                  logos
-                                </MenuItem>
-                                <MenuItem 
-                                  value="other"
-                                  sx={{
-                                    fontFamily: 'Marcellus',
-                                    color: '#303030'
-                                  }}
-                                >
-                                  other
-                                </MenuItem>
-                              </Select>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <TextField
-                                label="project description"
-                                name="projectDescription"
-                                variant="filled"
-                                value={projectDescription}
-                                onChange={handleChange}
-                                multiline={true}
-                                rows={3}
-                                InputProps={{
-                                  style: {
-                                    fontFamily: 'Marcellus',
-                                    width: 250
-                                  }
-                                }}
-                                InputLabelProps={{
-                                  style: {
-                                    fontFamily: 'Marcellus',
-                                    color: '#303030'
-                                  }
-                                }}
-                              />
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Button 
-                                onClick={(event) => handleEditSubmit(event, projectId)}
-                                size="large"
-                                sx={{
-                                  color: 'white',
-                                  backgroundColor: '#303030',
-                                  textTransform: 'lowercase',
-                                  fontFamily: 'Marcellus',
-                                  borderColor: 'white',
-                                  fontSize: '12px',
-                                  margin: '5px',
-                                  ':hover': {
-                                    backgroundColor: '#3f3f3f',
-                                  },
-                                }}
-                              >
-                                save project
-                              </Button>
-                            </Grid>
-                            <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
-                        </Grid>
-                      </Box>
-                    </Grid>
-                  </div>
-                </Modal>
-            </Box>
-          </Grid>
-        </TabPanel>
-        <DeleteDialog open={open} onClose={handleDeleteClose} onDelete={handleDelete} />
-        <TabPanel value={value} index={1}>
-          <Grid container rowSpacing={2}>
-              <Button
-                onClick={aboutModalOpen}
-                size="large"
-                sx={{
-                  color: 'white',
-                  backgroundColor: '#303030',
-                  textTransform: 'lowercase',
-                  fontFamily: 'Marcellus',
-                  borderColor: 'white',
-                  fontSize: '12px',
-                  display: 'block',
-                  margin: 'auto',
-                  ':hover': {
-                    backgroundColor: '#3f3f3f',
-                  },
-                }}
-              >
-                add a new about image
-              </Button>
-            <Box
-              align="center"
-              sx={{
-                width: 1000,
-                display: 'block', 
-                margin: 'auto', 
-              }}
-              >
-                <ImageList sx={{ maxWidth: 900 }} variant="masonry" cols={isMobile ? 1 : 2} gap={8}>
-                  {aboutImages.map((about) => (
-                    <ImageListItem key={about.id}>
+            >
+              add a new project
+            </Button>
+          <Box
+            sx={{
+              width: 1000,
+              display: 'block', 
+              margin: 'auto', 
+            }}
+            >
+              <ImageList sx={{ maxWidth: 900 }} variant="masonry" cols={isMobile ? 1 : 2} gap={8}>
+                {projects.map((project) => (
+                    <ImageListItem key={project.id}>
                       <img
-                        src={about.image}
-                        alt={about.title}
+                        className="slide-in-left"
+                        src={project.image}
+                        alt={project.category}
                         loading="lazy"
                       />
-                        <ImageListItemBar
-                          title={about.title}
-                          className="slide-in-left"
-                          actionIcon={
+                      <ImageListItemBar
+                        title={project.title}
+                        subtitle={project.category}
+                        className="slide-in-left"
+                        actionIcon={
+                          <>
                             <IconButton
-                              onClick={() => handleDeleteClick(about.id, "about image")}
+                              onClick={() => handleEditClick(project.id)}
                               sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                              aria-label={`info about ${about.title}`}
+                              aria-label={`edit ${project.title}`}
+                            >
+                              <EditIcon 
+                                sx={{
+                                  color: 'rgba(255, 255, 255, 0.54)'
+                                }}
+                              />
+                            </IconButton>
+                            <IconButton
+                            onClick={() => handleDeleteClick(project.id, "project")}
+                            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                            aria-label={`info about ${project.title}`}
                             >
                               <DeleteIcon 
                                 sx={{
@@ -903,32 +593,105 @@ const Admin = () => {
                                 }}
                               />
                             </IconButton>
-                          }
-                        />
+                          </>
+                        }
+                      />
                     </ImageListItem>
                   ))}
-                </ImageList>
-                <Modal
-                  open={modalOpen.aboutModal}
-                  onClose={aboutModalClose}
-                  aria-labelledby="simple-modal-title"
-                  aria-describedby="simple-modal-description"
-                  className="modal-container"
-                >
-                  <div className='modal-admin-about'>
-                    <Grid container rowSpacing={2}>
-                      <Box>
-                        <Grid  align="center" container spacing={3}>
-                          <Grid item xs={12}>
-                            <h1>add a new about image</h1>
+              </ImageList>
+              <Modal
+                open={modalOpen.projectModal}
+                onClose={projectModalClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                className="modal-container"
+              >
+                <div className='modal-admin'>
+                  <Grid container rowSpacing={2}>
+                    <Box>
+                      <Grid  align="center" container spacing={3}>
+                        <Grid item xs={12}>
+                          <h1>add a new project</h1>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField
+                            label="project title"
+                            name="projectTitle"
+                            variant="filled"
+                            value={projectTitle}
+                            onChange={handleChange}
+                            InputProps={{
+                              style: {
+                                fontFamily: 'Marcellus',
+                                width: 250
+                              }
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontFamily: 'Marcellus',
+                                color: '#303030'
+                              }
+                            }}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Select
+                              label="project category"
+                              name="projectCategory"
+                              value={projectCategory}
+                              onChange={handleChange}
+                              sx={{
+                                fontFamily: 'Marcellus',
+                                width: 250,
+                              }}
+                            >
+                              <MenuItem 
+                                value="prints"
+                                sx={{
+                                  fontFamily: 'Marcellus',
+                                  color: '#303030'
+                                }}
+                              >
+                                prints
+                              </MenuItem>
+                              <MenuItem 
+                                value="personal"
+                                sx={{
+                                  fontFamily: 'Marcellus',
+                                  color: '#303030'
+                                }}
+                              >
+                                personal
+                              </MenuItem>
+                              <MenuItem 
+                                value="logos"
+                                sx={{
+                                  fontFamily: 'Marcellus',
+                                  color: '#303030'
+                                }}
+                              >
+                                logos
+                              </MenuItem>
+                              <MenuItem 
+                                value="other"
+                                sx={{
+                                  fontFamily: 'Marcellus',
+                                  color: '#303030'
+                                }}
+                              >
+                                other
+                              </MenuItem>
+                            </Select>
                           </Grid>
                           <Grid item xs={12}>
                             <TextField
-                              label="image title"
-                              name="imageTitle"
+                              label="project description"
+                              name="projectDescription"
                               variant="filled"
-                              value={imageTitle}
+                              value={projectDescription}
                               onChange={handleChange}
+                              multiline={true}
+                              rows={3}
                               InputProps={{
                                 style: {
                                   fontFamily: 'Marcellus',
@@ -944,15 +707,15 @@ const Admin = () => {
                             />
                           </Grid>
                           <Grid item xs={12}>
-                                  <input
-                                      type="file"
-                                      accept="image/*"
-                                      onChange={handleAboutImageChange}
-                                  />
+                              <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={handleImageChange}
+                              />
                           </Grid>
                           <Grid item xs={12}>
-                            <Button
-                              onClick={handleAboutSubmit}
+                            <Button 
+                              onClick={handleProjectSubmit}
                               size="large"
                               sx={{
                                 color: 'white',
@@ -961,27 +724,306 @@ const Admin = () => {
                                 fontFamily: 'Marcellus',
                                 borderColor: 'white',
                                 fontSize: '12px',
-                                display: 'block',
-                                margin: 'auto',
+                                margin: '5px',
                                 ':hover': {
                                   backgroundColor: '#3f3f3f',
                                 },
                               }}
                             >
-                              submit
+                              Submit
                             </Button>
                           </Grid>
                           <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
+                      </Grid>
+                    </Box>
+                  </Grid>
+                </div>
+              </Modal>
+              <Modal
+                open={modalOpen.projectEditModal}
+                onClose={projectEditModalClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                className="modal-container"
+              >
+                <div className='modal-admin'>
+                  <Grid container rowSpacing={2}>
+                    <Box>
+                      <Grid  align="center" container spacing={3}>
+                        <Grid item xs={12}>
+                          <h1>edit this project</h1>
                         </Grid>
-                      </Box>
-                    </Grid>
-                  </div>
-                </Modal>
-            </Box>
-          </Grid>
-        </TabPanel>
+                        <Grid item xs={12}>
+                          <TextField
+                            label="project title"
+                            name="projectTitle"
+                            variant="filled"
+                            value={projectTitle}
+                            onChange={handleChange}
+                            InputProps={{
+                              style: {
+                                fontFamily: 'Marcellus',
+                                width: 250
+                              }
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontFamily: 'Marcellus',
+                                color: '#303030'
+                              }
+                            }}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Select
+                              label="project category"
+                              name="projectCategory"
+                              value={projectCategory}
+                              onChange={handleChange}
+                              sx={{
+                                fontFamily: 'Marcellus',
+                                width: 250,
+                              }}
+                            >
+                              <MenuItem 
+                                value="prints"
+                                sx={{
+                                  fontFamily: 'Marcellus',
+                                  color: '#303030'
+                                }}
+                              >
+                                prints
+                              </MenuItem>
+                              <MenuItem 
+                                value="personal"
+                                sx={{
+                                  fontFamily: 'Marcellus',
+                                  color: '#303030'
+                                }}
+                              >
+                                personal
+                              </MenuItem>
+                              <MenuItem 
+                                value="logos"
+                                sx={{
+                                  fontFamily: 'Marcellus',
+                                  color: '#303030'
+                                }}
+                              >
+                                logos
+                              </MenuItem>
+                              <MenuItem 
+                                value="other"
+                                sx={{
+                                  fontFamily: 'Marcellus',
+                                  color: '#303030'
+                                }}
+                              >
+                                other
+                              </MenuItem>
+                            </Select>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              label="project description"
+                              name="projectDescription"
+                              variant="filled"
+                              value={projectDescription}
+                              onChange={handleChange}
+                              multiline={true}
+                              rows={3}
+                              InputProps={{
+                                style: {
+                                  fontFamily: 'Marcellus',
+                                  width: 250
+                                }
+                              }}
+                              InputLabelProps={{
+                                style: {
+                                  fontFamily: 'Marcellus',
+                                  color: '#303030'
+                                }
+                              }}
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Button 
+                              onClick={(event) => handleEditSubmit(event, projectId)}
+                              size="large"
+                              sx={{
+                                color: 'white',
+                                backgroundColor: '#303030',
+                                textTransform: 'lowercase',
+                                fontFamily: 'Marcellus',
+                                borderColor: 'white',
+                                fontSize: '12px',
+                                margin: '5px',
+                                ':hover': {
+                                  backgroundColor: '#3f3f3f',
+                                },
+                              }}
+                            >
+                              save project
+                            </Button>
+                          </Grid>
+                          <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
+                      </Grid>
+                    </Box>
+                  </Grid>
+                </div>
+              </Modal>
+          </Box>
+        </Grid>
+      </TabPanel>
+      <DeleteDialog open={open} onClose={handleDeleteClose} onDelete={handleDelete} />
+      <TabPanel value={value} index={1}>
+        <Grid container rowSpacing={2}>
+            <Button
+              onClick={aboutModalOpen}
+              size="large"
+              sx={{
+                color: 'white',
+                backgroundColor: '#303030',
+                textTransform: 'lowercase',
+                fontFamily: 'Marcellus',
+                borderColor: 'white',
+                fontSize: '12px',
+                display: 'block',
+                margin: 'auto',
+                ':hover': {
+                  backgroundColor: '#3f3f3f',
+                },
+              }}
+            >
+              add a new about image
+            </Button>
+          <Box
+            align="center"
+            sx={{
+              width: 1000,
+              display: 'block', 
+              margin: 'auto', 
+            }}
+            >
+              <ImageList sx={{ maxWidth: 900 }} variant="masonry" cols={isMobile ? 1 : 2} gap={8}>
+                {aboutImages.map((about) => (
+                  <ImageListItem key={about.id}>
+                    <img
+                      src={about.image}
+                      alt={about.title}
+                      loading="lazy"
+                    />
+                      <ImageListItemBar
+                        title={about.title}
+                        className="slide-in-left"
+                        actionIcon={
+                          <IconButton
+                            onClick={() => handleDeleteClick(about.id, "about image")}
+                            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                            aria-label={`info about ${about.title}`}
+                          >
+                            <DeleteIcon 
+                              sx={{
+                                color: 'red'
+                              }}
+                            />
+                          </IconButton>
+                        }
+                      />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+              <Modal
+                open={modalOpen.aboutModal}
+                onClose={aboutModalClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                className="modal-container"
+              >
+                <div className='modal-admin-about'>
+                  <Grid container rowSpacing={2}>
+                    <Box>
+                      <Grid  align="center" container spacing={3}>
+                        <Grid item xs={12}>
+                          <h1>add a new about image</h1>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField
+                            label="image title"
+                            name="imageTitle"
+                            variant="filled"
+                            value={imageTitle}
+                            onChange={handleChange}
+                            InputProps={{
+                              style: {
+                                fontFamily: 'Marcellus',
+                                width: 250
+                              }
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontFamily: 'Marcellus',
+                                color: '#303030'
+                              }
+                            }}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleAboutImageChange}
+                                />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Button
+                            onClick={handleAboutSubmit}
+                            size="large"
+                            sx={{
+                              color: 'white',
+                              backgroundColor: '#303030',
+                              textTransform: 'lowercase',
+                              fontFamily: 'Marcellus',
+                              borderColor: 'white',
+                              fontSize: '12px',
+                              display: 'block',
+                              margin: 'auto',
+                              ':hover': {
+                                backgroundColor: '#3f3f3f',
+                              },
+                            }}
+                          >
+                            submit
+                          </Button>
+                        </Grid>
+                        <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
+                      </Grid>
+                    </Box>
+                  </Grid>
+                </div>
+              </Modal>
+          </Box>
+        </Grid>
+      </TabPanel>
+    </div>
+    : 
+    <div className='noAccessContainer'>
+      <Grid align="center" container>
+        <Grid item xs={12}>
+          <DangerousIcon 
+            sx={{
+              height: 150,
+              width: 150,
+              color: 'red'
+            }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <h1>You are not authorized</h1>
+        </Grid>
+      </Grid>
     </div>
   );
-};
+}
 
 export default Admin;

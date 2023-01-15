@@ -17,6 +17,19 @@ client.connect((err) => {
     }
 });
 
+const getUsers = async () => {
+  const text = "SELECT * FROM users";
+  return new Promise((resolve, reject) => {
+    client.query(text, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res.rows);
+      }
+    });
+  });
+};
+
 const getProjects = async () => {
   const text = "SELECT id, title, category, description FROM projects";
   return new Promise((resolve, reject) => {
@@ -125,6 +138,7 @@ module.exports = {
   insertProject,
   updateProject,
   insertAboutImage,
+  getUsers,
   getProjects,
   getAbout,
   deleteProject,

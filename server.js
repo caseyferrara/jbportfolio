@@ -3,23 +3,36 @@ const express = require('express');
 const request = require('request');
 const cors = require('cors');
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 const app = express();
 
-const { insertProject, updateProject, insertAboutImage, getProjects, getAbout, deleteProject, deleteAboutImage, getProjectById, getAboutById } = require('./src/Database/db');
+const { insertProject, updateProject, insertAboutImage, getUsers, getProjects, getAbout, deleteProject, deleteAboutImage, getProjectById, getAboutById } = require('./src/Database/db');
 
-app.use(cors());
-
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 app.use('/images', express.static('./src/Images'));
-
 app.use(express.json());
+
+async function isAllowedEmail(email) {
+  try {
+    const users = await getUsers(); // call the getUsers function and wait for the response
+    const emails = users.map(user => user.email); // map the users array to get only the email property
+    return emails.includes(email); // check if the email passed as argument is included in the emails array
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
 
 app.get('/callback', (req, res) => {
   const code = req.query.code;
-  console.log(code)
   const clientId = 'vAKqtbL2JR7mmz24hMlxf993JJQIiBg9';
   const clientSecret = 'YSt1mGdU2YXBMtV73g5O7xHpYIqE9bI7vfbD8eku3Dm_k0b6xPHMnhCxdmW7womM';
-  const redirectUri = 'https://edd4-162-211-34-192.ngrok.io/callback';
+  const redirectUri = 'http://localhost:3001/callback';
 
   // Exchange the authorization code for an access token
   request.post({
@@ -52,25 +65,20 @@ app.get('/callback', (req, res) => {
         res.status(500).send(err);
         return;
       }
-
       const email = body.email;
+      const image = body.picture;
+      req.user = { email: email, image: image };
+      const secret = crypto.randomBytes(64).toString('hex');
+      const token = jwt.sign({ email: req.user.email, image: req.user.image }, secret);
 
-      // Check if the email address is allowed
-      if (isAllowedEmail(email)) {
-        // Email is allowed, authenticate the user and redirect to the app
-        res.redirect(`http://localhost:3000/admin`);
-      } else {
-        // Email is not allowed, show an error message
-        res.send('Sorry, your email address is not allowed to access the app.');
-      }
+      if (req.user && isAllowedEmail(req.user.email)) {
+          res.redirect(`http://localhost:3000/admin?token=${token}`);
+        } else {
+          res.status(401).send('You are not authorized to access this page');
+        }
     });
   });
 });
-
-function isAllowedEmail(email) {
-  const allowedEmails = ['casey.ferrara@outlook.com', 'jillian22brown@gmail.com'];
-  return allowedEmails.includes(email);
-}
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -89,7 +97,48 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post('/projects/submit', upload.single('image'), async (req, res) => {
+app.get('/projects', async (req, res) => {
+  try {
+    const projects = await getProjects();
+    res.json(projects);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+app.get('/project/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const projects = await getProjectById(id);
+    res.json(projects);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+app.get('/users', async (req, res) => {
+  try {
+    const users = await getUsers();
+    res.json(users);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+app.get('/about', async (req, res) => {
+  try {
+    const about = await getAbout();
+    res.json(about);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+app.post('/admin/projects/submit', upload.single('image'), async (req, res) => {
   const { projectTitle, projectCategory, projectDescription } = req.body;
   const projectImage = req.file;
 
@@ -113,7 +162,7 @@ app.post('/projects/submit', upload.single('image'), async (req, res) => {
   });
 });
 
-app.post('/project/update/:id', async (req, res) => {
+app.post('/admin/project/update/:id', async (req, res) => {
   const { id } = req.params;
   const oldProject = await getProjectById(id);
   const oldProjectTitle = oldProject.title;
@@ -145,7 +194,7 @@ app.post('/project/update/:id', async (req, res) => {
 });
 
 
-app.post('/about/submit', upload.single('image'), async (req, res) => {
+app.post('/admin/about/submit', upload.single('image'), async (req, res) => {
   
   const { imageTitle } = req.body;
   const aboutImage = req.file;
@@ -169,7 +218,7 @@ app.post('/about/submit', upload.single('image'), async (req, res) => {
   });
 });
 
-app.get('/projects', async (req, res) => {
+app.get('/admin/projects', async (req, res) => {
   try {
     const projects = await getProjects();
     res.json(projects);
@@ -179,18 +228,7 @@ app.get('/projects', async (req, res) => {
   }
 });
 
-app.get('/project/:id', async (req, res) => {
-  try {
-    const id = req.params.id;
-    const projects = await getProjectById(id);
-    res.json(projects);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-});
-
-app.get('/about', async (req, res) => {
+app.get('/admin/about', async (req, res) => {
   try {
     const about = await getAbout();
     res.json(about);
@@ -200,7 +238,7 @@ app.get('/about', async (req, res) => {
   }
 });
 
-app.delete('/projects/:id', async (req, res) => {
+app.delete('/admin/projects/:id', async (req, res) => {
   try {
     const id = req.params.id;
     // Retrieve the project with the given id
@@ -223,7 +261,7 @@ app.delete('/projects/:id', async (req, res) => {
   }
 });
 
-app.delete('/about/:id', async (req, res) => {
+app.delete('/admin/about/:id', async (req, res) => {
   try {
 
     const id = req.params.id;
