@@ -3,7 +3,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 import React, { useState, useEffect } from 'react';
-import { Modal, Dialog, DialogTitle, DialogContent, DialogActions, useMediaQuery, Snackbar, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
+import { Typography, Avatar, Modal, Dialog, DialogTitle, DialogContent, DialogActions, useMediaQuery, Snackbar, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
 
@@ -47,9 +47,13 @@ const Admin = () => {
   const token = urlParams.get('token');
   let decoded;
   let email;
+  let photo;
+  let name;
   if (token) {
      decoded = jwtDecode(token);
      email = decoded.email;
+     photo = decoded.image;
+     name = decoded.name;
   }
   const [users, setUsers] = useState([]);
 
@@ -474,6 +478,29 @@ const Admin = () => {
     email 
     ? 
       <div align="center" className='adminContainer'>
+      <Grid align="center" container>
+          <Grid item xs={12}>
+            <Avatar 
+              src={photo}
+              alt="Google Photo"
+              sx={{
+                marginTop: 1
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+              <Typography
+                sx={{
+                  fontFamily: 'Marcellus',
+                  '@media (max-width: 600px)': {
+                    fontSize: 10
+                  }
+                }}
+              >
+                Welcome back, {name}! <a href="/">Sign Out?</a>
+              </Typography>
+          </Grid>
+      </Grid>
       <Grid align="center" item xs={12}>
               <h1 className='headerText tracking-in-expand'>admin</h1>
       </Grid>
@@ -491,13 +518,14 @@ const Admin = () => {
         <Tabs 
           value={value}
           onChange={handleTabChange} 
+          textColor="#303030"
           TabIndicatorProps={{
             style: {
               backgroundColor: "#303030",
             }
           }}
         >
-          <Tab 
+          <Tab
             sx={{ 
               display: 'block', 
               margin: 'auto',

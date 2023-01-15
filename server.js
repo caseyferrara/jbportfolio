@@ -67,9 +67,10 @@ app.get('/callback', (req, res) => {
       }
       const email = body.email;
       const image = body.picture;
-      req.user = { email: email, image: image };
+      const name = body.name;
+      req.user = { email: email, image: image, name: name };
       const secret = crypto.randomBytes(64).toString('hex');
-      const token = jwt.sign({ email: req.user.email, image: req.user.image }, secret);
+      const token = jwt.sign({ email: req.user.email, image: req.user.image, name: req.user.name }, secret);
 
       if (req.user && isAllowedEmail(req.user.email)) {
           res.redirect(`http://localhost:3000/admin?token=${token}`);
