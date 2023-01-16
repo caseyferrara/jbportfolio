@@ -1,4 +1,5 @@
 import './CSS/Style.css';
+import Footer from './Footer';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DangerousIcon from '@mui/icons-material/Dangerous';
@@ -56,6 +57,7 @@ const Admin = () => {
      name = decoded.name;
   }
   const [users, setUsers] = useState([]);
+  const user = users.find(user => user.email === email) ? users.find(user => user.email === email) : null;
 
   const [projects, setProjects] = useState([]);
   const [projectId, setProjectId] = useState(null);
@@ -150,7 +152,7 @@ const Admin = () => {
     });
   };
 
-  const handleChange = (event) => {
+  const handleInputChange = (event) => {
     if (event.target.name === 'projectTitle') {
       setProjectTitle(event.target.value);
     } else if (event.target.name === 'projectCategory') {
@@ -321,35 +323,6 @@ const Admin = () => {
       console.error(error);
     }
   };
-  
-  const deleteProject = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:3001/admin/projects/${id}`, {
-        method: 'DELETE',
-      });
-      
-      if (response.ok) {
-        // Update the frontend to reflect the deleted project
-        setProjects((prevProjects) => prevProjects.filter((project) => project.id !== id));
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const deleteAboutImage = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:3001/admin/about/${id}`, {
-        method: 'DELETE',
-      });
-      
-      if (response.ok) {
-        setAboutImages((prevAbout) => prevAbout.filter((about) => about.id !== id));
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   function DeleteDialog({ open, onClose, onDelete }) {
 
@@ -360,6 +333,9 @@ const Admin = () => {
         break;
       case "about image":
         itemTypeText = "about image";
+        break;
+      default:
+        itemTypeText = "invalid";
         break;
     }
 
@@ -426,15 +402,33 @@ const Admin = () => {
     );
   }
 
-  const handleDeleteClick = (id, itemType) => {
-    setItemType(itemType);
-    setItemId(id);
-    setOpen(true);
+  const deleteProject = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3001/admin/projects/${id}`, {
+        method: 'DELETE',
+      });
+      
+      if (response.ok) {
+        // Update the frontend to reflect the deleted project
+        setProjects((prevProjects) => prevProjects.filter((project) => project.id !== id));
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleDelete = () => {
-    deleteItem(itemId, itemType);
-    setOpen(false);
+  const deleteAboutImage = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3001/admin/about/${id}`, {
+        method: 'DELETE',
+      });
+      
+      if (response.ok) {
+        setAboutImages((prevAbout) => prevAbout.filter((about) => about.id !== id));
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const deleteItem = async (id, itemType) => {
@@ -448,6 +442,17 @@ const Admin = () => {
       default:
         console.error(`Unrecognized item type: ${itemType}`);
     }
+  };
+
+  const handleDeleteClick = (id, itemType) => {
+    setItemType(itemType);
+    setItemId(id);
+    setOpen(true);
+  };
+
+  const handleDelete = () => {
+    deleteItem(itemId, itemType);
+    setOpen(false);
   };
 
   const handleDeleteClose = () => {
@@ -475,7 +480,7 @@ const Admin = () => {
   }
 
   return (
-    email 
+    user
     ? 
       <div align="center" className='adminContainer'>
       <Grid align="center" container>
@@ -497,7 +502,7 @@ const Admin = () => {
                   }
                 }}
               >
-                Welcome back, {name}! <a href="/">Sign Out?</a>
+                Welcome back, {name}! <a href="/" style={{ textDecoration: 'underline', color: 'inherit' }}>Sign Out?</a>
               </Typography>
           </Grid>
       </Grid>
@@ -518,7 +523,7 @@ const Admin = () => {
         <Tabs 
           value={value}
           onChange={handleTabChange} 
-          textColor="#303030"
+          textColor="inherit"
           TabIndicatorProps={{
             style: {
               backgroundColor: "#303030",
@@ -558,25 +563,6 @@ const Admin = () => {
 
       <TabPanel value={value} index={0}>
         <Grid container rowSpacing={2}>
-            <Button
-              onClick={projectModalOpen}
-              size="large"
-              sx={{
-                color: 'white',
-                backgroundColor: '#303030',
-                textTransform: 'lowercase',
-                fontFamily: 'Marcellus',
-                borderColor: 'white',
-                fontSize: '12px',
-                display: 'block',
-                margin: 'auto',
-                ':hover': {
-                  backgroundColor: '#3f3f3f',
-                },
-              }}
-            >
-              add a new project
-            </Button>
           <Box
             sx={{
               width: 1000,
@@ -584,6 +570,25 @@ const Admin = () => {
               margin: 'auto', 
             }}
             >
+              <Button
+                onClick={projectModalOpen}
+                size="large"
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#303030',
+                  textTransform: 'lowercase',
+                  fontFamily: 'Marcellus',
+                  borderColor: 'white',
+                  fontSize: '12px',
+                  display: 'block',
+                  margin: 'auto',
+                  ':hover': {
+                    backgroundColor: '#3f3f3f',
+                  },
+                }}
+              >
+                add a new project
+              </Button>
               <ImageList sx={{ maxWidth: 900 }} variant="masonry" cols={isMobile ? 1 : 2} gap={8}>
                 {projects.map((project) => (
                     <ImageListItem key={project.id}>
@@ -647,7 +652,7 @@ const Admin = () => {
                             name="projectTitle"
                             variant="filled"
                             value={projectTitle}
-                            onChange={handleChange}
+                            onChange={handleInputChange}
                             InputProps={{
                               style: {
                                 fontFamily: 'Marcellus',
@@ -667,7 +672,7 @@ const Admin = () => {
                               label="project category"
                               name="projectCategory"
                               value={projectCategory}
-                              onChange={handleChange}
+                              onChange={handleInputChange}
                               sx={{
                                 fontFamily: 'Marcellus',
                                 width: 250,
@@ -717,7 +722,7 @@ const Admin = () => {
                               name="projectDescription"
                               variant="filled"
                               value={projectDescription}
-                              onChange={handleChange}
+                              onChange={handleInputChange}
                               multiline={true}
                               rows={3}
                               InputProps={{
@@ -787,7 +792,7 @@ const Admin = () => {
                             name="projectTitle"
                             variant="filled"
                             value={projectTitle}
-                            onChange={handleChange}
+                            onChange={handleInputChange}
                             InputProps={{
                               style: {
                                 fontFamily: 'Marcellus',
@@ -807,7 +812,7 @@ const Admin = () => {
                               label="project category"
                               name="projectCategory"
                               value={projectCategory}
-                              onChange={handleChange}
+                              onChange={handleInputChange}
                               sx={{
                                 fontFamily: 'Marcellus',
                                 width: 250,
@@ -857,7 +862,7 @@ const Admin = () => {
                               name="projectDescription"
                               variant="filled"
                               value={projectDescription}
-                              onChange={handleChange}
+                              onChange={handleInputChange}
                               multiline={true}
                               rows={3}
                               InputProps={{
@@ -906,25 +911,6 @@ const Admin = () => {
       <DeleteDialog open={open} onClose={handleDeleteClose} onDelete={handleDelete} />
       <TabPanel value={value} index={1}>
         <Grid container rowSpacing={2}>
-            <Button
-              onClick={aboutModalOpen}
-              size="large"
-              sx={{
-                color: 'white',
-                backgroundColor: '#303030',
-                textTransform: 'lowercase',
-                fontFamily: 'Marcellus',
-                borderColor: 'white',
-                fontSize: '12px',
-                display: 'block',
-                margin: 'auto',
-                ':hover': {
-                  backgroundColor: '#3f3f3f',
-                },
-              }}
-            >
-              add a new about image
-            </Button>
           <Box
             align="center"
             sx={{
@@ -933,6 +919,25 @@ const Admin = () => {
               margin: 'auto', 
             }}
             >
+              <Button
+                onClick={aboutModalOpen}
+                size="large"
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#303030',
+                  textTransform: 'lowercase',
+                  fontFamily: 'Marcellus',
+                  borderColor: 'white',
+                  fontSize: '12px',
+                  display: 'block',
+                  margin: 'auto',
+                  ':hover': {
+                    backgroundColor: '#3f3f3f',
+                  },
+                }}
+              >
+                add a new about image
+              </Button>
               <ImageList sx={{ maxWidth: 900 }} variant="masonry" cols={isMobile ? 1 : 2} gap={8}>
                 {aboutImages.map((about) => (
                   <ImageListItem key={about.id}>
@@ -981,7 +986,7 @@ const Admin = () => {
                             name="imageTitle"
                             variant="filled"
                             value={imageTitle}
-                            onChange={handleChange}
+                            onChange={handleInputChange}
                             InputProps={{
                               style: {
                                 fontFamily: 'Marcellus',
@@ -1033,6 +1038,7 @@ const Admin = () => {
           </Box>
         </Grid>
       </TabPanel>
+      <Footer />
     </div>
     : 
     <div className='noAccessContainer'>

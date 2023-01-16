@@ -9,6 +9,23 @@
   z-index: 1;
 }
 
+.contactContainer {
+  background-color: #E8EAE5;
+  font-family: Marcellus;
+  width: 100%;
+  overflow: hidden;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.footerContainer {
+  background-color: #E8EAE5;
+  width: 100%;
+}
+
 .noAccessContainer {
   background-color: #E8EAE5;
   height: 100vh;
@@ -34,12 +51,12 @@
   justify-content: center;
 }
 
-/* HOME COMPONENT */
-
-.homeImg {
-  max-width: 95%;
-  max-height: 95%;
-  z-index: 1;
+.adminContainer {
+  background-color: #E8EAE5;
+  font-family: Marcellus;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
 }
 
 .homeContainer {
@@ -48,6 +65,14 @@
   font-family: Marcellus;
   width: 100%;
   overflow: hidden;
+}
+
+/* HOME COMPONENT */
+
+.homeImg {
+  max-width: 95%;
+  max-height: 95%;
+  z-index: 1;
 }
 
 /* ABOUT COMPONENT */
@@ -120,6 +145,60 @@
   padding: 20px;
 }
 
+.modal-title {
+  font-size: 24px;
+  margin: 0;
+}
+
+.modal-image {
+  width: 350px;
+  height: auto;
+  object-fit: cover;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+
+/* CONTACT COMPONENT */
+
+.contact-index{
+    z-index: 2;
+}
+
+.contact-form {
+    border: 3px solid;
+    border-color: #303030;
+    width: 550px;
+    height: 350px;
+}
+
+/* FOOTER COMPONENT */
+
+.footerText {
+  color: white;
+  margin: 0 auto;
+}
+
+.footerLink {
+  margin: 5px;
+  color: white;
+}
+
+.social {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 20px;  /* position the social div at the bottom of the footer container */
+  width: 100%;
+  height: 50px;
+}
+
+/* ADMIN COMPONENT */
+
+.projectImageSize {
+  width: 164px;
+  height: 164px;
+}
+
 .modal-admin {
   background-color: #E8EAE5;
   border-radius: 5px;
@@ -150,78 +229,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-}
-
-.modal-title {
-  font-size: 24px;
-  margin: 0;
-}
-
-.modal-image {
-  width: 350px;
-  height: auto;
-  object-fit: cover;
-  margin: 10px;
-  border-radius: 5px;
-}
-
-
-/* CONTACT COMPONENT */
-
-.contact-index{
-    z-index: 2;
-}
-
-.contact-form {
-    border: 3px solid;
-    border-color: #303030;
-    width: 550px;
-    height: 350px;
-}
-
-/* FOOTER COMPONENT */
-
-/* .footerContainer {
-  background-color: #E8EAE5;
-  width: 100%;
-  height: 750px;
-  font-family: Marcellus;
-  position: relative;
-  background: url('./Images/waveFooter.svg') no-repeat;
-  background-size: cover;
-} */
-
-.footerText {
-  color: white;
-  margin: 0 auto;
-}
-
-.footerLink {
-  margin: 5px;
-  color: white;
-}
-
-.social {
-  position: absolute;
-  bottom: 0;
-  margin-bottom: 20px;  /* position the social div at the bottom of the footer container */
-  width: 100%;
-  height: 50px;
-}
-
-/* ADMIN COMPONENT */
-
-.adminContainer {
-  background-color: #E8EAE5;
-  font-family: Marcellus;
-  width: 80%;
-  height: 100%;
-  margin: 0 auto;
-}
-
-.projectImageSize {
-  width: 164px;
-  height: 164px;
 }
 
 /* RESPONSIVE SECTION */

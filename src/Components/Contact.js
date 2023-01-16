@@ -1,13 +1,14 @@
 import './CSS/Style.css'
 import { Grid, Box, TextField, Button } from '@mui/material';
 import { Element } from 'react-scroll';
+import Footer from './Footer';
 
 function Contact() {
 
     return (
       
       <Element id="contact">
-        <div className="allContainer">
+        <div className="contactContainer">
           <Grid
               container 
               direction="row" 
@@ -81,6 +82,7 @@ function Contact() {
               </Box>
             </Grid>
           </Grid>
+          <Footer />
         </div>
       </Element>
     );

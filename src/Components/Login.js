@@ -8,7 +8,6 @@ function Login() {
     const StyledImg = styled.img`
     height: 150px;
     width: auto;
-    cursor: pointer;
   `;
 
     const auth0ClientId = 'vAKqtbL2JR7mmz24hMlxf993JJQIiBg9';
@@ -25,7 +24,7 @@ function Login() {
       <div
         className="loginContainer"
       >
-        <Grid spacing={0}>
+        <Grid>
           <Grid item xs={12}>
             <StyledImg 
               src={blackLogo} 
@@ -41,6 +40,7 @@ function Login() {
               textTransform: 'lowercase',
               fontFamily: 'Marcellus',
               borderColor: 'white',
+              width: '100%',
               fontSize: '12px',
               ':hover': {
                 backgroundColor: '#3f3f3f',
