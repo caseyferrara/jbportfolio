@@ -133,7 +133,7 @@ const Admin = () => {
       fetchAboutData();
       setTimeout(() => {
         setIsLoading(false);
-      }, 2000);
+      }, 1000);
     
   }, [token]);
   
@@ -141,13 +141,6 @@ const Admin = () => {
   const alertClose = () => {
     setAlertMessage('');
     setSnackbarOpen(false);
-  }
-
-  const handleSignOut = () => {
-    if(sessionStorage.getItem('token')){
-      sessionStorage.removeItem('token');
-    }
-    window.location.replace("/");
   }
 
   const handleModalOpen = (modalName) => {
@@ -489,6 +482,13 @@ const Admin = () => {
 
   const aboutModalClose = () => {
       handleModalClose('aboutModal')
+  }
+
+  const handleSignOut = () => {
+    if(sessionStorage.getItem('token')){
+      sessionStorage.removeItem('token');
+    }
+    window.location.replace("/");
   }
 
   return (
