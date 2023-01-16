@@ -127,18 +127,27 @@ const Admin = () => {
         });        
       }
 
+      sessionStorage.setItem('token', token);
       fetchUserData();
       fetchProjectData();
       fetchAboutData();
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
     
-
-  }, []);
+  }, [token]);
   
 
   const alertClose = () => {
     setAlertMessage('');
     setSnackbarOpen(false);
+  }
+
+  const handleSignOut = () => {
+    if(sessionStorage.getItem('token')){
+      sessionStorage.removeItem('token');
+    }
+    window.location.replace("/");
   }
 
   const handleModalOpen = (modalName) => {
@@ -512,8 +521,26 @@ const Admin = () => {
                 }
               }}
             >
-              Welcome back, {name}! <a href="/" style={{ textDecoration: 'underline', color: 'inherit' }}>Sign Out?</a>
+              Welcome back, {name}!
             </Typography>
+            <Button 
+              onClick={handleSignOut}
+              sx={{
+                color: 'white',
+                backgroundColor: '#303030',
+                textTransform: 'lowercase',
+                fontFamily: 'Marcellus',
+                borderColor: 'white',
+                fontSize: '12px',
+                display: 'block',
+                margin: 'auto',
+                ':hover': {
+                  backgroundColor: '#3f3f3f',
+                }
+              }}
+            >
+              sign out?
+            </Button>
         </Grid>
     </Grid>
     <Grid align="center" item xs={12}>
