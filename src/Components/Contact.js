@@ -31,12 +31,19 @@ function Contact() {
                   <TextField
                       id="outlined-textarea"
                       label="Name"
-                      placeholder="John Doe"
+                      placeholder="john doe"
                       margin="normal"
-                      sx={{
-                        width: '35ch',
-                        '@media (max-width: 600px)': {
-                          width: '20ch'
+                      InputProps={{
+                        style: {
+                          fontFamily: 'Marcellus',
+                          width: 350,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          fontFamily: 'Marcellus',
+                          color: '#303030',
+                          textTransform: 'lowercase',
                         }
                       }}
                   />
@@ -46,10 +53,17 @@ function Contact() {
                       label="Email"
                       placeholder="jillian@jillianbrown.com"
                       margin="normal"
-                      sx={{
-                        width: '35ch',
-                        '@media (max-width: 600px)': {
-                          width: '20ch'
+                      InputProps={{
+                        style: {
+                          fontFamily: 'Marcellus',
+                          width: 350
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          fontFamily: 'Marcellus',
+                          color: '#303030',
+                          textTransform: 'lowercase',
                         }
                       }}
                   />
@@ -57,13 +71,20 @@ function Contact() {
                   <TextField
                       id="outlined-textarea"
                       label="Message"
-                      placeholder="Enter your message..."
+                      placeholder="enter your message..."
                       multiline
                       margin="normal"
-                      sx={{
-                        width: '35ch',
-                        '@media (max-width: 600px)': {
-                          width: '20ch'
+                      InputProps={{
+                        style: {
+                          fontFamily: 'Marcellus',
+                          width: 350
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          fontFamily: 'Marcellus',
+                          color: '#303030',
+                          textTransform: 'lowercase',
                         }
                       }}
                   />
@@ -71,9 +92,16 @@ function Contact() {
                   <Button
                     variant='contained'
                     sx={{
+                      color: 'white',
                       backgroundColor: '#303030',
+                      textTransform: 'lowercase',
+                      fontFamily: 'Marcellus',
+                      borderColor: 'white',
+                      fontSize: '12px',
+                      display: 'block',
+                      margin: 'auto',
                       ':hover': {
-                        backgroundColor: '#404040'
+                        backgroundColor: '#3f3f3f',
                       }
                     }}
                   >
