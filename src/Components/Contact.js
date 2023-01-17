@@ -1,5 +1,6 @@
 import './CSS/Style.css'
-import { Grid, Box, TextField, Button } from '@mui/material';
+import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import { Grid, Box, TextField, Button, Typography } from '@mui/material';
 import { Element } from 'react-scroll';
 import Footer from './Footer';
 
@@ -28,6 +29,23 @@ function Contact() {
                   backgroundColor: '#E8EAE5',
                 }}
               >
+                <Grid item xs={12}>
+                  <ContactSupportIcon 
+                    sx={{
+                      color: "#303030",
+                    }}
+                    fontSize="large"
+                  />
+                  <Typography
+                    sx={{
+                      fontFamily: "Marcellus"
+                    }}
+                  >
+                    let's chat! contact me below
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12}>
                   <TextField
                       id="outlined-textarea"
                       label="Name"
@@ -36,7 +54,6 @@ function Contact() {
                       InputProps={{
                         style: {
                           fontFamily: 'Marcellus',
-                          width: 350,
                         }
                       }}
                       InputLabelProps={{
@@ -47,7 +64,8 @@ function Contact() {
                         }
                       }}
                   />
-                  <br></br>
+                </Grid>
+                <Grid item xs={12}>
                   <TextField
                       id="outlined-textarea"
                       label="Email"
@@ -56,7 +74,6 @@ function Contact() {
                       InputProps={{
                         style: {
                           fontFamily: 'Marcellus',
-                          width: 350
                         }
                       }}
                       InputLabelProps={{
@@ -67,17 +84,18 @@ function Contact() {
                         }
                       }}
                   />
-                  <br></br>
+                </Grid>
+                <Grid item xs={12}>
                   <TextField
                       id="outlined-textarea"
                       label="Message"
                       placeholder="enter your message..."
                       multiline
+                      rows={4}
                       margin="normal"
                       InputProps={{
                         style: {
                           fontFamily: 'Marcellus',
-                          width: 350
                         }
                       }}
                       InputLabelProps={{
@@ -88,7 +106,8 @@ function Contact() {
                         }
                       }}
                   />
-                  <br></br>
+                </Grid>
+                <Grid item xs={12}>
                   <Button
                     variant='contained'
                     sx={{
@@ -107,6 +126,7 @@ function Contact() {
                   >
                   Submit
                   </Button>
+                </Grid>
               </Box>
             </Grid>
           </Grid>

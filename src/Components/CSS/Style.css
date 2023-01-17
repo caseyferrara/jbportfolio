@@ -177,8 +177,8 @@
 .contact-form {
     border: 3px solid;
     border-color: #303030;
-    width: 550px;
-    height: 350px;
+    width: 500px;
+    height: 420px;
 }
 
 /* FOOTER COMPONENT */
@@ -261,7 +261,7 @@
   }
   .contact-form {
     width: 300px;
-    height: 350px;
+    height: 420px;
   }
   .headerText{
     font-size: 60px;
