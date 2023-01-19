@@ -178,7 +178,7 @@
     border: 3px solid;
     border-color: #303030;
     width: 500px;
-    height: 420px;
+    height: 410px;
 }
 
 /* FOOTER COMPONENT */
@@ -261,7 +261,7 @@
   }
   .contact-form {
     width: 300px;
-    height: 420px;
+    height: 410px;
   }
   .headerText{
     font-size: 60px;

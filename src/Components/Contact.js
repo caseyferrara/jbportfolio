@@ -1,10 +1,49 @@
 import './CSS/Style.css'
+import { useState } from 'react';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
-import { Grid, Box, TextField, Button, Typography } from '@mui/material';
+import { Snackbar, Grid, Box, TextField, Button, Typography } from '@mui/material';
 import { Element } from 'react-scroll';
 import Footer from './Footer';
 
 function Contact() {
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+
+    const [alertMessage, setAlertMessage] = useState('');
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+    const handleSubmit = e => {
+      e.preventDefault();
+      fetch('http://localhost:3001/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, message })
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+      setName('');
+      setEmail('');
+      setMessage('');
+
+      setAlertMessage('Your email has been sent!');
+      setSnackbarOpen(true);
+    }
+
+    const alertClose = () => {
+      setAlertMessage('');
+      setSnackbarOpen(false);
+    }
+  
 
     return (
       
@@ -23,7 +62,7 @@ function Contact() {
               <Box
                 component="form"
                 noValidate
-                autoComplete="off"
+                autoComplete="on"
                 className='contact-form'
                 sx={{
                   backgroundColor: '#E8EAE5',
@@ -47,10 +86,12 @@ function Contact() {
 
                 <Grid item xs={12}>
                   <TextField
+                      onChange={e => setName(e.target.value)}
                       id="outlined-textarea"
-                      label="Name"
+                      label="name"
                       placeholder="john doe"
                       margin="normal"
+                      value={name}
                       InputProps={{
                         style: {
                           fontFamily: 'Marcellus',
@@ -67,10 +108,12 @@ function Contact() {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                      onChange={e => setEmail(e.target.value)}
                       id="outlined-textarea"
-                      label="Email"
+                      label="email"
                       placeholder="jillian@jillianbrown.com"
                       margin="normal"
+                      value={email}
                       InputProps={{
                         style: {
                           fontFamily: 'Marcellus',
@@ -87,12 +130,14 @@ function Contact() {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                      onChange={e => setMessage(e.target.value)}
                       id="outlined-textarea"
-                      label="Message"
+                      label="message"
                       placeholder="enter your message..."
                       multiline
                       rows={4}
                       margin="normal"
+                      value={message}
                       InputProps={{
                         style: {
                           fontFamily: 'Marcellus',
@@ -109,6 +154,7 @@ function Contact() {
                 </Grid>
                 <Grid item xs={12}>
                   <Button
+                    onClick={handleSubmit}
                     variant='contained'
                     sx={{
                       color: 'white',
@@ -127,6 +173,7 @@ function Contact() {
                   Submit
                   </Button>
                 </Grid>
+                <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
               </Box>
             </Grid>
           </Grid>

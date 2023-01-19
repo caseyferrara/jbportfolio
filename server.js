@@ -5,6 +5,15 @@ const cors = require('cors');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
+
+require('dotenv').config();
+
+const auth0ClientId = process.env.AUTH_CLIENT_ID;
+const auth0ClientSecret = process.env.CLIENT_SECRET;
+
 
 const app = express();
 
@@ -16,6 +25,58 @@ app.use(cors({
 }));
 app.use('/images', express.static('./src/Images'));
 app.use(express.json());
+
+const oauth2Client = new OAuth2(
+  process.env.GMAIL_CLIENT_ID,
+  process.env.GMAIL_CLIENT_SECRET,
+  "https://developers.google.com/oauthplayground"
+);
+
+oauth2Client.setCredentials({
+  refresh_token: process.env.REFRESH_TOKEN
+});
+
+const myAccessToken = oauth2Client.getAccessToken()
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    type: "OAuth2",
+    user: process.env.EMAIL,
+    clientId: process.env.GMAIL_CLIENT_ID,
+    clientSecret: process.env.GMAIL_CLIENT_SECRET,
+    refreshToken: process.env.REFRESH_TOKEN,
+    accessToken: myAccessToken
+  }
+});
+
+
+app.post('/email', (req, res) => {
+
+  const { name, email, message } = req.body;
+
+  // setup email data with unicode symbols
+  const mailOptions={
+    from: `"${name}" <${email}>`, // sender address
+    to: 'casey.ferrara@outlook.com', // list of receivers
+    subject: 'New message from contact form', // Subject line
+    text: message, // plain text body
+    html: `<b>${message}</b>` // html body
+  };
+
+  transporter.sendMail(mailOptions,function(err,result){
+    if(err){
+    res.send({
+    message:err
+    })
+    }else{
+    transport.close();
+    res.send({
+    message:'Email has been sent: check your inbox!'
+    })
+    }
+    })
+})
 
 async function isAllowedEmail(email) {
   try {
@@ -30,8 +91,8 @@ async function isAllowedEmail(email) {
 
 app.get('/callback', (req, res) => {
   const code = req.query.code;
-  const clientId = 'vAKqtbL2JR7mmz24hMlxf993JJQIiBg9';
-  const clientSecret = 'YSt1mGdU2YXBMtV73g5O7xHpYIqE9bI7vfbD8eku3Dm_k0b6xPHMnhCxdmW7womM';
+  const clientId = auth0ClientId;
+  const clientSecret = auth0ClientSecret;
   const redirectUri = 'http://localhost:3001/callback';
 
   // Exchange the authorization code for an access token

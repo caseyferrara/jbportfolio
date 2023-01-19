@@ -10,7 +10,7 @@ function Login() {
     width: auto;
   `;
 
-    const auth0ClientId = 'vAKqtbL2JR7mmz24hMlxf993JJQIiBg9';
+    const auth0ClientId = process.env.AUTH_CLIENT_ID;
     const auth0Domain = 'dev-apyiutdwrm7rajdb.us.auth0.com';
     const redirectUri = encodeURIComponent('http://localhost:3001/callback');
     const googleConnection = 'google-oauth2';
