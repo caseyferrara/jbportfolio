@@ -10,7 +10,6 @@ const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 
 require('dotenv').config();
-
 const auth0ClientId = process.env.AUTH_CLIENT_ID;
 const auth0ClientSecret = process.env.CLIENT_SECRET;
 
@@ -137,6 +136,7 @@ app.get('/callback', (req, res) => {
       if (req.user && isAllowedEmail(req.user.email)) {
           res.redirect(`http://localhost:3000/admin?token=${token}`);
         } else {
+          res.redirect(`http://localhost:3000/admin`);
           res.status(401).send('You are not authorized to access this page');
         }
     });

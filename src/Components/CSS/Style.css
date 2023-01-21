@@ -76,6 +76,10 @@
   overflow: hidden;
 }
 
+.index {
+  z-index: 2;
+}
+
 /* HOME COMPONENT */
 
 .homeImg {
@@ -86,8 +90,8 @@
 
 /* ABOUT COMPONENT */
 
-.hidden-app-bar {
-  display: none !important;
+::-webkit-scrollbar {
+  display: none
 }
 
 .aboutIcon {
@@ -112,11 +116,6 @@
     text-align: center;
     position: relative;
     max-width: 750px;
-}
-  
-.link {
-    margin: 10px;
-    color: black;
 }
 
 /* PORTFOLIO COMPONENT */
@@ -170,15 +169,11 @@
 
 /* CONTACT COMPONENT */
 
-.contact-index{
-    z-index: 2;
-}
-
 .contact-form {
     border: 3px solid;
     border-color: #303030;
     width: 500px;
-    height: 410px;
+    height: 450px;
 }
 
 /* FOOTER COMPONENT */

@@ -6,7 +6,7 @@ function Footer() {
 
     return (
       <div 
-        className="footerContainer"
+        className="footerContainer index"
       >
         <Box>
           <AppBar 

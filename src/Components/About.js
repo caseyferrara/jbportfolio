@@ -62,7 +62,7 @@ function About() {
                     <VisibilityIcon fontSize="large" className="aboutIcon swing-in-top-bck" />
                     <h3 className="iconText tracking-in-expand">visionary</h3>
                   </Grid>
-                <Grid align="center" container rowGap={2}>
+                <Grid align="center" className="index" container rowGap={2}>
                 <Box 
                   sx={{ 
                     width: 1000, 

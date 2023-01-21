@@ -2,16 +2,28 @@ import './CSS/Style.css';
 import './CSS/Animation.css';
 import InfoIcon from '@mui/icons-material/Info';
 import React, { useState, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
 import { Pagination, useMediaQuery, IconButton, Box, ImageList, ImageListItem, ImageListItemBar, MenuItem, FormControl, Select, Modal, Button } from '@mui/material';
 import { Element } from 'react-scroll';
 
 function Portfolio() {
 
+  const StyledFormControl = styled(FormControl)({
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#303030',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#3f3f3f',
+      },
+    },
+  });
+
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [modalImage, setModalImage] = useState({});
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('all graphics');
+  const categories = ['all','prints', 'personal', 'logos', 'other'];
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [openModal, setModalOpen] = useState(false);
   const [page, setPage] = useState(1);
   const itemsPerPage = 8;
@@ -63,12 +75,10 @@ function Portfolio() {
       }
       fetchData();
 
-      setCategories(['all graphics','prints', 'personal', 'logos', 'other']);
-
   }, []);
 
   useEffect(() => {
-    if (selectedCategory === 'all graphics') {
+    if (selectedCategory === 'all') {
       setFilteredProjects(projects);
     } else {
       setFilteredProjects(
@@ -84,11 +94,11 @@ function Portfolio() {
           <div className="headerText tracking-in-expand">
             portfolio
           </div>
-          <FormControl
+          <StyledFormControl
             sx={{
               padding: '1rem',
               color: '#303030',
-              width: '250px',
+              width: '250px'
             }}
           >
             <Select
@@ -96,8 +106,7 @@ function Portfolio() {
               onChange={handleCategoryChange}
               sx={{
                 fontFamily: 'Marcellus',
-                color: '#303030',
-                border: 1,
+                color: '#303030'
               }}
             >
               {categories.map((category) => (
@@ -112,7 +121,7 @@ function Portfolio() {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </StyledFormControl>
             <>
               <Box
                 sx={{

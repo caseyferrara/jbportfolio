@@ -4,9 +4,41 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 import React, { useState, useEffect } from 'react';
-import { CircularProgress, Typography, Avatar, Modal, Dialog, DialogTitle, DialogContent, DialogActions, useMediaQuery, Snackbar, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { FormControl, CircularProgress, Typography, Avatar, Modal, Dialog, DialogTitle, DialogContent, DialogActions, useMediaQuery, Tabs, Tab, IconButton, ImageList, ImageListItem, ImageListItemBar, Box, TextField, Select, MenuItem, Button, Grid }  from '@mui/material';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
+
+const StyledFormControl = styled(FormControl)({
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#303030',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#3f3f3f',
+    },
+  },
+});
+
+const StyledTextField = styled(TextField)({
+  '& label.Mui-focused': {
+    color: '#303030',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: '#3f3f3f',
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#303030',
+    },
+    '&:hover fieldset': {
+      borderColor: '#303030',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#3f3f3f',
+    },
+  },
+});
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,6 +74,7 @@ function a11yProps(index) {
 }
 
 const Admin = () => {
+
 
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
@@ -79,8 +112,7 @@ const Admin = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = React.useState(0);
 
-  const [alertMessage, setAlertMessage] = useState('');
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [helpText, setHelpText] = useState('');
 
   const isMobile = useMediaQuery('(max-width: 600px)');
 
@@ -127,21 +159,15 @@ const Admin = () => {
         });        
       }
 
-      sessionStorage.setItem('token', token);
       fetchUserData();
       fetchProjectData();
       fetchAboutData();
+      sessionStorage.setItem('token', token);
       setTimeout(() => {
         setIsLoading(false);
       }, 1000);
     
   }, [token]);
-  
-
-  const alertClose = () => {
-    setAlertMessage('');
-    setSnackbarOpen(false);
-  }
 
   const handleModalOpen = (modalName) => {
     setModalOpen({
@@ -185,20 +211,17 @@ const Admin = () => {
     event.preventDefault();
   
     if (!projectTitle) {
-      setAlertMessage('Please enter a project title');
-      setSnackbarOpen(true);
+      setHelpText('Please enter a project title');
       return;
     }
   
     if (!projectDescription) {
-      setAlertMessage('Please enter a project description');
-      setSnackbarOpen(true);
+      setHelpText('Please enter a project description');
       return;
     }
   
     if (!projectImage) {
-      setAlertMessage('Please upload an image');
-      setSnackbarOpen(true);
+      setHelpText('Please upload an image');
       return;
     }
   
@@ -223,8 +246,7 @@ const Admin = () => {
       setProjectDescription('');
       setProjectImage('');
   
-      setAlertMessage('Your project has been added!');
-      setSnackbarOpen(true);
+      setHelpText('Your project has been added!');
       setTimeout(reloadPage, 3000);
     } catch (error) {
       console.error(error);
@@ -233,10 +255,14 @@ const Admin = () => {
 
   const handleAboutSubmit = async (event) => {
     event.preventDefault();
+
+    if (!imageTitle) {
+      setHelpText('Please enter an image name')
+      return;
+    }
   
     if (!aboutImage) {
-      setAlertMessage('Please upload an image');
-      setSnackbarOpen(true);
+      setHelpText('Please upload an image');
       return;
     }
   
@@ -260,8 +286,7 @@ const Admin = () => {
 
     setAboutImage('');
     setImageTitle('');
-    setAlertMessage('Your about image has been added!');
-    setSnackbarOpen(true);
+    setHelpText('Your about image has been added!');
     setTimeout(reloadPage, 3000);
   };
 
@@ -320,8 +345,7 @@ const Admin = () => {
         setProjectCategory('prints');
         setProjectDescription('');
   
-        setAlertMessage('Your project has been updated!');
-        setSnackbarOpen(true);
+        setHelpText('Your project has been updated!');
         setTimeout(reloadPage, 3000);
       }
     } catch (error) {
@@ -474,6 +498,9 @@ const Admin = () => {
 
   const projectEditModalClose = () => {
       handleModalClose('projectEditModal')
+      setProjectTitle('');
+      setProjectCategory('prints');
+      setProjectDescription('');
   }
 
   const aboutModalOpen = () => {
@@ -684,10 +711,10 @@ const Admin = () => {
                         <h1>add a new project</h1>
                       </Grid>
                       <Grid item xs={12}>
-                        <TextField
+                        <StyledTextField
                           label="project title"
                           name="projectTitle"
-                          variant="filled"
+                          variant="outlined"
                           value={projectTitle}
                           onChange={handleInputChange}
                           InputProps={{
@@ -705,14 +732,14 @@ const Admin = () => {
                         />
                       </Grid>
                       <Grid item xs={12}>
+                        <StyledFormControl>
                           <Select
-                            label="project category"
                             name="projectCategory"
                             value={projectCategory}
                             onChange={handleInputChange}
                             sx={{
                               fontFamily: 'Marcellus',
-                              width: 250,
+                              width: 250
                             }}
                           >
                             <MenuItem 
@@ -752,12 +779,14 @@ const Admin = () => {
                               other
                             </MenuItem>
                           </Select>
+                        </StyledFormControl>
                         </Grid>
                         <Grid item xs={12}>
-                          <TextField
+                          <StyledTextField
                             label="project description"
                             name="projectDescription"
-                            variant="filled"
+                            variant="outlined"
+                            helperText={helpText}
                             value={projectDescription}
                             onChange={handleInputChange}
                             multiline={true}
@@ -803,7 +832,6 @@ const Admin = () => {
                             Submit
                           </Button>
                         </Grid>
-                        <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
                     </Grid>
                   </Box>
                 </Grid>
@@ -824,10 +852,10 @@ const Admin = () => {
                         <h1>edit this project</h1>
                       </Grid>
                       <Grid item xs={12}>
-                        <TextField
+                        <StyledTextField
                           label="project title"
                           name="projectTitle"
-                          variant="filled"
+                          variant="outlined"
                           value={projectTitle}
                           onChange={handleInputChange}
                           InputProps={{
@@ -845,8 +873,8 @@ const Admin = () => {
                         />
                       </Grid>
                       <Grid item xs={12}>
+                        <StyledFormControl>
                           <Select
-                            label="project category"
                             name="projectCategory"
                             value={projectCategory}
                             onChange={handleInputChange}
@@ -892,16 +920,18 @@ const Admin = () => {
                               other
                             </MenuItem>
                           </Select>
+                        </StyledFormControl>
                         </Grid>
                         <Grid item xs={12}>
-                          <TextField
+                          <StyledTextField
                             label="project description"
                             name="projectDescription"
-                            variant="filled"
+                            variant="outlined"
+                            helperText={helpText}
                             value={projectDescription}
                             onChange={handleInputChange}
                             multiline={true}
-                            rows={3}
+                            rows={4}
                             InputProps={{
                               style: {
                                 fontFamily: 'Marcellus',
@@ -936,7 +966,6 @@ const Admin = () => {
                             save project
                           </Button>
                         </Grid>
-                        <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
                     </Grid>
                   </Box>
                 </Grid>
@@ -1018,10 +1047,11 @@ const Admin = () => {
                         <h1>add a new about image</h1>
                       </Grid>
                       <Grid item xs={12}>
-                        <TextField
+                        <StyledTextField
                           label="image title"
                           name="imageTitle"
-                          variant="filled"
+                          variant="outlined"
+                          helperText={helpText}
                           value={imageTitle}
                           onChange={handleInputChange}
                           InputProps={{
@@ -1066,7 +1096,6 @@ const Admin = () => {
                           submit
                         </Button>
                       </Grid>
-                      <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
                     </Grid>
                   </Box>
                 </Grid>

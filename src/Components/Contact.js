@@ -1,9 +1,28 @@
 import './CSS/Style.css'
 import { useState } from 'react';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
-import { Snackbar, Grid, Box, TextField, Button, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Grid, Box, TextField, Button, Typography } from '@mui/material';
 import { Element } from 'react-scroll';
 import Footer from './Footer';
+
+
+const StyledTextField = styled(TextField)({
+  '& label.Mui-focused': {
+    color: '#303030',
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#303030',
+    },
+    '&:hover fieldset': {
+      borderColor: '#303030',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#3f3f3f',
+    },
+  },
+});
 
 function Contact() {
 
@@ -11,11 +30,26 @@ function Contact() {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
 
-    const [alertMessage, setAlertMessage] = useState('');
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [helpText, setHelpText] = useState('');
 
-    const handleSubmit = e => {
+    const handleSubmit = (e) => {
       e.preventDefault();
+
+      if (!name) {
+        setHelpText('Please enter your name');
+        return;
+      }
+    
+      if (!email) {
+        setHelpText('Please enter your email');
+        return;
+      }
+    
+      if (!message) {
+        setHelpText('Please enter a message');
+        return;
+      }
+
       fetch('http://localhost:3001/email', {
         method: 'POST',
         headers: {
@@ -35,14 +69,18 @@ function Contact() {
       setEmail('');
       setMessage('');
 
-      setAlertMessage('Your email has been sent!');
-      setSnackbarOpen(true);
+      setHelpText('Your email has been sent!');
     }
 
-    const alertClose = () => {
-      setAlertMessage('');
-      setSnackbarOpen(false);
-    }
+    const handleInputChange = (event) => {
+      if (event.target.name === 'name') {
+        setName(event.target.value);
+      } else if (event.target.name === 'email') {
+        setEmail(event.target.value);
+      } else if (event.target.name === 'message') {
+        setMessage(event.target.value);
+      }
+    };
   
 
     return (
@@ -55,10 +93,10 @@ function Contact() {
               align="center"
               rowGap={4}
           >
-            <Grid className='contact-index' item xs={12} sm={12}>
+            <Grid className='index' item xs={12} sm={12}>
               <h1 className='headerText tracking-in-expand'>contact</h1>
             </Grid>
-            <Grid className='contact-index' item xs={12} sm={12}>
+            <Grid className='index' item xs={12} sm={12}>
               <Box
                 component="form"
                 noValidate
@@ -72,6 +110,7 @@ function Contact() {
                   <ContactSupportIcon 
                     sx={{
                       color: "#303030",
+                      marginTop: 1
                     }}
                     fontSize="large"
                   />
@@ -85,10 +124,11 @@ function Contact() {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TextField
-                      onChange={e => setName(e.target.value)}
-                      id="outlined-textarea"
+                  <StyledTextField
+                      onChange={handleInputChange}
+                      variant="outlined"
                       label="name"
+                      name="name"
                       placeholder="john doe"
                       margin="normal"
                       value={name}
@@ -107,10 +147,11 @@ function Contact() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                      onChange={e => setEmail(e.target.value)}
-                      id="outlined-textarea"
+                  <StyledTextField
+                      onChange={handleInputChange}
+                      variant="outlined"
                       label="email"
+                      name="email"
                       placeholder="jillian@jillianbrown.com"
                       margin="normal"
                       value={email}
@@ -129,15 +170,17 @@ function Contact() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                      onChange={e => setMessage(e.target.value)}
-                      id="outlined-textarea"
+                  <StyledTextField
+                      onChange={handleInputChange}
+                      variant="outlined"
                       label="message"
+                      name="message"
                       placeholder="enter your message..."
                       multiline
                       rows={4}
                       margin="normal"
                       value={message}
+                      helperText={helpText}
                       InputProps={{
                         style: {
                           fontFamily: 'Marcellus',
@@ -173,7 +216,6 @@ function Contact() {
                   Submit
                   </Button>
                 </Grid>
-                <Snackbar open={snackbarOpen} message={alertMessage} autoHideDuration={3000} onClose={alertClose} />
               </Box>
             </Grid>
           </Grid>
