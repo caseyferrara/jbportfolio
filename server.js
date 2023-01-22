@@ -57,7 +57,7 @@ app.post('/email', (req, res) => {
   // setup email data with unicode symbols
   const mailOptions={
     from: `"${name}" <${email}>`, // sender address
-    to: 'casey.ferrara@outlook.com', // list of receivers
+    to: 'jillian22brown@gmail.com', // list of receivers
     subject: 'New message from contact form', // Subject line
     text: message, // plain text body
     html: `<b>${message}</b>` // html body
