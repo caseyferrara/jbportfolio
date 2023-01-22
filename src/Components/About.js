@@ -45,10 +45,11 @@ function About() {
                   item xs={12} 
                   sm={12}
                 >
-                <p className="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p className="paragraph">As a graphic designer, I possess a passion for creating visually striking designs that effectively communicate. 
+                I have experience across various mediums including print, digital, and packaging. 
+                My attention to detail and ability to craft designs that are both visually appealing and functional is evident in my portfolio. 
+                My portfolio showcases my versatility and ability to create outstanding designs in any medium, from branding and logo design to packaging and advertising. 
+                I am always eager to take on new challenges and push my creativity to deliver exceptional results.</p>
                 </Grid>
                   <Grid item xs={4} sm={4}>
                     <TipsAndUpdatesIcon fontSize="large" className="aboutIcon swing-in-top-bck" />
