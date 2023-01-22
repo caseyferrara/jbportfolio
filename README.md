@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+# Jillian Brown Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was created by Casey Ferrara for Jillian Brown to be used as a graphic design portfolio. The application allows users to view about images, projects, and even contact Jillian via email. There is also a restricted admin page that can only be accessed by Jillian via Auth0 Google login. The admin page allows for new projects/about images to be added, existing projects to be edited, and existing projects/about images to be deleted. The tech stack for this application is React, NodeJS, and PostgreSQL.
 
-## Available Scripts
+## Public Components
 
-In the project directory, you can run:
+The following components can be accessed by any user in the graphic design web application:
 
-### `npm start`
+### about
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![about component](https://live.staticflickr.com/65535/52643427910_013d4fe065_k.jpg)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This is an about section that displays a brief about summary, icons, and about images.
 
-### `npm test`
+### portfolio
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![portfolio component](https://live.staticflickr.com/65535/52643247319_7ea856266d_k.jpg)
 
-### `npm run build`
+The portfolio component displays projects uploaded by the admin.\ 
+There is currently a 8 project limit per page to allow for a better user experience.\
+Each project shows the user an image, project title, and project category.\
+All of the project information can be displayed by clicking on the info icon.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### contact
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![contact component](https://live.staticflickr.com/65535/52642485077_30355dc3e1_k.jpg)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The contact component is a simple form (name, email, and message) created with MUI.\ This component also includes the footer at the bottom. The server uses nodemailer to send an email via Gmail to the admin.
 
-### `npm run eject`
+### login
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![login component](https://live.staticflickr.com/65535/52642485057_1278a29f3e_k.jpg)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Any user can access the login page (there is not a link accessible on the home page)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### unauthorized
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+![unauthorized](https://live.staticflickr.com/65535/52643462848_7e1316da84_k.jpg)
 
-## Learn More
+If a user is not able to successfully login via Auth0 Google login (their email must match in the database), they will be shown this unauthorized page.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Restricted Component
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The following components can only be accessed by the admin in the graphic design web application:
 
-### Code Splitting
+### admin
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![admin (existing projects) component](https://live.staticflickr.com/65535/52642485047_41efb7fa77_k.jpg)
+![admin (about images) component](https://live.staticflickr.com/65535/52643462778_5b4bab5a4b_k.jpg)
 
-### Analyzing the Bundle Size
+Once the admin successfully logs in via Auth0 Google login they are redirected to the admin component.\ All existing projects and about images can be viewed here.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## admin features
 
-### Making a Progressive Web App
+These are all of the features included in the admin component:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### add a new project
 
-### Advanced Configuration
+![add project](https://live.staticflickr.com/65535/52643462803_b18622cee7_b.jpg)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+The admin can add a new project to the database and this will get displayed in the portfolio component.
 
-### Deployment
+### edit an existing project
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+![edit project](https://live.staticflickr.com/65535/52643427810_d7d669d743_b.jpg)
 
-### `npm run build` fails to minify
+The admin can edit any existing project which will be updated in the database and displayed to the user in the portfolio component.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### add an about image
+
+![add about image](https://live.staticflickr.com/65535/52642484987_56a91585f8_b.jpg)
+
+The admin can add a new about image and this will get displayed in the about component.
+
+### delete
+
+![delete project](https://live.staticflickr.com/65535/52642485007_ce6a50df0c_c.jpg)
+![delete about image](https://live.staticflickr.com/65535/52643427775_5da840768b_c.jpg)
+
+The admin can delete an existing project or about image.
