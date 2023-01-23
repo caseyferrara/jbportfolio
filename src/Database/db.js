@@ -2,9 +2,9 @@ const { Client } = require('pg');
 require('dotenv').config();
 
 const client = new Client({
-  user: 'admin',
-  host: 'localhost',
-  database: 'jbportfolio',
+  user: 'zpjiebiobxywzf',
+  host: 'ec2-52-201-124-168.compute-1.amazonaws.com',
+  database: 'dan42g8je74u0r',
   password: process.env.DB_PASS,
   port: 5432,
 });

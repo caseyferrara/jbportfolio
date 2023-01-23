@@ -15,14 +15,14 @@ function About() {
   useEffect(() => {
 
     async function fetchData() {
-      const res = await fetch('http://localhost:3001/about');
+      const res = await fetch('https://jbportfolio.herokuapp.com/about');
       const data = await res.json();
 
       data.forEach(about => {
         setAboutImages(current => [...current, {
           id: about.id,
           title: about.title,
-          image: `http://localhost:3001/images/${about.title}.jpg`
+          image: `https://jbportfolio.herokuapp.com/images/${about.title}.jpg`
         }])
       });        
     }

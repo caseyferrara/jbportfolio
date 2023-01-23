@@ -50,7 +50,7 @@ function Contact() {
         return;
       }
 
-      fetch('http://localhost:3001/email', {
+      fetch('https://jbportfolio.herokuapp.com/email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

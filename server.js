@@ -19,7 +19,7 @@ const app = express();
 const { insertProject, updateProject, insertAboutImage, getUsers, getProjects, getAbout, deleteProject, deleteAboutImage, getProjectById, getAboutById } = require('./src/Database/db');
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: '*',
   credentials: true
 }));
 app.use('/images', express.static('./src/Images'));
