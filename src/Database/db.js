@@ -2,20 +2,12 @@ const { Client } = require('pg');
 require('dotenv').config();
 
 const client = new Client({
-  user: 'zpjiebiobxywzf',
-  host: 'ec2-52-201-124-168.compute-1.amazonaws.com',
-  database: 'dan42g8je74u0r',
-  password: process.env.DB_PASS,
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
-
-client.connect((err) => {
-    if (err) {
-      console.error('Error connecting to the database', err.stack);
-    } else {
-      console.log('Connected to the database');
-    }
-});
+client.connect();
 
 const getUsers = async () => {
   const text = "SELECT * FROM users";
