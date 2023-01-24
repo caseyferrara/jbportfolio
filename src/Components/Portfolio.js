@@ -60,7 +60,7 @@ function Portfolio() {
   useEffect(() => {
 
       async function fetchData() {
-        const res = await fetch('https://jbportfolio.herokuapp.com/projects');
+        const res = await fetch('https://secret-beyond-29351.herokuapp.com/projects');
         const data = await res.json();
 
         data.forEach(project => {
@@ -69,7 +69,7 @@ function Portfolio() {
             title: project.title,
             category: project.category,
             description: project.description,
-            image: `https://jbportfolio.herokuapp.com/images/${project.title}.jpg`
+            image: `https://secret-beyond-29351.herokuapp.com/Images/${project.title}.jpg`
           }])
         });        
       }

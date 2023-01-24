@@ -50,7 +50,7 @@ function Contact() {
         return;
       }
 
-      fetch('https://jbportfolio.herokuapp.com/email', {
+      fetch('https://secret-beyond-29351.herokuapp.com/email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

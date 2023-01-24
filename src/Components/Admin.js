@@ -118,7 +118,7 @@ const Admin = () => {
   useEffect(() => {
 
       async function fetchUserData() {
-        const res = await fetch('https://jbportfolio.herokuapp.com/users');
+        const res = await fetch('https://secret-beyond-29351.herokuapp.com/users');
         const data = await res.json();
 
         data.forEach(user => {
@@ -130,7 +130,7 @@ const Admin = () => {
       }
 
       async function fetchProjectData() {
-        const res = await fetch('https://jbportfolio.herokuapp.com/projects');
+        const res = await fetch('https://secret-beyond-29351.herokuapp.com/projects');
         const data = await res.json();
 
         data.forEach(project => {
@@ -139,20 +139,20 @@ const Admin = () => {
             title: project.title,
             category: project.category,
             description: project.description,
-            image: `https://jbportfolio.herokuapp.com/${project.title}.jpg`
+            image: `https://secret-beyond-29351.herokuapp.com/Images/${project.title}.jpg`
           }])
         });        
       }
 
       async function fetchAboutData() {
-        const res = await fetch('https://jbportfolio.herokuapp.com/admin/about');
+        const res = await fetch('https://secret-beyond-29351.herokuapp.com/admin/about');
         const data = await res.json();
 
         data.forEach(about => {
           setAboutImages(current => [...current, {
             id: about.id,
             title: about.title,
-            image: `https://jbportfolio.herokuapp.com/images/${about.title}.jpg`
+            image: `https://secret-beyond-29351.herokuapp.com/Images/${about.title}.jpg`
           }])
         });        
       }
@@ -231,7 +231,7 @@ const Admin = () => {
     formData.append('image', projectImage);
   
     try {
-      const response = await fetch('https://jbportfolio.herokuapp.com/admin/projects/submit', {
+      const response = await fetch('https://secret-beyond-29351.herokuapp.com/admin/projects/submit', {
         method: 'POST',
         body: formData,
       });
@@ -270,7 +270,7 @@ const Admin = () => {
     formData.append('image', aboutImage);
     
     try {
-      const response = await fetch('https://jbportfolio.herokuapp.com/admin/about/submit', {
+      const response = await fetch('https://secret-beyond-29351.herokuapp.com/admin/about/submit', {
         method: 'POST',
         body: formData,
       });
@@ -294,7 +294,7 @@ const Admin = () => {
 
   const handleEditClick = async (id) => {
       try {
-        const response = await fetch(`https://jbportfolio.herokuapp.com/project/${id}`, {
+        const response = await fetch(`https://secret-beyond-29351.herokuapp.com/project/${id}`, {
           method: 'GET',
         });
         
@@ -316,7 +316,7 @@ const Admin = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch(`https://jbportfolio.herokuapp.com/admin/project/update/${id}`, {
+      const response = await fetch(`https://secret-beyond-29351.herokuapp.com/admin/project/update/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -431,7 +431,7 @@ const Admin = () => {
 
   const deleteProject = async (id) => {
     try {
-      const response = await fetch(`https://jbportfolio.herokuapp.com/admin/projects/${id}`, {
+      const response = await fetch(`https://secret-beyond-29351.herokuapp.com/admin/projects/${id}`, {
         method: 'DELETE',
       });
       
@@ -446,7 +446,7 @@ const Admin = () => {
 
   const deleteAboutImage = async (id) => {
     try {
-      const response = await fetch(`https://jbportfolio.herokuapp.com/admin/about/${id}`, {
+      const response = await fetch(`https://secret-beyond-29351.herokuapp.com/admin/about/${id}`, {
         method: 'DELETE',
       });
       

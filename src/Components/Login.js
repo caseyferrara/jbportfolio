@@ -12,7 +12,7 @@ function Login() {
 
     const auth0ClientId = 'vAKqtbL2JR7mmz24hMlxf993JJQIiBg9';
     const auth0Domain = 'dev-apyiutdwrm7rajdb.us.auth0.com';
-    const redirectUri = encodeURIComponent('https://jbportfolio.herokuapp.com/callback');
+    const redirectUri = encodeURIComponent('https://secret-beyond-29351.herokuapp.com/callback');
     const googleConnection = 'google-oauth2';
       
     const handleClick = () => {
