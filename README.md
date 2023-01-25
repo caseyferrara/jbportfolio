@@ -1,6 +1,6 @@
-# Jillian Brown Portfolio
+# Graphic Design Portfolio
 
-This project was created by Casey Ferrara for Jillian Brown to be used as a graphic design portfolio. The application allows users to view about images, projects, and even contact Jillian via email. There is also a restricted admin page that can only be accessed by Jillian via Auth0 Google login. The admin page allows for new projects/about images to be added, existing projects to be edited, and existing projects/about images to be deleted. The tech stack for this application is React, NodeJS, and PostgreSQL.
+This project was created by Casey Ferrara to be used as a graphic design portfolio. The application allows users to view about images, projects, and even contact Jillian via email. There is also a restricted admin page that can only be accessed by Jillian via Auth0 Google login. The admin page allows for new projects/about images to be added, existing projects to be edited, and existing projects/about images to be deleted. The tech stack for this application is React, NodeJS, and PostgreSQL.
 
 ## Public Components
 
