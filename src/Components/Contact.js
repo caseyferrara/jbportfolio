@@ -52,6 +52,7 @@ function Contact() {
 
       fetch('https://secret-beyond-29351.herokuapp.com/email', {
         method: 'POST',
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/json'
         },

@@ -98,7 +98,8 @@ function Portfolio() {
             sx={{
               padding: '1rem',
               color: '#303030',
-              width: '250px'
+              width: '250px',
+              zIndex: 2
             }}
           >
             <Select
