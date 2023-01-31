@@ -29,7 +29,7 @@ function Portfolio() {
   const itemsPerPage = 8;
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = page * itemsPerPage;
-  const isMobile = useMediaQuery('(max-width: 600px)');
+  const isMobile = useMediaQuery('(max-width: 1000px)');
   const currentProjects = filteredProjects.slice(startIndex, endIndex);
 
   const handlePageChange = (event, value) => {

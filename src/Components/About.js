@@ -9,7 +9,7 @@ import { Element } from 'react-scroll';
 
 function About() {
 
-  const isMobile = useMediaQuery('(max-width: 600px)');
+  const isMobile = useMediaQuery('(max-width: 1000px)');
   const [aboutImages, setAboutImages] = useState([]);
 
   useEffect(() => {
