@@ -239,7 +239,7 @@
 
 @media (max-width: 600px) {
   .homeContainer {
-    height: 70vh;
+    height: 60vh;
   }
   .paragraph {
     max-width: 300px;
