@@ -9,7 +9,7 @@ import { Element } from 'react-scroll';
 
 function About() {
 
-  const isMobile = useMediaQuery('(max-width: 1000px)');
+  const isMobile = useMediaQuery('(max-width: 600px)');
   const [aboutImages, setAboutImages] = useState([]);
 
   useEffect(() => {
@@ -66,13 +66,18 @@ function About() {
                 <Grid align="center" className="index" container rowGap={2}>
                 <Box 
                   sx={{ 
-                    width: 1000, 
-                    height: 400, 
-                    display: 'block', 
-                    margin: 'auto', 
-                    overflowY: 'scroll', 
-                    scrollbarWidth: 'none'
-                  }}>
+                    maxHeight: 500,
+                    maxWidth: 1000,
+                    display: 'block',
+                    margin: 'auto',
+                    overflowY: 'scroll',
+                    scrollbarWidth: 'none',
+                    '@media (max-width: 600px)': {
+                      maxHeight: 600,
+                      maxWidth: 300,
+                    },
+                  }}
+                >
                   <ImageList 
                     variant="masonry" 
                     cols={isMobile ? 1 : 2}

@@ -244,13 +244,6 @@
   .paragraph {
     max-width: 300px;
   }
-  .footerText {
-    font-size: 14px;
-  }
-  .footerLink {
-    height: 5px;
-    width: 5px;
-  }
   .modal {
     width: 80%
   }
